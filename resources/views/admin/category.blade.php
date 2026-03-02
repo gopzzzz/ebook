@@ -11,7 +11,7 @@
               <!-- Bordered Table -->
               <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Bordered Table</h5>
+        <h5 class="mb-0">Category</h5>
          <button
                           type="button"
                           class="btn btn-primary"
@@ -36,7 +36,7 @@
                               <div class="modal-body">
                                 <div class="row">
                                   <div class="col mb-3">
-                                    <label for="nameWithTitle" class="form-label">Name</label>
+                                    <label for="nameWithTitle" class="form-label">Category</label>
                                     <input
                                       type="text"
                                       id="nameWithTitle"
@@ -45,7 +45,7 @@
                                     />
                                   </div>
                                 </div>
-                                <div class="row g-2">
+                                <!-- <div class="row g-2">
                                   <div class="col mb-0">
                                     <label for="emailWithTitle" class="form-label">Email</label>
                                     <input
@@ -54,8 +54,8 @@
                                       class="form-control"
                                       placeholder="xxxx@xxx.xx"
                                     />
-                                  </div>
-                                  <div class="col mb-0">
+                                  </div> -->
+                                  <!-- <div class="col mb-0">
                                     <label for="dobWithTitle" class="form-label">DOB</label>
                                     <input
                                       type="text"
@@ -64,7 +64,7 @@
                                       placeholder="DD / MM / YY"
                                     />
                                   </div>
-                                </div>
+                                </div> -->
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
@@ -82,20 +82,17 @@
                     <table class="table table-bordered">
                       <thead>
                         <tr>
-                          <th>Project</th>
-                          <th>Client</th>
-                          <th>Users</th>
-                          <th>Status</th>
+                          <th>Category</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td>
+                          <!-- <td>
                             <i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Angular Project</strong>
-                          </td>
-                          <td>Albert Cook</td>
-                          <td>
+                          </td> -->
+                          <!-- <td>Albert Cook</td> -->
+                          <!-- <td>
                             <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
                               <li
                                 data-bs-toggle="tooltip"
@@ -125,7 +122,7 @@
                                 <img src="../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
                               </li>
                             </ul>
-                          </td>
+                          </td> -->
                           <td><span class="badge bg-label-primary me-1">Active</span></td>
                           <td>
                             <div class="dropdown">
@@ -148,7 +145,7 @@
                           </td>
                         </tr>
                         <tr>
-                          <td><i class="fab fa-react fa-lg text-info me-3"></i> <strong>React Project</strong></td>
+                          <!-- <td><i class="fab fa-react fa-lg text-info me-3"></i> <strong>React Project</strong></td>
                           <td>Barry Hunter</td>
                           <td>
                             <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
@@ -180,7 +177,7 @@
                                 <img src="../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
                               </li>
                             </ul>
-                          </td>
+                          </td> -->
                           <td><span class="badge bg-label-success me-1">Completed</span></td>
                           <td>
                             <div class="dropdown">
@@ -203,7 +200,7 @@
                           </td>
                         </tr>
                         <tr>
-                          <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <strong>VueJs Project</strong></td>
+                          <!-- <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <strong>VueJs Project</strong></td>
                           <td>Trevor Baker</td>
                           <td>
                             <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
@@ -235,7 +232,7 @@
                                 <img src="../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
                               </li>
                             </ul>
-                          </td>
+                          </td> -->
                           <td><span class="badge bg-label-info me-1">Scheduled</span></td>
                           <td>
                             <div class="dropdown">
@@ -258,7 +255,7 @@
                           </td>
                         </tr>
                         <tr>
-                          <td>
+                          <!-- <td>
                             <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>Bootstrap Project</strong>
                           </td>
                           <td>Jerry Milton</td>
@@ -292,7 +289,7 @@
                                 <img src="../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
                               </li>
                             </ul>
-                          </td>
+                          </td> -->
                           <td><span class="badge bg-label-warning me-1">Pending</span></td>
                           <td>
                             <div class="dropdown">

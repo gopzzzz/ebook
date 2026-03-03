@@ -131,9 +131,9 @@
                     <div data-i18n="Notifications">Items</div>
                   </a>
                 </li>
-                <li class="menu-item">
-                  <a href="pages-account-settings-connections.html" class="menu-link">
-                    <div data-i18n="Connections">Connections</div>
+                 <li class="menu-item">
+                  <a href="{{url('authors')}}" class="menu-link">
+                    <div data-i18n="Account">Author Creation</div>
                   </a>
                 </li>
               </ul>

@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\AuthorController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,11 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::resource('categories', CategoryController::class);
 });
+
+Route::middleware('auth')->group(function () {
+    Route::resource('authors', AuthorController::class);
+});
+
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 

@@ -3,6 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\PageController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,6 +28,16 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+//web Routes//
+
+
+ Route::get('/', [IndexController::class, 'home'])->name('index');
+ Route::redirect('/index', '/');
+Route::get('/product-list', [IndexController::class, 'productlist'])->name('product-list');
+Route::get('/product', [IndexController::class, 'product'])->name('product');
+Route::get('/aboutus', [PageController::class, 'aboutus'])->name('aboutus');
 
 
 

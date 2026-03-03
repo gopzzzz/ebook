@@ -122,7 +122,7 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="{{url('categorylist')}}" class="menu-link">
+                  <a href="{{url('categories')}}" class="menu-link">
                     <div data-i18n="Account">Category</div>
                   </a>
                 </li>

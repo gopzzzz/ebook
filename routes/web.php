@@ -23,8 +23,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/categorylist', [CategoryController::class, 'list'])->name('category.list');
-   
+    Route::resource('categories', CategoryController::class);
 });
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

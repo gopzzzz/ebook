@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Publisher extends Model
 {
-    protected $table = 'categories';
+   protected $table = 'publishers';
 
-    protected $fillable = ['category_name'];
+    protected $fillable = ['publisher_name'];
 
      public function items()
     {

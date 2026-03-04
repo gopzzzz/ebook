@@ -6,6 +6,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\PublisherController;
+use App\Http\Controllers\ItemController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +31,14 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('authors', AuthorController::class);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::resource('publishers', PublisherController::class);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::resource('items', ItemController::class);
 });
 
 

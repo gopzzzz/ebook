@@ -127,13 +127,18 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="pages-account-settings-notifications.html" class="menu-link">
+                   <a href="{{url('items')}}" class="menu-link">
                     <div data-i18n="Notifications">Items</div>
                   </a>
                 </li>
                  <li class="menu-item">
                   <a href="{{url('authors')}}" class="menu-link">
                     <div data-i18n="Account">Author Creation</div>
+                  </a>
+                </li>
+                 <li class="menu-item">
+                  <a href="{{url('publishers')}}" class="menu-link">
+                    <div data-i18n="Account">Publisher</div>
                   </a>
                 </li>
               </ul>

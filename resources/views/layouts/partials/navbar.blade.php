@@ -136,6 +136,16 @@
                     <div data-i18n="Account">Author Creation</div>
                   </a>
                 </li>
+                <li class="menu-item">
+                  <a href="{{url('orders')}}" class="menu-link">
+                    <div data-i18n="Account">Order Master</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="{{url('customers')}}" class="menu-link">
+                    <div data-i18n="Account">Customers</div>
+                  </a>
+                </li>
                  <li class="menu-item">
                   <a href="{{url('publishers')}}" class="menu-link">
                     <div data-i18n="Account">Publisher</div>

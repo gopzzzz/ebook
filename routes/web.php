@@ -8,7 +8,8 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\ItemController;
-
+use App\Http\Controllers\OrderMasterController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -39,6 +40,14 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('items', ItemController::class);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::resource('orders', OrderMasterController::class);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::resource('customers', CustomerController::class);
 });
 
 

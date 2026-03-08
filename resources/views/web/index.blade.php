@@ -12,33 +12,21 @@
 					</button>
 
 					<div class="main-slider pattern-overlay">
+						@foreach($banner as $banner)
 						<div class="slider-item">
 							<div class="banner-content">
-								<h2 class="banner-title">Life of the Wild</h2>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet, libero
-									ipsum enim pharetra hac. Urna commodo, lacus ut magna velit eleifend. Amet, quis
-									urna, a eu.</p>
+								<h2 class="banner-title">{{$banner->banner_title}}</h2>
+								
 								<div class="btn-wrap">
 									<a href="#" class="btn btn-outline-accent btn-accent-arrow">Read More<i
 											class="icon icon-ns-arrow-right"></i></a>
 								</div>
 							</div><!--banner-content-->
-							<img src="images/main-banner1.jpg" alt="banner" class="banner-image">
+							<img src="{{asset('banners/'.$banner->banner)}}" alt="banner" class="banner-image">
 						</div><!--slider-item-->
+						@endforeach
 
-						<div class="slider-item">
-							<div class="banner-content">
-								<h2 class="banner-title">Birds gonna be Happy</h2>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet, libero
-									ipsum enim pharetra hac. Urna commodo, lacus ut magna velit eleifend. Amet, quis
-									urna, a eu.</p>
-								<div class="btn-wrap">
-									<a href="#" class="btn btn-outline-accent btn-accent-arrow">Read More<i
-											class="icon icon-ns-arrow-right"></i></a>
-								</div>
-							</div><!--banner-content-->
-							<img src="images/main-banner2.jpg" alt="banner" class="banner-image">
-						</div><!--slider-item-->
+						
 
 					</div><!--slider-->
 
@@ -66,77 +54,23 @@
 				<div class="inner-content">
 					<div class="product-list" data-aos="fade-up">
 						<div class="grid product-grid">
+							@foreach($dod as $deals)
 							<div class="product-item">
 								<figure class="product-style">
-									<a href="product.html"><img src="images/product-item5.jpg" alt="Books" class="product-item"></a>
-									<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-										Cart</button>
+									<a href="product.html"><img src="{{asset('assets/img/items/'.$deals->image)}}" alt="Books" class="product-item"></a>
+									<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Buy Now</button>
 								</figure>
 								<figcaption>
-									<h3>Simple way of piece life</h3>
-									<span>Armor Ramsey</span>
+								<h3>{{ substr($deals->name, 0, 25) }}...</h3>
+									<span>{{$deals->author_name}}</span>
 									<div class="item-price">
-										<span class="prev-price">$ 50.00</span>$ 40.00
+										<span class="prev-price">₹ {{$deals->mrp}}</span>₹ {{$deals->amount}}
 									</div>
 								</div>
 							</figcaption>
+							@endforeach
 
-							<div class="product-item">
-								<figure class="product-style">
-									<img src="images/product-item6.jpg" alt="Books" class="product-item">
-									<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-										Cart</button>
-								</figure>
-								<figcaption>
-									<h3>Great travel at desert</h3>
-									<span>Sanchit Howdy</span>
-									<div class="item-price">
-										<span class="prev-price">$ 30.00</span>$ 38.00
-									</div>
-								</div>
-							</figcaption>
-
-							<div class="product-item">
-								<figure class="product-style">
-									<img src="images/product-item7.jpg" alt="Books" class="product-item">
-									<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-										Cart</button>
-								</figure>
-								<figcaption>
-									<h3>The lady beauty Scarlett</h3>
-									<span>Arthur Doyle</span>
-									<div class="item-price">
-										<span class="prev-price">$ 35.00</span>$ 45.00
-									</div>
-								</div>
-							</figcaption>
-
-							<div class="product-item">
-								<figure class="product-style">
-									<img src="images/product-item8.jpg" alt="Books" class="product-item">
-									<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-										Cart</button>
-								</figure>
-								<figcaption>
-									<h3>Once upon a time</h3>
-									<span>Klien Marry</span>
-									<div class="item-price">
-										<span class="prev-price">$ 25.00</span>$ 35.00
-									</div>
-								</div>
-							</figcaption>
-
-							<div class="product-item">
-								<figure class="product-style">
-									<img src="images/product-item2.jpg" alt="Books" class="product-item">
-									<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-										Cart</button>
-								</figure>
-								<figcaption>
-									<h3>Simple way of piece life</h3>
-									<span>Armor Ramsey</span>
-									<div class="item-price">$ 40.00</div>
-								</figcaption>
+							
 							</div>
 						</div><!--grid-->
 					</div>
@@ -177,66 +111,28 @@
 
 					<div class="product-list" data-aos="fade-up">
 						<div class="row">
-
+							@foreach($fastmovingProducts as $fastProduct)
 							<div class="col-md-3">
+								
 								<div class="product-item">
 									<figure class="product-style">
-										<img src="images/product-item1.jpg" alt="Books" class="product-item">
+										<a href="{{url('product/'.$fastProduct->slug)}}"><img src="{{asset('assets/img/items/'.$fastProduct->image)}}" alt="Books" class="product-item"></a>
 										<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
 											Cart</button>
 									</figure>
 									<figcaption>
-										<h3>Simple way of piece life</h3>
-										<span>Armor Ramsey</span>
-										<div class="item-price">$ 40.00</div>
+										<h3>{{ substr($fastProduct->name, 0, 15) }}...</h3>
+										<span>{{$fastProduct->author_name}}</span>
+										<div class="item-price">
+											<span class="prev-price">₹ {{$fastProduct->mrp}}</span>₹ {{$fastProduct->sr}}
+										
+										</div>
 									</figcaption>
 								</div>
 							</div>
+							@endforeach
 
-							<div class="col-md-3">
-								<div class="product-item">
-									<figure class="product-style">
-										<img src="images/product-item2.jpg" alt="Books" class="product-item">
-										<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-											Cart</button>
-									</figure>
-									<figcaption>
-										<h3>Great travel at desert</h3>
-										<span>Sanchit Howdy</span>
-										<div class="item-price">$ 38.00</div>
-									</figcaption>
-								</div>
-							</div>
-
-							<div class="col-md-3">
-								<div class="product-item">
-									<figure class="product-style">
-										<img src="images/product-item3.jpg" alt="Books" class="product-item">
-										<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-											Cart</button>
-									</figure>
-									<figcaption>
-										<h3>The lady beauty Scarlett</h3>
-										<span>Arthur Doyle</span>
-										<div class="item-price">$ 45.00</div>
-									</figcaption>
-								</div>
-							</div>
-
-							<div class="col-md-3">
-								<div class="product-item">
-									<figure class="product-style">
-										<img src="images/product-item4.jpg" alt="Books" class="product-item">
-										<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-											Cart</button>
-									</figure>
-									<figcaption>
-										<h3>Once upon a time</h3>
-										<span>Klien Marry</span>
-										<div class="item-price">$ 35.00</div>
-									</figcaption>
-								</div>
-							</div>
+							
 
 						</div><!--ft-books-slider-->
 					</div><!--grid-->

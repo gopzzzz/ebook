@@ -60,7 +60,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
  Route::get('/', [IndexController::class, 'home'])->name('index');
  Route::redirect('/index', '/');
 Route::get('/product-list', [IndexController::class, 'productlist'])->name('product-list');
-Route::get('/product', [IndexController::class, 'product'])->name('product');
+Route::get('/product/{slug}', [IndexController::class, 'product'])->name('product');
 Route::get('/aboutus', [PageController::class, 'aboutus'])->name('aboutus');
 
 

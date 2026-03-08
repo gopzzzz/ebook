@@ -78,38 +78,12 @@
 
             <!-- Layouts -->
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a href="{{url('orders')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">Layouts</div>
+                <div data-i18n="Layouts">Orders</div>
               </a>
 
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="layouts-without-menu.html" class="menu-link">
-                    <div data-i18n="Without menu">Without menu</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-without-navbar.html" class="menu-link">
-                    <div data-i18n="Without navbar">Without navbar</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-container.html" class="menu-link">
-                    <div data-i18n="Container">Container</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-fluid.html" class="menu-link">
-                    <div data-i18n="Fluid">Fluid</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-blank.html" class="menu-link">
-                    <div data-i18n="Blank">Blank</div>
-                  </a>
-                </li>
-              </ul>
+              
             </li>
 
             <li class="menu-header small text-uppercase">
@@ -131,47 +105,30 @@
                     <div data-i18n="Notifications">Items</div>
                   </a>
                 </li>
-                 <li class="menu-item">
-                  <a href="{{url('authors')}}" class="menu-link">
-                    <div data-i18n="Account">Author Creation</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="{{url('orders')}}" class="menu-link">
-                    <div data-i18n="Account">Order Master</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="{{url('customers')}}" class="menu-link">
-                    <div data-i18n="Account">Customers</div>
-                  </a>
-                </li>
-                 <li class="menu-item">
-                  <a href="{{url('publishers')}}" class="menu-link">
-                    <div data-i18n="Account">Publisher</div>
-                  </a>
-                </li>
+               
+               
+                
               </ul>
             </li>
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                <div data-i18n="Authentications">Authentications</div>
+                <div data-i18n="Authentications">Account Creation</div>
               </a>
               <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="auth-login-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">Login</div>
+               <li class="menu-item">
+                  <a href="{{url('customers')}}" class="menu-link">
+                    <div data-i18n="Account">Customers</div>
                   </a>
                 </li>
-                <li class="menu-item">
-                  <a href="auth-register-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">Register</div>
+                  <li class="menu-item">
+                  <a href="{{url('authors')}}" class="menu-link">
+                    <div data-i18n="Account">Author Creation</div>
                   </a>
                 </li>
-                <li class="menu-item">
-                  <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">Forgot Password</div>
+                 <li class="menu-item">
+                  <a href="{{url('publishers')}}" class="menu-link">
+                    <div data-i18n="Account">Publisher</div>
                   </a>
                 </li>
               </ul>

@@ -18,18 +18,7 @@
                 <label class="form-label">Name</label>
                 <input type="text" name="name" class="form-control" required>
               </div>
-              <div class="mb-3">
-                <label class="form-label">Author</label>
-                <select name="author_id" class="form-select" required>
-                  <option value="">Select Author</option> @foreach ($authors as $author) <option value="{{ $author->id }}">{{ $author->author_name }}</option> @endforeach
-                </select>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Publisher</label>
-                <select name="publisher_id" class="form-select" required>
-                  <option value="">Select Publisher</option> @foreach ($publishers as $publisher) <option value="{{ $publisher->id }}">{{ $publisher->publisher_name }}</option> @endforeach
-                </select>
-              </div>
+              
               <div class="mb-3">
                 <label class="form-label">Category</label>
                 <select name="cat_id" class="form-select" required>
@@ -50,7 +39,7 @@
               </div>
               <div class="mb-3">
                 <label class="form-label">Description</label>
-                <input type="text" name="description" class="form-control" required>
+                <textarea name="description" class="form-control" rows="4" required></textarea>
               </div>
             </div>
             <div class="modal-footer">
@@ -70,8 +59,6 @@
         <tr>
           <th>Image</th>
           <th>Name</th>
-          <th>Author Name</th>
-          <th>Publisher Name</th>
           <th>Category Name</th>
           <th>MRP</th>
           <th>Selling Price</th>
@@ -84,8 +71,7 @@
             <img src="{{ asset('assets/img/items/'.$item->image) }}" width="50" height="50" style="object-fit: cover; border-radius: 6px;">
           </td>
           <td>{{ $item->name }}</td>
-          <td>{{ $item->author->author_name ?? '-' }}</td>
-          <td>{{ $item->publisher->publisher_name ?? '-' }}</td>
+         
           <td>{{ $item->category->category_name ?? '-' }}</td>
           <td>{{ $item->mrp }}</td>
           <td>{{ $item->sr }}</td>
@@ -96,7 +82,7 @@
                 <i class="bx bx-dots-vertical-rounded"></i>
               </button>
               <div class="dropdown-menu">
-                <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#EditItemmodal" data-id="{{ $item->id }}" data-name="{{ e($item->name) }}" data-author="{{ $item->author_id }}" data-publisher="{{ $item->publisher_id }}" data-category="{{ $item->cat_id }}" data-mrp="{{ $item->mrp }}" data-sr="{{ $item->sr }}" data-image="{{ $item->image }}" data-description="{{ e($item->description) }}">
+                <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#EditItemmodal" data-id="{{ $item->id }}" data-name="{{ e($item->name) }}"  data-category="{{ $item->cat_id }}" data-mrp="{{ $item->mrp }}" data-sr="{{ $item->sr }}" data-image="{{ $item->image }}" data-description="{{ e($item->description) }}">
                   <i class="bx bx-edit-alt me-1"></i> Edit </a>
                 <a href="#" class="dropdown-item text-danger">
                   <i class="bx bx-trash me-1"></i> Delete </a>
@@ -117,14 +103,7 @@
                 <label class="form-label">Name</label>
                 <input type="text" name="name" id="editName" class="form-control" required>
               </div>
-              <div class="mb-3">
-                <label class="form-label">Author</label>
-                <select name="author_id" id="editAuthor" class="form-select" required> @foreach ($authors as $author) <option value="{{ $author->id }}">{{ $author->author_name }}</option> @endforeach </select>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Publisher</label>
-                <select name="publisher_id" id="editPublisher" class="form-select" required> @foreach ($publishers as $publisher) <option value="{{ $publisher->id }}">{{ $publisher->publisher_name }}</option> @endforeach </select>
-              </div>
+              
               <div class="mb-3">
                 <label class="form-label">Category</label>
                 <select name="cat_id" id="editCategory" class="form-select" required> @foreach ($categories as $category) <option value="{{ $category->id }}">{{ $category->category_name }}</option> @endforeach </select>
@@ -169,8 +148,8 @@
           const button = event.relatedTarget;
           form.action = `/items/${button.dataset.id}`;
           document.getElementById('editName').value = button.dataset.name;
-          document.getElementById('editAuthor').value = button.dataset.author;
-          document.getElementById('editPublisher').value = button.dataset.publisher;
+         
+          
           document.getElementById('editCategory').value = button.dataset.category;
           document.getElementById('editMrp').value = button.dataset.mrp;
           document.getElementById('editSr').value = button.dataset.sr;

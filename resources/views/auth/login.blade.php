@@ -164,7 +164,7 @@
                       type="password"
                       id="password"
                       class="form-control"
-                      name=" "
+                      name="password"
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                       aria-describedby="password"
                     />

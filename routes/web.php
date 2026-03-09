@@ -10,6 +10,7 @@ use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\OrderMasterController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ShippingAddressController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -48,6 +49,10 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('customers', CustomerController::class);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::resource('shippingaddress', ShippingAddressController::class);
 });
 
 

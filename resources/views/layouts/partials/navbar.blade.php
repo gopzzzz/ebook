@@ -105,6 +105,11 @@
                     <div data-i18n="Notifications">Items</div>
                   </a>
                 </li>
+                <li class="menu-item">
+                  <a href="{{url('shippingaddress')}}" class="menu-link">
+                    <div data-i18n="Account">Shipping Address</div>
+                  </a>
+                </li>
                
                
                 

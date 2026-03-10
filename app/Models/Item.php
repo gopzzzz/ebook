@@ -14,7 +14,8 @@ class Item extends Model
     protected $fillable = [
     'name',
     'slug',
-
+    'author_id',
+    'publisher_id',
     'cat_id',
     'mrp',
     'sr',
@@ -24,9 +25,20 @@ class Item extends Model
 
     // 🔗 Relationships
 
+    public function author()
+    {
+        return $this->belongsTo(Author::class, 'author_id');
+    }
+
+    public function publisher()
+    {
+        return $this->belongsTo(Publisher::class, 'publisher_id');
+    }
+
 
     public function category()
     {
         return $this->belongsTo(Category::class, 'cat_id');
     }
+    
 }

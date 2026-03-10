@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Item;
-
+use App\Models\Author;
+use App\Models\Publisher;
 use App\Models\Category;
 use Illuminate\Support\Str;
 
@@ -19,13 +20,15 @@ class ItemController extends Controller
 
 public function index()
 {
-    $items = Item::with([ 'category'])->get();
-    
+    $items = Item::with(['author','publisher','category'])->get();
+    $authors = Author::all();
+    $publishers = Publisher::all();
     $categories = Category::all();
 
     return view('admin.item', compact(
         'items',
-        
+        'authors',
+        'publishers',
         'categories'
     ));
 }
@@ -34,7 +37,8 @@ public function store(Request $request)
 {
     $request->validate([
         'name'         => 'required|string|max:255',
-        
+        'author_id'       => 'required|exists:authors,id',
+        'publisher_id'       => 'required|exists:publishers,id',
         'cat_id'       => 'required|exists:categories,id',
         'mrp'          => 'required|numeric',
         'sr'           => 'required|numeric',
@@ -53,7 +57,8 @@ public function store(Request $request)
     Item::create([
         'name'         => $request->name,
         'slug' => Str::slug($request->name),
-        
+        'author_id'       => $request->author_id,
+        'publisher_id'       => $request->publisher_id,
         'cat_id'       => $request->cat_id,
         'mrp'          => $request->mrp,
         'sr'           => $request->sr,
@@ -70,7 +75,8 @@ public function store(Request $request)
 
     $request->validate([
         'name'         => 'required|string|max:255',
-        
+        'author_id'       => 'required|exists:authors,id',
+        'publisher_id'       => 'required|exists:publishers,id',
         'cat_id'       => 'required|exists:categories,id',
         'mrp'          => 'required|numeric',
         'sr'           => 'required|numeric',
@@ -79,7 +85,7 @@ public function store(Request $request)
     ]);
 
     $data = $request->only([
-        'name','cat_id','mrp','sr','description'
+        'name','author_id','publisher_id','cat_id','mrp','sr','description'
     ]);
 
     $data['slug'] = Str::slug($request->name);

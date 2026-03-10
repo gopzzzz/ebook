@@ -34,7 +34,7 @@ class IndexController extends Controller
           $items=DB::table('items')
          ->leftJoin('authors', 'items.author_id', '=', 'authors.id')
          ->select('items.*','authors.author_name')
-         ->limit(4)
+        //  ->limit(4)
          ->get();
          return view('web.productlist',compact('category','items'));
     }

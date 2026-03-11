@@ -2,9 +2,25 @@
   <span class="text-muted fw-light">Home /</span> Items
 </h4>
 <!-- Bordered Table -->
-<div class="card">
-  <div class="card-header d-flex justify-content-between align-items-center">
+ <div class="card">
+<div class="card-header">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+
     <h5 class="mb-0">Items</h5>
+
+    <div class="d-flex align-items-center gap-2">
+
+      <form method="GET" action="{{ route('items.index') }}" class="d-flex gap-2">
+        <input 
+          type="text" 
+          name="search"
+          value="{{ request('search') }}"
+          class="form-control"
+          placeholder="Search item..."
+        >
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+      </form>
+</div>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter"> Add New Record </button>
     <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -104,6 +120,10 @@
           </td>
         </tr> @endforeach </tbody>
     </table>
+</div>
+    <div class="d-flex justify-content-center mt-3">
+        {{ $items->appends(request()->query())->links() }}
+    </div>
     <div class="modal fade" id="EditItemmodal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -171,8 +191,8 @@
           const button = event.relatedTarget;
           form.action = `/items/${button.dataset.id}`;
           document.getElementById('editName').value = button.dataset.name;
-          document.getElementById('editAuthor').value = button.dataset.category;
-          document.getElementById('editPublisher').value = button.dataset.category;
+          document.getElementById('editAuthor').value = button.dataset.author;
+          document.getElementById('editPublisher').value = button.dataset.publisher;
           document.getElementById('editCategory').value = button.dataset.category;
           document.getElementById('editMrp').value = button.dataset.mrp;
           document.getElementById('editSr').value = button.dataset.sr;
@@ -184,4 +204,26 @@
   </div>
 </div>
 </div>
+<style>
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.pagination li {
+    list-style: none;
+}
+
+.pagination .page-link {
+    padding: 6px 12px;
+    margin: 0 3px;
+}
+
+.pagination svg {
+    width: 16px;
+    height: 16px;
+}
+</style>
 <!--/ Bordered Table --> @endsection

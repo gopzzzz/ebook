@@ -11,6 +11,8 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\OrderMasterController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ShippingAddressController;
+use App\Http\Controllers\BannerController;
+use App\Http\Controllers\OfferController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -54,6 +56,16 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::resource('shippingaddress', ShippingAddressController::class);
 });
+
+Route::middleware('auth')->group(function () {
+    Route::resource('banners', BannerController::class);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::resource('offers', OfferController::class);
+});
+
+
 
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

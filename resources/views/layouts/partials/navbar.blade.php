@@ -110,6 +110,18 @@
                     <div data-i18n="Account">Shipping Address</div>
                   </a>
                 </li>
+
+                <li class="menu-item">
+                  <a href="{{url('banners')}}" class="menu-link">
+                    <div data-i18n="Account">Banner Creation</div>
+                  </a>
+                </li>
+
+                <li class="menu-item">
+                  <a href="{{url('offers')}}" class="menu-link">
+                    <div data-i18n="Account">Offer Creation</div>
+                  </a>
+                </li>
                
                
                 

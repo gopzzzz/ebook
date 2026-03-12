@@ -78,7 +78,7 @@
     <div class="modal fade" id="EditPublishermodal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form method="POST" id="editPublisherForm" enctype="multipart/form-data"> @csrf @method('PUT') <div class="modal-header">
+          <form method="POST" id="editPublisherForm" enctype="multipart/form-data"> @csrf @method('POST') <div class="modal-header">
               <h5 class="modal-title">Edit Publisher</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
         nameInput.value = name;
 
         // set form action
-        form.action = `/publishers/${id}`;
+        form.action = `/publishers/update/${id}`;
 
     });
 

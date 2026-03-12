@@ -60,7 +60,7 @@
     <div class="modal fade" id="Editmodal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form method="POST" id="editCategoryForm"> @csrf @method('PUT') <div class="modal-header">
+          <form method="POST" id="editCategoryForm"> @csrf @method('POST') <div class="modal-header">
               <h5 class="modal-title">Edit Category</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
@@ -88,7 +88,7 @@
           const id = button.getAttribute('data-id');
           const name = button.getAttribute('data-name');
           nameInput.value = name;
-          form.action = `/categories/${id}`;
+          form.action = `/categories/update/${id}`;
         });
       });
     </script>

@@ -127,7 +127,7 @@
     <div class="modal fade" id="EditItemmodal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
-          <form method="POST" id="editItemForm" enctype="multipart/form-data"> @csrf @method('PUT') <div class="modal-header">
+          <form method="POST" id="editItemForm" enctype="multipart/form-data"> @csrf @method('POST') <div class="modal-header">
               <h5 class="modal-title">Edit Item</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
@@ -189,7 +189,7 @@
         const form = document.getElementById('editItemForm');
         editItemModal.addEventListener('show.bs.modal', function(event) {
           const button = event.relatedTarget;
-          form.action = `/items/${button.dataset.id}`;
+          form.action = `/items/update/${button.dataset.id}`;
           document.getElementById('editName').value = button.dataset.name;
           document.getElementById('editAuthor').value = button.dataset.author;
           document.getElementById('editPublisher').value = button.dataset.publisher;

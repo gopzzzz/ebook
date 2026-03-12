@@ -22,7 +22,7 @@
               </div>
               <div class="mb-3">
                 <label class="form-label">Address</label>
-                <input type="text" name="address" class="form-control" placeholder="Enter Address">
+                <in type="text" name="address" class="form-control" placeholder="Enter Address">
               </div>
               <div class="mb-3">
                 <label class="form-label">Pincode</label>
@@ -104,7 +104,7 @@
 
       <form method="POST" id="editAddressForm">
         @csrf
-        @method('PUT')
+        @method('POST')
 
         <div class="modal-header">
           <h5 class="modal-title">Edit Shipping Address</h5>
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const button = event.relatedTarget;
 
-    form.action = `/shippingaddress/${button.dataset.id}`;
+    form.action = `/shippingaddress/update/${button.dataset.id}`;
 
     document.getElementById('editCustomer').value = button.dataset.cus;
     document.getElementById('editAddress').value = button.dataset.address;

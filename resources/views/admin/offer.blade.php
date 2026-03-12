@@ -90,7 +90,7 @@
     <div class="modal fade" id="EditOffermodal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form method="POST" id="editOfferForm"> @csrf @method('PUT') <div class="modal-header">
+          <form method="POST" id="editOfferForm"> @csrf @method('POST') <div class="modal-header">
               <h5 class="modal-title">Edit offer</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
             amountInput.value = amount ?? '';
 
             if (id) {
-                form.action = `/offers/${id}`;
+                form.action = `/offers/update/${id}`;
             }
 
         });

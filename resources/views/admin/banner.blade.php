@@ -82,7 +82,7 @@
     <div class="modal fade" id="EditBannermodal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form method="POST" id="editBannerForm" enctype="multipart/form-data"> @csrf @method('PUT') <div class="modal-header">
+          <form method="POST" id="editBannerForm" enctype="multipart/form-data"> @csrf @method('POST') <div class="modal-header">
               <h5 class="modal-title">Edit Banner</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
@@ -127,13 +127,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const banner_title = button.getAttribute('data-banner_title');
 
     // set preview image
-    preview.src = `{{ asset('uploads/banners') }}/${banner}`;
+    preview.src = banner 
+    ? `{{ asset('uploads/banners') }}/${banner}` 
+    : '';
 
     // set banner title
     titleInput.value = banner_title;
 
     // update form action
-    form.action = `/banners/${id}`;
+   form.action = "{{ url('banners/update') }}/" + id;
 
   });
 

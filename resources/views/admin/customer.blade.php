@@ -20,7 +20,7 @@
               </div>
               <div class="mb-3">
 <label class="form-label">Phone Number</label>
-<input type="text" name="phone_number" class="form-control" required>
+<input type="text" name="phone_number" class="form-control" placeholder="Enter Number" required>
 </div>
             </div>
             <div class="modal-footer">
@@ -81,7 +81,7 @@
     <div class="modal fade" id="EditCustomermodal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form method="POST" id="editCustomerForm"> @csrf @method('PUT') <div class="modal-header">
+          <form method="POST" id="editCustomerForm"> @csrf @method('POST') <div class="modal-header">
               <h5 class="modal-title">Edit Customer</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
@@ -122,7 +122,7 @@
     nameInput.value = name;
     phoneInput.value = phone;
 
-    form.action = `/customers/${id}`;
+    form.action = `/customers/update/${id}`;
 
   });
 

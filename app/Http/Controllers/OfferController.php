@@ -12,9 +12,15 @@ use App\Models\Offer;
 
 class OfferController extends Controller
 {
-     public function index()
-    {
-        $offers = Offer::all();
+     public function index(Request $request)
+{
+    $search = $request->search;
+
+    $offers = Offer::when($search, function ($query, $search) {
+            $query->where('type', 'like', "%{$search}%");
+        })
+        ->paginate(10);
+
         return view('admin.offer', compact('offers'));
     }
 

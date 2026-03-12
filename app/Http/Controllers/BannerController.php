@@ -13,9 +13,14 @@ use Illuminate\Support\Str;
 
 class BannerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
 {
-    $banners = Banner::all();
+    $search = $request->search;
+
+    $banners = Banner::when($search, function ($query, $search) {
+            $query->where('title', 'like', "%{$search}%");
+        })
+        ->paginate(10);
     return view('admin.banner', compact('banners'));
 }
     public function store(Request $request)

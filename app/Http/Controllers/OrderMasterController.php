@@ -14,9 +14,15 @@ use App\Models\Customer;
 
 class OrderMasterController extends Controller
 {
-    public function index()
+    public function index(Request $request)
 {
-    $orders = OrderMaster::all();
+    $search = $request->search;
+
+    $orders = OrderMaster::when($search, function ($query, $search) {
+            $query->where('order_no', 'like', "%{$search}%");
+        })
+        ->paginate(10);
+
     $customers = Customer::all();
 
     return view('admin.orders', compact('orders','customers'));

@@ -14,14 +14,19 @@ use App\Models\Customer;
 
 class ShippingAddressController extends Controller
 {
-    public function index()
-    {
-        $shippingaddress = ShippingAddress::all();
-        $customers = Customer::all();
+   public function index(Request $request)
+{
+    $search = $request->search;
 
-        return view('admin.shippingaddress', compact('shippingaddress','customers'));
-    }
+    $shippingaddress = ShippingAddress::when($search, function ($query, $search) {
+            $query->where('address', 'like', "%{$search}%");
+        })
+        ->paginate(10);
 
+    $customers = Customer::all();
+
+    return view('admin.shippingaddress', compact('shippingaddress','customers'));
+}
     public function store(Request $request)
     {
         $request->validate([

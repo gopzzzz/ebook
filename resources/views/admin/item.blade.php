@@ -100,7 +100,9 @@
           <td>
             <img src="{{ asset('assets/img/items/'.$item->image) }}" width="50" height="50" style="object-fit: cover; border-radius: 6px;">
           </td>
-          <td>{{ $item->name }}</td>
+          <td title="{{ $item->name }}">
+    {{ \Illuminate\Support\Str::words($item->name, 8, '...') }}
+</td>
           <td>{{ $item->category->category_name ?? '-' }}</td>
           <td>{{ $item->mrp }}</td>
           <td>{{ $item->sr }}</td>

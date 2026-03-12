@@ -12,11 +12,17 @@ use App\Models\Author;
 
 class AuthorController extends Controller
 {
-    public function index()
-    {
-        $authors = Author::all();
-        return view('admin.Author', compact('authors'));
-    }
+   public function index(Request $request)
+{
+    $search = $request->search;
+
+    $authors = Author::when($search, function ($query, $search) {
+            $query->where('author_name', 'like', "%{$search}%");
+        })
+        ->paginate(10);
+
+    return view('admin.Author', compact('authors'));
+}
 
     public function store(Request $request)
     {

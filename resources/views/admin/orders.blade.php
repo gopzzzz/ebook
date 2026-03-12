@@ -5,6 +5,19 @@
 <div class="card">
   <div class="card-header d-flex justify-content-between align-items-center">
     <h5 class="mb-0">Order Master</h5>
+    <div class="d-flex align-items-center gap-2">
+
+      <form method="GET" action="{{ route('orders.index') }}" class="d-flex gap-2">
+        <input 
+          type="text" 
+          name="search"
+          value="{{ request('search') }}"
+          class="form-control"
+          placeholder="Search item..."
+        >
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+      </form>
+</div>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter"> Add New Record </button>
     <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -84,6 +97,9 @@
             </div>
         </tr> @endforeach </tbody>
     </table>
+    <div class="d-flex justify-content-center mt-3">
+        {{ $orders->appends(request()->query())->links() }}
+    </div>
   </div>
 </div>
 </div>

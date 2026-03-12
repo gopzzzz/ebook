@@ -13,9 +13,14 @@ use Illuminate\Support\Str;
 
 class PublisherController extends Controller
 {
-    public function index()
-    {
-        $publishers = Publisher::all();
+   public function index(Request $request)
+{
+    $search = $request->search;
+
+    $publishers = Publisher::when($search, function ($query, $search) {
+            $query->where('publisher_name', 'like', "%{$search}%");
+        })
+        ->paginate(10);
         return view('admin.publisher', compact('publishers'));
     }
 

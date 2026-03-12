@@ -12,11 +12,17 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
-    public function index()
-    {
-        $categories = Category::all();
-        return view('admin.category', compact('categories'));
-    }
+    public function index(Request $request)
+{
+    $search = $request->search;
+
+    $categories = Category::when($search, function ($query, $search) {
+            $query->where('category_name', 'like', "%{$search}%");
+        })
+        ->paginate(10);
+
+    return view('admin.category', compact('categories'));
+}
 
     public function store(Request $request)
     {

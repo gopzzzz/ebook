@@ -12,9 +12,14 @@ use App\Models\Customer;
 
 class CustomerController extends Controller
 {
-     public function index()
-    {
-        $customers = Customer::all();
+     public function index(Request $request)
+{
+    $search = $request->search;
+
+    $customers = Customer::when($search, function ($query, $search) {
+            $query->where('name', 'like', "%{$search}%");
+        })
+        ->paginate(10);
         return view('admin.customer', compact('customers'));
     }
 

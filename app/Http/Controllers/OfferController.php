@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Offer;
+use App\Models\Item;
 
 class OfferController extends Controller
 {
@@ -21,7 +22,9 @@ class OfferController extends Controller
         })
         ->paginate(10);
 
-        return view('admin.offer', compact('offers'));
+        $items = Item::all();
+
+        return view('admin.offer', compact('offers','items'));
     }
 
     public function store(Request $request)

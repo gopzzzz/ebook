@@ -31,10 +31,12 @@
                 <label class="form-label">Type</label>
                 <input type="text" name="type" class="form-control" placeholder="Enter Type" required>
               </div>
-              <div class="mb-3">
-<label class="form-label">Product ID</label>
-<input type="text" name="product_id" class="form-control" required>
-</div>
+            <div class="mb-3">
+                <label class="form-label">Product</label>
+                <select name="product_id" class="form-select" required>
+                  <option value="">Select Product</option> @foreach ($items as $item) <option value="{{ $item->id }}">{{ $item->name }}</option> @endforeach
+                </select>
+              </div>
 
  <div class="mb-3">
 <label class="form-label">Amount</label>
@@ -57,7 +59,7 @@
       <thead>
         <tr>
           <th>Type</th>
-          <th>Product ID</th>
+          <th>Product</th>
           <th>Amount</th>
           <th>Actions</th>
         </tr>
@@ -67,8 +69,9 @@
 <tr>
   <td>
     {{ $offer->type }}</td>
-   <td> {{ $offer->product_id }}
-  </td>
+   <td title="{{ $offer->item->name ?? '-' }}">
+{{ \Illuminate\Support\Str::words($offer->item->name ?? '-', 10, '...') }}
+</td>
   <td> {{ $offer->amount }}
   </td>
 
@@ -116,9 +119,15 @@
                 <input type="text" name="type" id="editOfferType" class="form-control" required>
               </div>
               <div class="mb-3">
-                <label class="form-label"> Product ID</label>
-                <input type="text" name="product_id" id="editProductid" class="form-control" required>
-              </div>
+            <label class="form-label">Product</label>
+            <select name="product_id" id="editProductid" class="form-select">
+              @foreach ($items as $item)
+              <option value="{{ $item->id }}">
+                {{ $item->name }}
+              </option>
+              @endforeach
+            </select>
+          </div>
 
               <div class="mb-3">
                 <label class="form-label"> Amount</label>

@@ -11,4 +11,9 @@ class Offer extends Model
         'product_id',
         'amount',
     ];
+
+     public function item()
+{
+    return $this->belongsTo(Item::class, 'product_id');
+}
 }

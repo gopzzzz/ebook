@@ -13,6 +13,8 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ShippingAddressController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\OfferController;
+use App\Http\Controllers\AdController;
+use App\Http\Controllers\CompanyProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -81,7 +83,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/offers/edit/{id}', [OfferController::class, 'edit'])->name('offers.edit');
     Route::post('/offers/update/{id}', [OfferController::class, 'update'])->name('offers.update');
     Route::post('/offers/delete/{id}', [OfferController::class, 'destroy'])->name('offers.destroy');
-
+    Route::get('/ads', [AdController::class,'index'])->name('ads.index');
+    Route::post('/ads/store', [AdController::class,'store'])->name('ads.store');
+    Route::post('/ads/update/{id}', [AdController::class,'update'])->name('ads.update');
+    Route::post('/ads/delete/{id}', [AdController::class,'destroy'])->name('ads.destroy');
+    Route::get('/profiles', [CompanyProfileController::class, 'index'])->name('profiles.index');
+    Route::get('/profiles/create', [CompanyProfileController::class, 'create'])->name('profiles.create');
+    Route::post('/profiles/store', [CompanyProfileController::class, 'store'])->name('profiles.store');
+    Route::get('/profiles/edit/{id}', [CompanyProfileController::class, 'edit'])->name('profiles.edit');
+    Route::post('/profiles/update/{id}', [CompanyProfileController::class, 'update'])->name('profiles.update');
+    Route::post('/profiles/delete/{id}', [CompanyProfileController::class, 'destroy'])->name('profiles.destroy');
 });
 
 

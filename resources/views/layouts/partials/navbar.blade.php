@@ -122,6 +122,18 @@
                     <div data-i18n="Account">Offer Creation</div>
                   </a>
                 </li>
+
+                <li class="menu-item">
+                  <a href="{{url('ads')}}" class="menu-link">
+                    <div data-i18n="Account">Ad Creation</div>
+                  </a>
+                </li>
+
+                <li class="menu-item">
+                  <a href="{{url('profiles')}}" class="menu-link">
+                    <div data-i18n="Account">Profile Creation</div>
+                  </a>
+                </li>
                
                
                 

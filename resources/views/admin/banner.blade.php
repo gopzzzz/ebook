@@ -60,8 +60,8 @@
 @foreach ($banners as $banner)
 <tr>
   <td>
-            <img src="{{ asset('uploads/banners/'.$banner->banner) }}" width="50" height="50" style="object-fit: cover; border-radius: 6px;">
-          </td>
+    <img src="{{ asset('uploads/banners/'.$banner->banner) }}" width="50" height="50" style="object-fit: cover; border-radius: 6px;">
+  </td>
    <td> {{ $banner->banner_title }}
   </td>
 

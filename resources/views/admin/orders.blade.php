@@ -68,6 +68,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th>SL No.</th>
           <th>Order ID</th>
           <th>Customer</th>
           <th>Total</th>
@@ -78,6 +79,7 @@
         </tr>
       </thead>
       <tbody> @foreach($orders as $order) <tr>
+        <td>{{ $orders->firstItem() + $loop->index }}</td>
           <td>{{ $order->order_id }}</td>
           <td>{{ $order->customer->name ?? '-' }}</td>
           <td>{{ $order->total_amount }}</td>

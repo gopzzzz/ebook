@@ -87,6 +87,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th>SL No.</th>
           <th>Image</th>
           <th>Name</th>
           <th>Category Name</th>
@@ -97,6 +98,7 @@
         </tr>
       </thead>
       <tbody> @foreach ($items as $item) <tr>
+        <td>{{ $items->firstItem() + $loop->index }}</td>
           <td>
             <img src="{{ asset('assets/img/items/'.$item->image) }}" width="50" height="50" style="object-fit: cover; border-radius: 6px;">
           </td>

@@ -47,11 +47,13 @@
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th>SL No.</th>
           <th>Category</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody> @foreach ($categories as $category) <tr>
+        <td>{{ $categories->firstItem() + $loop->index }}</td>
           <td>
             {{ $category->category_name }}
           </td>

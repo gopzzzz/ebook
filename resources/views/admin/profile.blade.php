@@ -108,6 +108,7 @@
 
       <thead>
         <tr>
+          <th>SL No.</th>
           <th>Logo</th>
           <th>Name</th>
           <th>Phone</th>
@@ -120,7 +121,7 @@
       <tbody>
         @foreach ($profiles as $profile)
         <tr>
-
+          <td>{{ $profiles->firstItem() + $loop->index }}</td>
           <td>
             <img src="{{ asset('uploads/profile/'.$profile->logo) }}" width="50" height="50" style="object-fit:cover;border-radius:6px;">
           </td>

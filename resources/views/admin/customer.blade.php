@@ -51,6 +51,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th>SL No.</th>
           <th>Name</th>
           <th>Phone Number</th>
           <th>Actions</th>
@@ -59,6 +60,7 @@
       <tbody>
 @foreach ($customers as $customer)
 <tr>
+  <td>{{ $customers->firstItem() + $loop->index }}</td>
   <td>
     {{ $customer->name }}</td>
    <td> {{ $customer->phone_number }}

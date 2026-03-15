@@ -60,6 +60,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th>SL No.</th>
           <th>Name</th>
           <th>Image</th>
           <th>Amount</th>
@@ -70,6 +71,7 @@
         </tr>
       </thead>
       <tbody> @foreach ($ads as $ad) <tr>
+        <td>{{ $ads->firstItem() + $loop->index }}</td>
           <td>{{ $ad->name }}</td>
           <td>
             <img src="{{ asset('uploads/ads/'.$ad->image) }}" width="50" height="50" style="object-fit: cover; border-radius: 6px;">

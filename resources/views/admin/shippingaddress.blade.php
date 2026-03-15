@@ -64,7 +64,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          
+          <th>SL No.</th>
           <th>Customer</th>
           <th>Address</th>
           <th>Pincode</th>
@@ -76,7 +76,7 @@
       <tbody>
 @foreach($shippingaddress as $address)
 <tr>
-
+<td>{{ $shippingaddress->firstItem() + $loop->index }}</td>
 <td>{{ $address->customer->name ?? '-' }}</td>
 <td>{{ $address->address }}</td>
 <td>{{ $address->pincode }}</td>

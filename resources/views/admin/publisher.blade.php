@@ -60,13 +60,14 @@
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th>SL No.</th>
           <th>Publisher Logo</th>
           <th>Publisher</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody> @foreach ($publishers as $publisher) <tr>
-
+          <td>{{ $publishers->firstItem() + $loop->index }}</td>
           <td>
             <img src="{{ asset('uploads/publisher_logo/'.$publisher->publisher_logo) }}" width="50" height="50" style="object-fit: cover; border-radius: 6px;">
           </td>

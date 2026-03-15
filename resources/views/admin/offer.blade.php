@@ -58,6 +58,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th>SL No.</th>
           <th>Type</th>
           <th>Product</th>
           <th>Amount</th>
@@ -67,6 +68,7 @@
       <tbody>
 @foreach ($offers as $offer)
 <tr>
+  <td>{{ $offers->firstItem() + $loop->index }}</td>
   <td>
     {{ $offer->type }}</td>
    <td title="{{ $offer->item->name ?? '-' }}">

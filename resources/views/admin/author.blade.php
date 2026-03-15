@@ -47,11 +47,13 @@
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th>SL No.</th>
           <th>Author Name</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody> @foreach ($authors as $author) <tr>
+        <td>{{ $authors->firstItem() + $loop->index }}</td>
           <td>
             {{ $author->author_name }}
           </td>

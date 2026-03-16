@@ -4,3 +4,69 @@
 		crossorigin="anonymous"></script>
 	<script src="{{asset('web/js/plugins.js')}}"></script>
 	<script src="{{asset('web/js/script.js')}}"></script>
+
+	
+<script>
+$(document).ready(function(){
+
+    $("#confirm_password").keyup(function(){
+
+        var pass = $("#password").val();
+        var cpass = $("#confirm_password").val();
+
+        if(pass != cpass){
+            $("#pass_error").text("Passwords do not match");
+        }else{
+            $("#pass_error").text("");
+        }
+
+    });
+
+$('.add-to-cart').on('click', function () {
+
+    var id = $(this).data('id');
+
+    if (id) {
+        $.ajax({
+            type: "POST",
+            url: "{{ route('add-to-cart') }}",
+            data: {
+                _token: "{{ csrf_token() }}",
+                id: id
+            },
+            success: function (res) {
+
+                console.log(res);
+
+                if (res.status == 0) {
+                    // alert('Product added to cart');
+                    $('#carts').text(res.count); // update cart number
+                } 
+                else if (res.status == 1) {
+                    window.location.href = "{{ url('userlogin') }}";
+                }
+
+            },
+            error: function () {
+                alert('Something went wrong');
+            }
+        });
+    }
+
+});
+});
+</script>
+
+<script>
+$("form").submit(function(){
+
+    var pass = $("#password").val();
+    var cpass = $("#confirm_password").val();
+
+    if(pass != cpass){
+        alert("Passwords do not match");
+        return false;
+    }
+
+});
+</script>

@@ -5,6 +5,19 @@
 <div class="card">
   <div class="card-header d-flex justify-content-between align-items-center">
     <h5 class="mb-0">Shipping Address</h5>
+    <div class="d-flex align-items-center gap-2">
+
+      <form method="GET" action="{{ route('shippingaddress.index') }}" class="d-flex gap-2">
+        <input 
+          type="text" 
+          name="search"
+          value="{{ request('search') }}"
+          class="form-control"
+          placeholder="Search item..."
+        >
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+      </form>
+</div>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter"> Add New Record </button>
     <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -22,7 +35,7 @@
               </div>
               <div class="mb-3">
                 <label class="form-label">Address</label>
-                <input type="text" name="address" class="form-control" placeholder="Enter Address">
+                <in type="text" name="address" class="form-control" placeholder="Enter Address">
               </div>
               <div class="mb-3">
                 <label class="form-label">Pincode</label>
@@ -51,7 +64,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          
+          <th>SL No.</th>
           <th>Customer</th>
           <th>Address</th>
           <th>Pincode</th>
@@ -63,7 +76,7 @@
       <tbody>
 @foreach($shippingaddress as $address)
 <tr>
-
+<td>{{ $shippingaddress->firstItem() + $loop->index }}</td>
 <td>{{ $address->customer->name ?? '-' }}</td>
 <td>{{ $address->address }}</td>
 <td>{{ $address->pincode }}</td>
@@ -98,13 +111,16 @@
           </td>
         </tr> @endforeach </tbody>
     </table>
+    <div class="d-flex justify-content-center mt-3">
+        {{ $shippingaddress->appends(request()->query())->links() }}
+    </div>
    <div class="modal fade" id="EditAddressModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
 
       <form method="POST" id="editAddressForm">
         @csrf
-        @method('PUT')
+        @method('POST')
 
         <div class="modal-header">
           <h5 class="modal-title">Edit Shipping Address</h5>
@@ -168,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const button = event.relatedTarget;
 
-    form.action = `/shippingaddress/${button.dataset.id}`;
+    form.action = `/shippingaddress/update/${button.dataset.id}`;
 
     document.getElementById('editCustomer').value = button.dataset.cus;
     document.getElementById('editAddress').value = button.dataset.address;

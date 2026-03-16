@@ -21,10 +21,16 @@
 					</div>
 					<div class="col-md-6">
 						<div class="right-element">
-							<a href="#" class="user-account for-buy"><i
-									class="icon icon-user"></i></a>
-							<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>:0
+							@if(Auth::check())
+							<i class="icon icon-user"></i><span> {{ Auth::user()->name }}</span>
+							<a href="{{url('cart')}}"  class="cart for-buy"><i class="icon icon-clipboard"></i><span id="carts">:{{ $cartCount }}
 							</span></a>
+							@else
+<a href="{{url('userlogin')}}" class="user-account for-buy"><i
+									class="icon icon-user"></i></a>
+
+
+							@endif
 
 							<div class="action-menu">
 
@@ -52,7 +58,8 @@
 
 					<div class="col-md-2">
 						<div class="main-logo">
-							<a href="{{url('index')}}"><img src="images/main-logo.png" alt="logo"></a>
+							<a href="{{url('index')}}"><img src="{{asset('uploads/profile/aron.png')}}" alt="logo"></a>
+							 <!-- <h2>Aron</h2> -->
 						</div>
 
 					</div>

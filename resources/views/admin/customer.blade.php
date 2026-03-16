@@ -5,6 +5,19 @@
 <div class="card">
   <div class="card-header d-flex justify-content-between align-items-center">
     <h5 class="mb-0">Customer</h5>
+    <div class="d-flex align-items-center gap-2">
+
+      <form method="GET" action="{{ route('customers.index') }}" class="d-flex gap-2">
+        <input 
+          type="text" 
+          name="search"
+          value="{{ request('search') }}"
+          class="form-control"
+          placeholder="Search item..."
+        >
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+      </form>
+</div>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter"> Add New Record </button>
     <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -20,7 +33,7 @@
               </div>
               <div class="mb-3">
 <label class="form-label">Phone Number</label>
-<input type="text" name="phone_number" class="form-control" required>
+<input type="text" name="phone_number" class="form-control" placeholder="Enter Number" required>
 </div>
             </div>
             <div class="modal-footer">
@@ -38,6 +51,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th>SL No.</th>
           <th>Name</th>
           <th>Phone Number</th>
           <th>Actions</th>
@@ -46,6 +60,7 @@
       <tbody>
 @foreach ($customers as $customer)
 <tr>
+  <td>{{ $customers->firstItem() + $loop->index }}</td>
   <td>
     {{ $customer->name }}</td>
    <td> {{ $customer->phone_number }}
@@ -78,10 +93,13 @@
 @endforeach
 </tbody>
     </table>
+    <div class="d-flex justify-content-center mt-3">
+        {{ $customers->appends(request()->query())->links() }}
+    </div>
     <div class="modal fade" id="EditCustomermodal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form method="POST" id="editCustomerForm"> @csrf @method('PUT') <div class="modal-header">
+          <form method="POST" id="editCustomerForm"> @csrf @method('POST') <div class="modal-header">
               <h5 class="modal-title">Edit Customer</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
@@ -122,7 +140,7 @@
     nameInput.value = name;
     phoneInput.value = phone;
 
-    form.action = `/customers/${id}`;
+    form.action = `/customers/update/${id}`;
 
   });
 

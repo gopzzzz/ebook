@@ -5,6 +5,19 @@
 <div class="card">
   <div class="card-header d-flex justify-content-between align-items-center">
     <h5 class="mb-0">Category</h5>
+    <div class="d-flex align-items-center gap-2">
+
+      <form method="GET" action="{{ route('categories.index') }}" class="d-flex gap-2">
+        <input 
+          type="text" 
+          name="search"
+          value="{{ request('search') }}"
+          class="form-control"
+          placeholder="Search item..."
+        >
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+      </form>
+</div>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter"> Add New Record </button>
     <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -34,11 +47,13 @@
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th>SL No.</th>
           <th>Category</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody> @foreach ($categories as $category) <tr>
+        <td>{{ $categories->firstItem() + $loop->index }}</td>
           <td>
             {{ $category->category_name }}
           </td>
@@ -57,10 +72,13 @@
           </td>
         </tr> @endforeach </tbody>
     </table>
+    <div class="d-flex justify-content-center mt-3">
+        {{ $categories->appends(request()->query())->links() }}
+    </div>
     <div class="modal fade" id="Editmodal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form method="POST" id="editCategoryForm"> @csrf @method('PUT') <div class="modal-header">
+          <form method="POST" id="editCategoryForm"> @csrf @method('POST') <div class="modal-header">
               <h5 class="modal-title">Edit Category</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
@@ -88,7 +106,7 @@
           const id = button.getAttribute('data-id');
           const name = button.getAttribute('data-name');
           nameInput.value = name;
-          form.action = `/categories/${id}`;
+          form.action = `/categories/update/${id}`;
         });
       });
     </script>

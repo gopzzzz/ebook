@@ -30,10 +30,12 @@
 									<p>{{$product->description}}</p>
 									<div class="item-price"><span class="prev-price">₹ {{$product->mrp}}</span>₹ {{$product->sr}}
 										</div>
-									<div class="btn-wrap">
+									<!-- <div class="btn-wrap">
 										<a href="#" class="btn-accent-arrow">shop it now <i
 												class="icon icon-ns-arrow-right"></i></a>
-									</div>
+									</div> -->
+									<button type="button" class="add-to-cart" data-id="{{$product->id}}" data-product-tile="add-to-cart">Add to
+												Cart</button>
 								</div>
 
 							</div>

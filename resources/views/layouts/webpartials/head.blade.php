@@ -8,6 +8,8 @@
 	<meta name="author" content="">
 	<meta name="keywords" content="">
 	<meta name="description" content="">
+	
+	<link rel="icon" type="image/png" href="{{asset('uploads/profile/aron.png')}}">
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">

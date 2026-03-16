@@ -18,9 +18,16 @@ use Illuminate\Support\Str;
 class ItemController extends Controller
 {
 
-public function index()
+public function index(Request $request)
 {
-    $items = Item::with(['author','publisher','category'])->get();
+    $search = $request->search;
+
+    $items = Item::with(['author','publisher','category'])
+        ->when($search, function ($query, $search) {
+            $query->where('name', 'like', "%{$search}%");
+        })
+        ->paginate(10);
+
     $authors = Author::all();
     $publishers = Publisher::all();
     $categories = Category::all();
@@ -29,7 +36,8 @@ public function index()
         'items',
         'authors',
         'publishers',
-        'categories'
+        'categories',
+        'search'
     ));
 }
 

@@ -35,7 +35,7 @@
               </div>
               <div class="mb-3">
                 <label class="form-label">Address</label>
-                <in type="text" name="address" class="form-control" placeholder="Enter Address">
+                <input type="text" name="address" class="form-control" placeholder="Enter Address">
               </div>
               <div class="mb-3">
                 <label class="form-label">Pincode</label>

@@ -55,7 +55,7 @@ class AdController extends Controller
     $ad = Ad::findOrFail($id);
 
     $request->validate([
-        'image' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         'name' => 'required|string|max:255',
         'amount' => 'required|numeric',
         'link' => 'nullable|string|max:255',
@@ -74,7 +74,8 @@ class AdController extends Controller
     if ($request->hasFile('image')) {
 
         if ($ad->image && file_exists(public_path('uploads/ads/'.$ad->image))) {
-            unlink(public_path('uploads/ads/'.$ad->image));
+    unlink(public_path('uploads/ads/'.$ad->image));
+
         }
 
         $imageName = Str::uuid().'.'.$request->image->extension();

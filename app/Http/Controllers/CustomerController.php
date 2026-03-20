@@ -11,6 +11,7 @@ use Illuminate\View\View;
 use App\Models\Customer;
 use App\Models\User;
 use DB;
+
 use Hash;
 use Illuminate\Database\QueryException;
 
@@ -132,5 +133,10 @@ class CustomerController extends Controller
     }
 
     return back()->with('error','Invalid email or password');
+    }
+    public function userprofile(){
+          $userId = Auth::id();
+        $orders=DB::table('order_masters')->where('cus_id',$userId)->orderBy('id', 'desc')->get();
+        return view('web.profile',compact('orders'));
     }
 }

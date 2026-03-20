@@ -18,10 +18,12 @@ class OrderMasterController extends Controller
 {
     $search = $request->search;
 
-    $orders = OrderMaster::when($search, function ($query, $search) {
-            $query->where('order_no', 'like', "%{$search}%");
-        })
-        ->paginate(10);
+$orders = OrderMaster::leftJoin('customers', 'order_masters.cus_id', '=', 'customers.user_id')
+    ->when($search, function ($query, $search) {
+        $query->where('order_masters.order_no', 'like', "%{$search}%");
+    })
+    ->select('order_masters.*', 'customers.name as customer_name')
+    ->paginate(10);
 
     $customers = Customer::all();
 

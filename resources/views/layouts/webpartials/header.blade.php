@@ -22,7 +22,7 @@
 					<div class="col-md-6">
 						<div class="right-element">
 							@if(Auth::check())
-							<i class="icon icon-user"></i><span> {{ Auth::user()->name }}</span>
+							<a href="{{url('userprofile')}}"><i class="icon icon-user"></i><span> {{ Auth::user()->name }}</span></a>
 							<a href="{{url('cart')}}"  class="cart for-buy"><i class="icon icon-clipboard"></i><span id="carts">:{{ $cartCount }}
 							</span></a>
 							@else

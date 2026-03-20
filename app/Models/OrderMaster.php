@@ -9,6 +9,7 @@ class OrderMaster extends Model
     protected $table = 'order_masters';
 
     protected $fillable = [
+        'id',
         'order_id',
         'cus_id',
         'total_amount',

@@ -105,16 +105,25 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 //web Routes//
 
 
- Route::get('/', [IndexController::class, 'home'])->name('index');
- Route::redirect('/index', '/');
+Route::get('/', [IndexController::class, 'home'])->name('index');
+Route::redirect('/index', '/');
 Route::get('/product-list', [IndexController::class, 'productlist'])->name('product-list');
 Route::get('/product/{slug}', [IndexController::class, 'product'])->name('product');
 Route::get('/aboutus', [PageController::class, 'aboutus'])->name('aboutus');
 
 Route::middleware('customer')->group(function () {
-
 Route::get('/cart', [OrderController::class, 'cart'])->name('cart');
+Route::get('/shipping_details', [OrderController::class, 'shipping_details'])->name('shipping_details');
+Route::post('/addshippingaddress', [OrderController::class, 'addshippingaddress'])->name('addshippingaddress');
+Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+Route::get('/success', [OrderController::class, 'success'])->name('success');
+Route::get('/userprofile', [CustomerController::class, 'userprofile'])->name('userprofile');
+Route::post('/changeqty', [OrderController::class, 'changeqty'])->name('changeqty');
+Route::get('/orderview/{id}', [OrderController::class, 'orderview'])->name('orderview');
+
 });
+
+
 Route::post('/add-to-cart', [OrderController::class, 'addtocart'])->name('add-to-cart');
 Route::get('/userlogin', [CustomerController::class, 'login'])->name('userlogin');
 Route::get('/user_registration', [CustomerController::class, 'user_registration'])->name('user_registration');

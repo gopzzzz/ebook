@@ -119,7 +119,7 @@ color:#f0c14b;
 
 <div class="cart-header">
     <h2>Shopping Cart</h2>
-    <a href="#" class="checkout-btn">PROCEED TO CHECKOUT</a>
+    <a href="{{url('shipping_details')}}" class="checkout-btn">CONTINUE -></a>
 </div>
 
    @if($cartItems->count() > 0)
@@ -129,7 +129,7 @@ color:#f0c14b;
       @endphp
             @foreach($cartItems as $item)
 
-<div class="cart-item">
+<div class="cart-item" id="cart-item_{{$item->product_id}}">
 
 <div class="cart-img">
 <img src="{{asset('assets/img/items/'.$item->image)}}">
@@ -145,13 +145,13 @@ color:#f0c14b;
 
 
 <div class="qty-box">
-<button class="qty-btn">-</button>
-<span>1</span>
-<button class="qty-btn">+</button>
+<button class="qty-btn btn-increment" data-id="{{$item->product_id}}" data-vid="2">-</button>
+<span id="qty_{{$item->product_id}}">{{$item->qty}}</span>
+<button class="qty-btn btn-increment" data-id="{{$item->product_id}}" data-vid="1">+</button>
 </div>
 
 <div class="links">
-<a href="#">Delete</a> 
+<a href="#" class="btn-increment" data-id="{{$item->product_id}}" data-vid="3">Delete</a> 
 
 </div>
 
@@ -167,8 +167,8 @@ color:#f0c14b;
 
 @php 
 
-$sum=$sum+$item->sr;
-$mrp=$mrp+$item->mrp;
+$sum=$sum+($item->sr * $item->qty);
+$mrp=$mrp+($item->mrp * $item->qty);
 
 
 @endphp
@@ -179,9 +179,10 @@ $mrp=$mrp+$item->mrp;
 
 <div class="subtotal">
     
-    Subtotal ({{$cartCount}} item): <b>₹ {{$mrp}}</b><br>
-Discount : <b>₹ {{$mrp - $sum}}</b> <br>
-Grand Total : <b>₹ {{$sum}}</b>
+    Subtotal ({{$cartCount}} item): <b id="subtotal">₹ {{$mrp}}</b><br>
+Discount : <b id="discount">₹ {{$mrp - $sum}}</b> <br>
+Shipping Charge : <b>₹ 60</b> <br>
+Grand Total : <b id="grandtotal">₹ {{$sum + 60}}</b>
 </div>
 
  @else

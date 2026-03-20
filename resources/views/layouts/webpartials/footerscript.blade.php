@@ -41,6 +41,7 @@ $('.add-to-cart').on('click', function () {
                 if (res.status == 0) {
                     // alert('Product added to cart');
                     $('#carts').text(res.count); // update cart number
+                   
                 } 
                 else if (res.status == 1) {
                     window.location.href = "{{ url('userlogin') }}";
@@ -54,6 +55,50 @@ $('.add-to-cart').on('click', function () {
     }
 
 });
+
+$('.btn-increment').on('click', function () {
+
+    var id = $(this).data('id');
+    var vid = $(this).data('vid');
+
+    if (id) {
+        $.ajax({
+            type: "POST",
+            url: "{{ route('changeqty') }}",
+            data: {
+                _token: "{{ csrf_token() }}",
+                id: id,
+                vid: vid
+            },
+            success: function (res) {
+
+                console.log(res);
+
+                if (res.status == 0) {
+
+                    // ✅ update individual qty
+                    $('#qty_' + id).text(res.count);
+                    $('#subtotal').text(res.subtotal);
+                    $('#discount').text(res.discount);
+                    $('#grandtotal').text(res.grandtotal + 60 );
+
+                     if(res.qty == 0){
+                        $('#cart-item_'+id).empty();
+                    }
+
+
+                } else if (res.status == 1) {
+                    window.location.href = "{{ url('userlogin') }}";
+                }
+
+            },
+            error: function () {
+                alert('Something went wrong');
+            }
+        });
+    }
+});
+
 });
 </script>
 

@@ -166,6 +166,12 @@ public function addshippingaddress(Request $request){
         $shipping->state = $request->state;
         $shipping->save();
 
+       DB::table('customers')
+    ->where('user_id', Auth::user()->id)
+    ->update([
+        'ship_id' => $shipping->id
+    ]);
+
         return redirect('shipping_details');
 
         // return response()->json([

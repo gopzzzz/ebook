@@ -12,17 +12,23 @@ use App\Models\Profile;
 
 class CompanyProfileController extends Controller
 {
-    public function index(Request $request)
-    {
-        $profiles = Profile::paginate(10);
+   public function index()
+{
+    $profile = Profile::first();
 
-        return view('admin.profile', compact('profiles'));
+    if (!$profile) {
+        $profile = Profile::create([
+            'name' => 'Aron Books'
+        ]);
     }
+
+    return view('admin.profile', compact('profile'));
+}
 
     public function store(Request $request)
     {
         $request->validate([
-            'logo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'logo' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
             'name' => 'required',
             'description' => 'nullable',
             'facebook_link' => 'nullable',
@@ -61,7 +67,7 @@ class CompanyProfileController extends Controller
         $profile = Profile::findOrFail($id);
 
         $request->validate([
-            'logo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'logo' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
             'name' => 'required'
         ]);
 

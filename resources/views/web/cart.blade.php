@@ -180,8 +180,9 @@ $mrp=$mrp+($item->mrp * $item->qty);
 <div class="subtotal">
     
     Subtotal ({{$cartCount}} item): <b id="subtotal">₹ {{$mrp}}</b><br>
+    Shipping Charge : <b>₹ 60</b> <br>
 Discount : <b id="discount">₹ {{$mrp - $sum}}</b> <br>
-Shipping Charge : <b>₹ 60</b> <br>
+
 Grand Total : <b id="grandtotal">₹ {{$sum + 60}}</b>
 </div>
 

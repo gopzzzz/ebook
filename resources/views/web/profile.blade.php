@@ -170,7 +170,7 @@
                 </div>
 
                 <div>
-                    <a href="{{ route('orderview', $order->id) }}" class="view-btn">
+                    <a href="{{ route('orderview', $order->id) }}" class="view-btn" target="_blank">
                         View Details
                     </a>
                 </div>

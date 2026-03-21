@@ -84,7 +84,7 @@ class CustomerController extends Controller
 
     DB::commit();
 
-    return redirect('login')->with('success','User registered successfully');
+    return redirect('userlogin')->with('success','User registered successfully');
 
 } catch (QueryException $e) {
 

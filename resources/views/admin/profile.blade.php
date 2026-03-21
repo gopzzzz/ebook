@@ -2,24 +2,84 @@
 
 @section('content')
 
+<style>
+.profile-card {
+    background: #fff;
+    border-radius: 16px; /* smoother */
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    transition: 0.3s;
+    height: 100%;
+}
+
+.profile-card:hover {
+    transform: translateY(-6px);
+}
+
+.profile-cover {
+    height: 150px;
+    background: linear-gradient(135deg, #4e73df, #224abe);
+}
+
+.profile-img {
+    margin-top: -60px; /* better overlap */
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.profile-img img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 5px solid #fff;
+    object-fit: cover;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.profile-body {
+    padding: 20px 20px;
+}
+
+.profile-body p {
+    word-break: break-word;
+    margin-bottom: 8px;
+}
+
+.profile-body a {
+    color: #4e73df;
+    text-decoration: none;
+}
+
+.profile-body a:hover {
+    text-decoration: underline;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+.card-header {
+    padding: 12px 15px;
+}
+</style>
+
 <h4 class="fw-bold py-3 mb-4">
   <span class="text-muted fw-light">Home /</span> Profiles
 </h4>
 
-<div class="card">
-  <div class="card-header d-flex justify-content-between align-items-center">
-    <h5 class="mb-0">Profiles</h5>
+<div class="card mb-4">
+   
 
-    <div class="d-flex align-items-center gap-2">
+    <!-- <div class="d-flex align-items-center gap-2">
       <form method="GET" action="{{ route('profiles.index') }}" class="d-flex gap-2">
         <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Search profile...">
         <button type="submit" class="btn btn-outline-primary">Search</button>
       </form>
-    </div>
+    </div> -->
 
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createProfileModal">
+    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createProfileModal">
       Add New Record
-    </button>
+    </button> -->
 
     {{-- CREATE PROFILE MODAL --}}
     <div class="modal fade" id="createProfileModal" tabindex="-1">
@@ -102,87 +162,84 @@
 </div>
 
 
-<div class="card-body">
-  <div class="table-responsive text-nowrap">
-    <table class="table table-bordered">
 
-      <thead>
-        <tr>
-          <th>SL No.</th>
-          <th>Logo</th>
-          <th>Name</th>
-          <th>Phone</th>
-          <th>Email</th>
-          <th>Address</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
+    <div class="row justify-content-center">
 
-      <tbody>
-        @foreach ($profiles as $profile)
-        <tr>
-          <td>{{ $profiles->firstItem() + $loop->index }}</td>
-          <td>
-            <img src="{{ asset('uploads/profile/'.$profile->logo) }}" width="50" height="50" style="object-fit:cover;border-radius:6px;">
-          </td>
+@if ($profile)
 
-          <td>{{ $profile->name }}</td>
-          <td>{{ $profile->phone_number }}</td>
-          <td>{{ $profile->email }}</td>
-          <td>{{ $profile->address }}</td>
+<div class="col-md-8 col-lg-6">
+    <div class="profile-card">
 
-          <td>
-            <div class="dropdown position-static">
-              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                <i class="bx bx-dots-vertical-rounded"></i>
-              </button>
+        <div class="profile-cover"></div>
 
-              <div class="dropdown-menu">
+        <div class="profile-img">
+            <img src="{{ $profile->logo ? asset('uploads/profile/'.$profile->logo) : 'https://via.placeholder.com/100' }}" alt="Profile">
+        </div>
 
-                <a href="#" class="dropdown-item"
-                data-bs-toggle="modal"
-                data-bs-target="#EditProfileModal"
-
-                data-id="{{ $profile->id }}"
-                data-logo="{{ $profile->logo }}"
-                data-name="{{ $profile->name }}"
-                data-phone="{{ $profile->phone_number }}"
-                data-email="{{ $profile->email }}"
-                data-address="{{ $profile->address }}"
-                data-description="{{ $profile->description }}"
-                data-facebook="{{ $profile->facebook_link }}"
-                data-youtube="{{ $profile->youtube_link }}"
-                data-insta="{{ $profile->insta_link }}"
-                data-twitter="{{ $profile->twitter_link }}"
-                >
-
-                <i class="bx bx-edit-alt me-1"></i> Edit
-                </a>
-
-                <a class="dropdown-item text-danger" href="#">
-          <i class="bx bx-trash me-1"></i> Delete
-        </a>
-
-              </div>
+        <div class="profile-body">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold mb-1">{{ $profile->name }}</h3>
+                @if($profile->description)
+                    <p class="text-muted mb-0">{{ $profile->description }}</p>
+                @endif
             </div>
-          </td>
 
-        </tr>
-        @endforeach
-      </tbody>
+            <div class="px-4 mt-3 text-start">
+    <p><strong>Email:</strong> {{ $profile->email ?: '-' }}</p>
+    <p><strong>Phone:</strong> {{ $profile->phone_number ?: '-' }}</p>
+    <p><strong>Address:</strong> {{ $profile->address ?: '-' }}</p>
 
-    </table>
+    <p><strong>Facebook:</strong> 
+        <a href="{{ $profile->facebook_link }}" target="_blank">{{ $profile->facebook_link }}</a>
+    </p>
 
-    <div class="d-flex justify-content-center mt-3">
-      {{ $profiles->appends(request()->query())->links() }}
+    <p><strong>YouTube:</strong> 
+        <a href="{{ $profile->youtube_link }}" target="_blank">{{ $profile->youtube_link }}</a>
+    </p>
+
+    <p><strong>Instagram:</strong> 
+        <a href="{{ $profile->insta_link }}" target="_blank">{{ $profile->insta_link }}</a>
+    </p>
+
+    <p><strong>Twitter:</strong> 
+        <a href="{{ $profile->twitter_link }}" target="_blank">{{ $profile->twitter_link }}</a>
+    </p>
+</div>
+
+            <div class="d-flex justify-content-center gap-2 mt-4">
+                <button class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#EditProfileModal"
+                    data-id="{{ $profile->id }}"
+                    data-logo="{{ $profile->logo }}"
+                    data-name="{{ $profile->name }}"
+                    data-phone="{{ $profile->phone_number }}"
+                    data-email="{{ $profile->email }}"
+                    data-address="{{ $profile->address }}"
+                    data-description="{{ $profile->description }}"
+                    data-facebook="{{ $profile->facebook_link }}"
+                    data-youtube="{{ $profile->youtube_link }}"
+                    data-insta="{{ $profile->insta_link }}"
+                    data-twitter="{{ $profile->twitter_link }}">
+                    Edit Profile
+                </button>
+            </div>
+        </div>
+
     </div>
+</div>
+
+@endif
+
+</div>
+
     <div class="modal fade" id="EditProfileModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
 
       <form method="POST" id="editProfileForm" enctype="multipart/form-data">
         @csrf
-        @method('POST')
+        
 
         <div class="modal-header">
           <h5 class="modal-title">Edit Profile</h5>
@@ -316,8 +373,5 @@ form.action = "{{ url('profiles/update') }}/" + id;
 });
 
 </script>
-
-</div>
-</div>
 
 @endsection

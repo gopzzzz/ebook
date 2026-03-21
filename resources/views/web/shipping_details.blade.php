@@ -99,7 +99,7 @@
 }
 </style>
 
-<form class="mb-3" action="{{ route('checkout') }}" method="POST">
+<form class="mb-3" action="{{ route('checkout') }}" method="POST" id="checkout">
 @csrf
 
 <div class="cart-container row">
@@ -111,6 +111,7 @@
             <h2>Shupping Address</h2>
         </div>
 
+      
         @foreach($cusAddress as $shipping)
         <div class="cart-item">
             <div class="cart-product">
@@ -192,10 +193,11 @@
         @else
             <div class="empty-cart">Cart is empty</div>
         @endif
-
-        <button type="submit" class="checkout-btn">
-            PROCEED TO CHECKOUT ->
-        </button>
+      @if($cusAddress->isNotEmpty())
+    <button type="submit" class="checkout-btn">
+        PROCEED TO CHECKOUT ->
+    </button>
+@endif
 
     </div>
 
@@ -240,5 +242,19 @@
 <script>
 $('input[type="radio"]').on('change', function () {
     $('input[type="radio"]').not(this).prop('checked', false);
+});
+</script>
+<script>
+$(document).ready(function () {
+
+    $('#checkout').on('submit', function (e) {
+
+        if (!$('input[name="shipping_id"]:checked').val()) {
+            e.preventDefault();
+            alert('Please select a shipping address');
+        }
+
+    });
+
 });
 </script>

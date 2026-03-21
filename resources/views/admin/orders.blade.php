@@ -64,45 +64,108 @@
     </div>
   </div>
 <div class="card-body">
-  <div class="table-responsive text-nowrap">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>SL No.</th>
-          <th>Order ID</th>
-          <th>Customer</th>
-          <th>Total</th>
-          <th>Shipping</th>
-          <th>Discount</th>
-          <th>Address id</th>
-          <td>Actions</td>
-        </tr>
-      </thead>
-      <tbody> @foreach($orders as $order) <tr>
-        <td>{{ $orders->firstItem() + $loop->index }}</td>
-          <td>{{ $order->order_id }}</td>
-          <td>{{ $order->customer->name ?? '-' }}</td>
-          <td>{{ $order->total_amount }}</td>
-          <td>{{ $order->shipping_charge }}</td>
-          <td>{{ $order->discount }}</td>
-          <td>{{ $order->address_id }}</td>
-          <div class="dropdown position-static">
-              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                <i class="bx bx-dots-vertical-rounded"></i>
-              </button>
-              <div class="dropdown-menu">
-                <a href="#" class="dropdown-item">
-                  <i class="bx bx-edit-alt me-1"></i> Edit </a>
-                <a class="dropdown-item" href="#">
-                  <i class="bx bx-trash me-1"></i> Delete </a>
-              </div>
-            </div>
-        </tr> @endforeach </tbody>
-    </table>
-    <div class="d-flex justify-content-center mt-3">
-        {{ $orders->appends(request()->query())->links() }}
+    <div class="table-responsive text-nowrap">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>SL No.</th>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Total</th>
+                    <th>Shipping</th>
+                    <th>Discount</th>
+                    <th>Address ID</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($orders as $order)
+                    <tr>
+                        <td>{{ $orders->firstItem() + $loop->index }}</td>
+                        <td>{{ $order->order_id }}</td>
+                        <td>{{ $order->customer->name ?? '-' }}</td>
+                        <td>{{ $order->total_amount }}</td>
+                        <td>{{ $order->shipping_charge }}</td>
+                        <td>{{ $order->discount }}</td>
+                        <td>{{ $order->address_id }}</td>
+                        <td>
+                            {{ [0 => 'Pending', 1 => 'Confirmed', 2 => 'Shipped', 3 => 'Delivered'][$order->order_status] ?? 'Unknown' }}
+                        </td>
+                        <td>
+                            <div class="dropdown position-static">
+                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a href="#"
+                                       class="dropdown-item editStatusBtn"
+                                       data-bs-toggle="modal"
+                                       data-bs-target="#editStatusModal"
+                                       data-id="{{ $order->id }}"
+                                       data-status="{{ $order->order_status }}">
+                                        <i class="bx bx-edit-alt me-1"></i> Update Status
+                                    </a>
+
+                                    <a class="dropdown-item text-danger" href="#">
+                                        <i class="bx bx-trash me-1"></i> Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-center mt-3">
+            {{ $orders->appends(request()->query())->links() }}
+        </div>
+        <div class="modal fade" id="editStatusModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="POST" id="editStatusForm">
+                @csrf
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Order Status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="order_status" class="form-label">Order Status</label>
+                        <select name="order_status" id="order_status" class="form-control" required>
+                            <option value="0">Pending</option>
+                            <option value="1">Confirmed</option>
+                            <option value="2">Shipped</option>
+                            <option value="3">Delivered</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update Status</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
     </div>
-  </div>
+</div>
+    </div>
+    <script>
+    document.querySelectorAll('.editStatusBtn').forEach(button => {
+        button.addEventListener('click', function () {
+            let orderId = this.getAttribute('data-id');
+            let status = this.getAttribute('data-status');
+
+            console.log('Order ID:', orderId);
+
+            document.getElementById('order_status').value = status;
+            document.getElementById('editStatusForm').action = `/orders/status/${orderId}`;
+        });
+    });
+</script>
 </div>
 </div>
 <!--/ Bordered Table --> @endsection

@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/orders/edit/{id}', [OrderMasterController::class, 'edit'])->name('orders.edit');
     Route::post('/orders/update/{id}', [OrderMasterController::class, 'update'])->name('orders.update');
     Route::post('/orders/delete/{id}', [OrderMasterController::class, 'destroy'])->name('orders.destroy');
+    Route::post('/orders/status/{id}', [OrderMasterController::class, 'updateStatus'])->name('orders.updateStatus');
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
     Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
     Route::post('/customers/store', [CustomerController::class, 'store'])->name('customers.store');

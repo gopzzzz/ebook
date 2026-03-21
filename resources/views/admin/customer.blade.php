@@ -32,9 +32,23 @@
                 <input type="text" name="name" class="form-control" placeholder="Enter Name" required>
               </div>
               <div class="mb-3">
-<label class="form-label">Phone Number</label>
-<input type="text" name="phone_number" class="form-control" placeholder="Enter Number" required>
-</div>
+              <label class="form-label">Address</label>
+              <input type="text" name="address" class="form-control" placeholder="Enter Address">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Pincode</label>
+              <input type="text" name="pincode" class="form-control" placeholder="Enter Pincode">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">District</label>
+              <input type="text" name="district" class="form-control" placeholder="Enter District">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">State</label>
+              <input type="text" name="state" class="form-control" placeholder="Enter State">
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"> Close </button>
@@ -53,7 +67,7 @@
         <tr>
           <th>SL No.</th>
           <th>Name</th>
-          <th>Phone Number</th>
+          <th>Shipping address </th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -63,8 +77,7 @@
   <td>{{ $customers->firstItem() + $loop->index }}</td>
   <td>
     {{ $customer->name }}</td>
-   <td> {{ $customer->phone_number }}
-  </td>
+   <td>{{ $customer->shipping_address ?? '-' }}</td>
 
   <td>
     <div class="dropdown position-static">
@@ -79,7 +92,7 @@
            data-bs-target="#EditCustomermodal"
            data-id="{{ $customer->id }}"
            data-name="{{ $customer->name }}"
-           data-phone="{{ $customer->phone_number }}">
+           data-shipping-address="{{ $customer->shipping_address }}">
           <i class="bx bx-edit-alt me-1"></i> Edit
         </a>
 
@@ -109,10 +122,9 @@
                 <input type="text" name="name" id="editCustomerName" class="form-control" required>
               </div>
               <div class="mb-3">
-                <label class="form-label"> Phone Number</label>
-                <input type="text" name="phone_number" id="editPhoneNumber" class="form-control" required>
+                <label class="form-label">Shipping Address</label>
+                <input type="text" name="shipping_address" id="editShippingAddress" class="form-control">
               </div>
-            </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"> Close </button>
               <button type="submit" class="btn btn-primary"> Update </button>
@@ -127,7 +139,7 @@
   const editCustomerModal = document.getElementById('EditCustomermodal');
   const form = document.getElementById('editCustomerForm');
   const nameInput = document.getElementById('editCustomerName');
-  const phoneInput = document.getElementById('editPhoneNumber');
+  const shippingInput = document.getElementById('editShippingAddress');
 
   editCustomerModal.addEventListener('show.bs.modal', function(event) {
 
@@ -135,10 +147,10 @@
 
     const id = button.getAttribute('data-id');
     const name = button.getAttribute('data-name');
-    const phone = button.getAttribute('data-phone');
+   const shippingAddress = button.getAttribute('data-shipping-address');
 
     nameInput.value = name;
-    phoneInput.value = phone;
+   shippingInput.value = shippingAddress ?? '';
 
     form.action = `/customers/update/${id}`;
 

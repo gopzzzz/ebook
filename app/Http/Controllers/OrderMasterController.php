@@ -51,6 +51,19 @@ class OrderMasterController extends Controller
         return redirect()->back()->with('success', 'Order created successfully');
     }
 
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'order_status' => 'required|in:0,1,2,3',
+        ]);
+
+        $order = OrderMaster::findOrFail($id);
+        $order->order_status = $request->order_status;
+        $order->save();
+
+        return redirect()->back()->with('success', 'Order status updated successfully');
+    }
+
 
     
 }

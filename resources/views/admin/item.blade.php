@@ -57,6 +57,8 @@
               <h5 class="modal-title">Items</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
+
+        
             <div class="modal-body">
                 
                  <div class="mb-3">
@@ -66,6 +68,13 @@
                 </select>
               </div>
              
+              <div class="mb-3">
+              <label class="form-label">Item Type</label>
+              <select name="item_type" class="form-control" required>
+                <option value="1">New Sale</option>
+                <option value="2">Second Sale</option>
+              </select>
+  </div>
               <div class="mb-3">
                 <label class="form-label">Name</label>
                 <input type="text" name="name" class="form-control" required>
@@ -125,6 +134,7 @@
         <tr>
           <th>SL No.</th>
           <th>Image</th>
+          <th>Item Type</th>
           <th>Name</th>
           <th>Category Name</th>
           <th>MRP</th>
@@ -138,6 +148,8 @@
           <td>
             <img src="{{ asset('public/assets/img/items/'.$item->image) }}" width="50" height="50" style="object-fit: cover; border-radius: 6px;">
           </td>
+          <td>
+    {{ $item->item_type == 1 ? 'New sale' : 'Second sale' }}</td>
           <td>{{ substr($item->name, 0, 25) }}...</td>
           <td>{{ $item->category->category_name ?? '-' }}</td>
           <td>{{ $item->mrp }}</td>
@@ -175,6 +187,13 @@
                 <label class="form-label">Item Type</label>
                 <select name="item_type" class="form-select" required id="edititemtype">
                   <option value="1">New Sale </option> <option value="2">Second Sale</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Item Type</label>
+                <select name="item_type" id="editItemType" class="form-control" required>
+                  <option value="1">New sale</option>
+                  <option value="2">Second sale</option>
                 </select>
               </div>
               <div class="mb-3">
@@ -228,6 +247,7 @@
         </div>
       </div>
     </div>
+<<<<<<< HEAD
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         const editItemModal = document.getElementById('EditItemmodal');
@@ -247,6 +267,29 @@
         });
       });
     </script>
+=======
+   <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const editItemModal = document.getElementById('EditItemmodal');
+    const form = document.getElementById('editItemForm');
+
+    editItemModal.addEventListener('show.bs.modal', function(event) {
+      const button = event.relatedTarget;
+
+      form.action = `/items/update/${button.dataset.id}`;
+      document.getElementById('editItemType').value = button.dataset.item_type;
+      document.getElementById('editName').value = button.dataset.name;
+      document.getElementById('editAuthor').value = button.dataset.author;
+      document.getElementById('editPublisher').value = button.dataset.publisher;
+      document.getElementById('editCategory').value = button.dataset.category;
+      document.getElementById('editMrp').value = button.dataset.mrp;
+      document.getElementById('editSr').value = button.dataset.sr;
+      document.getElementById('editImagePreview').src = `/assets/img/items/${button.dataset.image}`;
+      document.getElementById('editDescription').value = button.dataset.description ?? '';
+    });
+  });
+</script>
+>>>>>>> fa958f4ce4125d3ac27e97483a62c283559aa76a
   </div>
 </div>
 </div>

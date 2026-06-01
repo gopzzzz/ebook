@@ -6,10 +6,8 @@
 
 					<div class="footer-item">
 						<div class="company-brand">
-							<img src="{{asset('uploads/profile/aron.png')}}" alt="logo" class="footer-logo">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sagittis sed ptibus liberolectus
-								nonet psryroin. Amet sed lorem posuere sit iaculis amet, ac urna. Adipiscing fames
-								semper erat ac in suspendisse iaculis.</p>
+							<img src="{{asset('public/uploads/profile/'.$app_profile->logo)}}" alt="logo" class="footer-logo">
+							<p>{{$app_profile->description}}</p>
 						</div>
 					</div>
 
@@ -18,23 +16,21 @@
 				<div class="col-md-2">
 
 					<div class="footer-menu">
-						<h5>About Us</h5>
+						<h5>Pages</h5>
 						<ul class="menu-list">
 							<li class="menu-item">
-								<a href="#">vision</a>
+								<a href="{{url('product-list')}}">Products</a>
 							</li>
 							<li class="menu-item">
-								<a href="#">articles </a>
+								<a href="{{url('aboutus')}}">About Us</a>
 							</li>
 							<li class="menu-item">
-								<a href="#">careers</a>
+								<a href="#">Team</a>
 							</li>
 							<li class="menu-item">
-								<a href="#">service terms</a>
+								<a href="#">Contact Us</a>
 							</li>
-							<li class="menu-item">
-								<a href="#">donate</a>
-							</li>
+						
 						</ul>
 					</div>
 
@@ -42,23 +38,18 @@
 				<div class="col-md-2">
 
 					<div class="footer-menu">
-						<h5>Discover</h5>
+						<h5>Privacy & Terms</h5>
 						<ul class="menu-list">
 							<li class="menu-item">
-								<a href="#">Home</a>
+								<a href="{{url('privacy')}}" target="_blank">Privacy</a>
 							</li>
 							<li class="menu-item">
-								<a href="#">Books</a>
+								<a href="{{url('term-conditions')}}" target="_blank">Terms & Conditions</a>
 							</li>
 							<li class="menu-item">
-								<a href="#">Authors</a>
+								<a href="{{url('refund')}}" target="_blank">Refund Policy</a>
 							</li>
-							<li class="menu-item">
-								<a href="#">Subjects</a>
-							</li>
-							<li class="menu-item">
-								<a href="#">Advanced Search</a>
-							</li>
+						
 						</ul>
 					</div>
 
@@ -69,16 +60,16 @@
 						<h5>My account</h5>
 						<ul class="menu-list">
 							<li class="menu-item">
-								<a href="#">Sign In</a>
+								<a href="{{url('userlogin')}}">Sign In</a>
 							</li>
 							<li class="menu-item">
-								<a href="#">View Cart</a>
+								<a href="{{url('cart')}}">View Cart</a>
 							</li>
 							<li class="menu-item">
-								<a href="#">My Wishtlist</a>
+								<a href="{{url('userprofile')}}">Profile</a>
 							</li>
 							<li class="menu-item">
-								<a href="#">Track My Order</a>
+								<a href="{{url('userprofile')}}">Track My Order</a>
 							</li>
 						</ul>
 					</div>
@@ -90,17 +81,15 @@
 						<h5>Help</h5>
 						<ul class="menu-list">
 							<li class="menu-item">
-								<a href="#">Help center</a>
+								<a href="#">{{$app_profile->address}}</a>
 							</li>
 							<li class="menu-item">
-								<a href="#">Report a problem</a>
+								<a href="#">+91 {{$app_profile->phone_number}}</a>
 							</li>
 							<li class="menu-item">
-								<a href="#">Suggesting edits</a>
+								<a href="#">{{$app_profile->email}}</a>
 							</li>
-							<li class="menu-item">
-								<a href="#">Contact us</a>
-							</li>
+							
 						</ul>
 					</div>
 
@@ -129,16 +118,16 @@
 								<div class="social-links align-right">
 									<ul>
 										<li>
-											<a href="#"><i class="icon icon-facebook"></i></a>
+											<a href="{{$app_profile->facebook_link}}" target="_blank"><i class="icon icon-facebook"></i></a>
 										</li>
 										<li>
-											<a href="#"><i class="icon icon-twitter"></i></a>
+											<a href="{{$app_profile->twitter_link}}" target="_blank"><i class="icon icon-twitter"></i></a>
 										</li>
 										<li>
-											<a href="#"><i class="icon icon-youtube-play"></i></a>
+											<a href="{{$app_profile->youtube_link}}" target="_blank"><i class="icon icon-youtube-play"></i></a>
 										</li>
 										<li>
-											<a href="#"><i class="icon icon-behance-square"></i></a>
+											<a href="{{$app_profile->insta_link}}" target="_blank"><i class="icon icon-behance-square"></i></a>
 										</li>
 									</ul>
 								</div>

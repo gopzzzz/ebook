@@ -1,101 +1,130 @@
 @extends('layouts.weblayout')
 
 @section('content')
-<section id="billboard">
+<style>
+#mainCarousel {
+    width: 100vw;
+}
 
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
+/* Fix inner items */
+.carousel-inner,
+.carousel-item {
+    width: 100%;
+}
 
-					<button class="prev slick-arrow">
-						<i class="icon icon-arrow-left"></i>
-					</button>
+/* Image styling */
+.carousel-item img {
+    width: 100%;
+    height: 450px; /* adjust as needed */
+    object-fit: cover;
+}
+.carousel-control-prev,
+.carousel-control-next {
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+}
 
-					<div class="main-slider pattern-overlay">
-						@foreach($banner as $banner)
-						<div class="slider-item">
-							<div class="banner-content">
-								<h2 class="banner-title">{{$banner->banner_title}}</h2>
-								
-								<div class="btn-wrap">
-									<a href="#" class="btn btn-outline-accent btn-accent-arrow">Read More<i
-											class="icon icon-ns-arrow-right"></i></a>
-								</div>
-							</div><!--banner-content-->
-							<img src="{{asset('banners/'.$banner->banner)}}" alt="banner" class="banner-image">
-						</div><!--slider-item-->
-						@endforeach
+/* Optional: make arrows more visible */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-size: 100% 100%;
+    width: 40px;
+    height: 40px;
+}
+</style>
 
-						
+<!-- FULL WIDTH CAROUSEL -->
+<div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
 
-					</div><!--slider-->
+    <!-- Indicators -->
+    <div class="carousel-indicators">
+        @foreach($banner as $index => $bk)
+            <button type="button"
+                data-bs-target="#mainCarousel"
+                data-bs-slide-to="{{ $index }}"
+                class="{{ $index == 0 ? 'active' : '' }}"
+                aria-current="{{ $index == 0 ? 'true' : '' }}">
+            </button>
+        @endforeach
+    </div>
 
-					<button class="next slick-arrow">
-						<i class="icon icon-arrow-right"></i>
-					</button>
+    <!-- Slides -->
+    <div class="carousel-inner">
+        @foreach($banner as $index => $banners)
+            <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                <img src="{{ asset('public/uploads/banners/'.$banners->banner) }}" alt="Banner {{ $index+1 }}">
+            </div>
+        @endforeach
+    </div>
 
-				</div>
-			</div>
-		</div>
+    <!-- Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
 
-	</section>
+    <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
 
-	<section id="special-offer" class="bookshelf pb-5 mb-5">
+</div>
 
-		<div class="section-header align-center">
-			<div class="title">
-				<span>Grab your opportunity</span>
-			</div>
-			<h2 class="section-title">Deal Of the Day</h2>
-		</div>
+	<!--<section id="special-offer" class="bookshelf pb-5 mb-5">-->
 
-		<div class="container">
-			<div class="row">
-				<div class="inner-content">
-					<div class="product-list" data-aos="fade-up">
-						<div class="grid product-grid">
-							@foreach($dod as $deals)
-							<div class="product-item">
-								<figure class="product-style">
-									<a href="product.html"><img src="{{asset('assets/img/items/'.$deals->image)}}" alt="Books" class="product-item"></a>
-									<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Buy Now</button>
-								</figure>
-								<figcaption>
-								<h3>{{ substr($deals->name, 0, 25) }}...</h3>
-									<span>{{$deals->author_name}}</span>
-									<div class="item-price">
-										<span class="prev-price">₹ {{$deals->mrp}}</span>₹ {{$deals->amount}}
-									</div>
-								</div>
-							</figcaption>
-							@endforeach
+	<!--	<div class="section-header align-center">-->
+	<!--		<div class="title">-->
+	<!--			<span>Grab your opportunity</span>-->
+	<!--		</div>-->
+	<!--		<h2 class="section-title">Deal Of the Day</h2>-->
+	<!--	</div>-->
+
+	<!--	<div class="container">-->
+	<!--		<div class="row">-->
+	<!--			<div class="inner-content">-->
+	<!--				<div class="product-list" data-aos="fade-up">-->
+	<!--					<div class="grid product-grid">-->
+	<!--						@foreach($dod as $deals)-->
+	<!--						<div class="product-item">-->
+	<!--							<figure class="product-style">-->
+	<!--								<a href="product.html"><img src="{{asset('assets/img/items/'.$deals->image)}}" alt="Books" class="product-item"></a>-->
+	<!--								<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Buy Now</button>-->
+	<!--							</figure>-->
+	<!--							<figcaption>-->
+	<!--							<h3>{{ substr($deals->name, 0, 25) }}...</h3>-->
+	<!--								<span>{{$deals->author_name}}</span>-->
+	<!--								<div class="item-price">-->
+	<!--									<span class="prev-price">₹ {{$deals->mrp}}</span>₹ {{$deals->amount}}-->
+	<!--								</div>-->
+	<!--							</div>-->
+	<!--						</figcaption>-->
+	<!--						@endforeach-->
 
 							
-							</div>
-						</div><!--grid-->
-					</div>
-				</div><!--inner-content-->
-			</div>
-		</div>
-	</section>
+	<!--						</div>-->
+	<!--					</div><!--grid-->
+	<!--				</div>-->
+	<!--			</div><!--inner-content-->
+	<!--		</div>-->
+	<!--	</div>-->
+	<!--</section>-->
 
-	<section id="client-holder" data-aos="fade-up">
-		<div class="container">
-			<div class="row">
-				<div class="inner-content">
-					<div class="logo-wrap">
-						<div class="grid">
-							<a href="#"><img src="images/client-image1.png" alt="client"></a>
-							<a href="#"><img src="images/client-image2.png" alt="client"></a>
-							<a href="#"><img src="images/client-image3.png" alt="client"></a>
-							<a href="#"><img src="images/client-image4.png" alt="client"></a>
-							<a href="#"><img src="images/client-image5.png" alt="client"></a>
-						</div>
-					</div><!--image-holder-->
-				</div>
-			</div>
-		</div>
-	</section>
+	<!--<section id="client-holder" data-aos="fade-up">-->
+	<!--	<div class="container">-->
+	<!--		<div class="row">-->
+	<!--			<div class="inner-content">-->
+	<!--				<div class="logo-wrap">-->
+	<!--					<div class="grid">-->
+	<!--						<a href="#"><img src="images/client-image1.png" alt="client"></a>-->
+	<!--						<a href="#"><img src="images/client-image2.png" alt="client"></a>-->
+	<!--						<a href="#"><img src="images/client-image3.png" alt="client"></a>-->
+	<!--						<a href="#"><img src="images/client-image4.png" alt="client"></a>-->
+	<!--						<a href="#"><img src="images/client-image5.png" alt="client"></a>-->
+	<!--					</div>-->
+	<!--				</div><!--image-holder-->
+	<!--			</div>-->
+	<!--		</div>-->
+	<!--	</div>-->
+	<!--</section>-->
 
 	<section id="featured-books" class="py-5 my-5">
 		<div class="container">
@@ -111,27 +140,56 @@
 
 					<div class="product-list" data-aos="fade-up">
 						<div class="row">
-							@foreach($fastmovingProducts as $fastProduct)
-							<div class="col-md-3">
-								
-								<div class="product-item">
-									<figure class="product-style">
-										<a href="{{url('product/'.$fastProduct->slug)}}"><img src="{{asset('assets/img/items/'.$fastProduct->image)}}" alt="Books" class="product-item"></a>
-										<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-											Cart</button>
-									</figure>
-									<figcaption>
-										<h3>{{ substr($fastProduct->name, 0, 15) }}...</h3>
-										<span>{{$fastProduct->author_name}}</span>
-										<div class="item-price">
-											<span class="prev-price">₹ {{$fastProduct->mrp}}</span>₹ {{$fastProduct->sr}}
-										
-										</div>
-									</figcaption>
-								</div>
-							</div>
-							@endforeach
+					@foreach($fastmovingProducts as $productList)
+<div class="col-6 col-md-3">
+    <div class="product-item">
+        <figure class="product-style">
+            
+            <a href="{{ url('product/'.$productList->slug) }}">
+                <img src="{{ asset('public/assets/img/items/'.$productList->image) }}" 
+                     alt="Books" 
+                     class="product-item">
+            </a>
 
+            @php
+                $inCart = in_array($productList->id, $cartProductIds);
+            @endphp
+
+            @if($inCart)
+                <a href="{{ url('cart') }}">
+                    <button type="button" 
+                            class="add-to-cart btn btn-primary" 
+                            data-id="{{ $productList->id }}">
+                        <span class="btn-text">Go To Cart</span>
+                        <span class="btn-loader d-none">
+                            <i class="fa fa-spinner fa-spin"></i> Loading...
+                        </span>
+                    </button>
+                </a>
+            @else
+                <button type="button" 
+                        class="add-to-cart btn btn-primary" 
+                        data-id="{{ $productList->id }}">
+                    <span class="btn-text">Add to Cart</span>
+                    <span class="btn-loader d-none">
+                        <i class="fa fa-spinner fa-spin"></i> Loading...
+                    </span>
+                </button>
+            @endif
+
+        </figure>
+
+        <figcaption>
+            <h3>{{ Str::limit($productList->name, 20) }}</h3>
+            <div class="item-price">
+                <span class="prev-price">₹ {{ $productList->mrp }}</span> 
+                ₹ {{ $productList->sr }}
+            </div>
+        </figcaption>
+
+    </div>
+</div>
+@endforeach
 							
 
 						</div><!--ft-books-slider-->
@@ -145,7 +203,7 @@
 				<div class="col-md-12">
 
 					<div class="btn-wrap align-right">
-						<a href="#" class="btn-accent-arrow">View all products <i
+						<a href="{{url('product-list')}}" class="btn-accent-arrow">View all products <i
 								class="icon icon-ns-arrow-right"></i></a>
 					</div>
 

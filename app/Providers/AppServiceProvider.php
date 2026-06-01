@@ -41,16 +41,18 @@ class AppServiceProvider extends ServiceProvider
                  ->select('carts.*','items.name','items.image','items.mrp','items.sr')
                 ->get();
 
-                $cusAddress=ShippingAddress::where('cus_id', Auth::id())
-                 ->leftJoin('customers', 'shipping_address.cus_id', '=', 'customers.user_id')
+                $cusAddress=ShippingAddress::where('shipping_address.cus_id', Auth::id())
+                 ->leftJoin('customers', 'shipping_address.cus_id', '=', 'customers.id')
                  ->select('shipping_address.*','customers.ship_id')
                 ->get();
 
                 $profile=DB::table('customers')->where('user_id',Auth::id())->first();
 
         }
+        $app_profile=DB::table('profiles')->first();
+        $cartProductIds = collect($cartItems)->pluck('product_id')->toArray();
 
-        $view->with(compact('cartItems','cartCount','cusAddress','profile'));
+        $view->with(compact('cartItems','cartCount','cusAddress','profile','app_profile','cartProductIds'));
     });
 }
 }

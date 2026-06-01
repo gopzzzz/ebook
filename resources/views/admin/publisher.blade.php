@@ -33,7 +33,7 @@
 <div class="modal-body">
 
     <div class="mb-3">
-        <label class="form-label">Publisher Logo</label>
+        <label class="form-label">Publisher Logo (262 * 250 )</label>
         <input type="file" name="publisher_logo" id="publisher_logo" class="form-control" accept=".png,.jpg,.jpeg" required>
     </div>
 
@@ -69,7 +69,7 @@
       <tbody> @foreach ($publishers as $publisher) <tr>
           <td>{{ $publishers->firstItem() + $loop->index }}</td>
           <td>
-            <img src="{{ asset('uploads/publisher_logo/'.$publisher->publisher_logo) }}" width="50" height="50" style="object-fit: cover; border-radius: 6px;">
+            <img src="{{ asset('public/uploads/publisher_logo/'.$publisher->publisher_logo) }}"  style="object-fit: cover; border-radius: 6px;">
           </td>
           <td>
             {{ $publisher->publisher_name }}

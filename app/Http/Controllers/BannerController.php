@@ -14,8 +14,10 @@ use Illuminate\Support\Facades\File;
 
 class BannerController extends Controller
 {
-    public function index(Request $request)
+    public function banners(Request $request)
     {
+        
+         
         $search = $request->search;
 
         $banners = Banner::when($search, function ($query, $search) {
@@ -53,10 +55,12 @@ class BannerController extends Controller
 
     public function update(Request $request, $id)
     {
+           try {
+
         $banner = Banner::findOrFail($id);
 
         $request->validate([
-            'banner' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
+            'banner' => 'nullable|image|mimes:png,jpg,jpeg',
             'banner_title' => 'required|string|max:255'
         ]);
 
@@ -66,18 +70,39 @@ class BannerController extends Controller
 
         if ($request->hasFile('banner')) {
 
-            if ($banner->banner && File::exists(public_path('uploads/banners/'.$banner->banner))) {
-                File::delete(public_path('uploads/banners/'.$banner->banner));
+            if (
+                $banner->banner &&
+                File::exists(public_path('uploads/banners/' . $banner->banner))
+            ) {
+                File::delete(public_path('uploads/banners/' . $banner->banner));
             }
 
-            $bannerName = Str::uuid().'.'.$request->banner->extension();
-            $request->banner->move(public_path('uploads/banners'), $bannerName);
+            $bannerName = Str::uuid() . '.' . $request->banner->extension();
+
+            $request->banner->move(
+                public_path('uploads/banners'),
+                $bannerName
+            );
 
             $data['banner'] = $bannerName;
         }
 
         $banner->update($data);
 
-        return redirect()->back()->with('success','Banner updated successfully');
+        return redirect()->back()
+            ->with('success', 'Banner updated successfully');
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+
+        return redirect()->back()
+            ->withErrors($e->validator)
+            ->withInput();
+
+    } catch (Exception $e) {
+
+        return redirect()->back()
+            ->with('error', 'Something went wrong: ' . $e->getMessage())
+            ->withInput();
+    }
     }
 }

@@ -13,6 +13,8 @@ use App\Models\Author;
 use App\Models\Publisher;
 use App\Models\Category;
 use Illuminate\Support\Str;
+use DB;
+use Log;
 
 
 class ItemController extends Controller
@@ -26,6 +28,7 @@ public function index(Request $request)
         ->when($search, function ($query, $search) {
             $query->where('name', 'like', "%{$search}%");
         })
+       ->orderBy('items.id', 'desc')
         ->paginate(10);
 
     $authors = Author::all();
@@ -45,6 +48,7 @@ public function store(Request $request)
 {
     $request->validate([
         'name'         => 'required|string|max:255',
+        'item_type'    => 'required',
         'author_id'       => 'required|exists:authors,id',
         'publisher_id'       => 'required|exists:publishers,id',
         'cat_id'       => 'required|exists:categories,id',
@@ -60,10 +64,20 @@ public function store(Request $request)
     public_path('assets/img/items'),
     $imageName
 );
+    
+   $items = DB::table('items')->orderBy('id', 'desc')->first();
 
+if ($items) {
+    $itemcode = $items->pro_code + 1;
+} else {
+    $itemcode = 10001;
+}
+    
     // ✅ SAVE ITEM
     Item::create([
         'name'         => $request->name,
+        'item_type'    =>$request->itemtype,
+        'pro_code'     =>$itemcode,
         'slug' => Str::slug($request->name),
         'author_id'       => $request->author_id,
         'publisher_id'       => $request->publisher_id,
@@ -79,21 +93,24 @@ public function store(Request $request)
 
  public function update(Request $request, $id)
 {
+  try {
+
     $item = Item::findOrFail($id);
 
     $request->validate([
         'name'         => 'required|string|max:255',
-        'author_id'       => 'required|exists:authors,id',
-        'publisher_id'       => 'required|exists:publishers,id',
+        'item_type'    => 'required',
+        'author_id'    => 'required|exists:authors,id',
+        'publisher_id' => 'required|exists:publishers,id',
         'cat_id'       => 'required|exists:categories,id',
         'mrp'          => 'required|numeric',
         'sr'           => 'required|numeric',
-        'image'        => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
+        'image'        => 'nullable|image|mimes:png,jpg,jpeg',
         'description'  => 'nullable|string',
     ]);
 
     $data = $request->only([
-        'name','author_id','publisher_id','cat_id','mrp','sr','description'
+        'name','item_type','author_id','publisher_id','cat_id','mrp','sr','description'
     ]);
 
     $data['slug'] = Str::slug($request->name);
@@ -114,5 +131,19 @@ public function store(Request $request)
     $item->update($data);
 
     return redirect()->back()->with('success', 'Item updated successfully');
+
+} catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+
+    return redirect()->back()->with('error', 'Item not found');
+
+} catch (\Exception $e) {
+
+    // Log error for debugging
+    Log::error('Item Update Error: '.$e->getMessage());
+    
+   // dd($e->getMessage());exit;
+
+    return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+}
 }
 }

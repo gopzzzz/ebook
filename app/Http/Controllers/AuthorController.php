@@ -21,7 +21,7 @@ class AuthorController extends Controller
         })
         ->paginate(10);
 
-    return view('admin.Author', compact('authors'));
+    return view('admin.author', compact('authors'));
 }
 
     public function store(Request $request)

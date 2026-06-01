@@ -74,7 +74,7 @@
         <td>{{ $ads->firstItem() + $loop->index }}</td>
           <td>{{ $ad->name }}</td>
           <td>
-            <img src="{{ asset('uploads/ads/'.$ad->image) }}" width="50" height="50" style="object-fit: cover; border-radius: 6px;">
+            <img src="{{ asset('public/uploads/ads/'.$ad->image) }}" width="50" height="50" style="object-fit: cover; border-radius: 6px;">
           </td>
           <td>{{ $ad->amount }}</td>
           <td>{{ $ad->link }}</td>

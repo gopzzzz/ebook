@@ -15,7 +15,7 @@ use App\Models\ShippingAddress;
 use App\Models\OrderMaster;
 use App\Models\Order_trans;
 use DB;
-
+use Illuminate\Support\Facades\Http;
 
 
 class OrderController extends Controller
@@ -31,9 +31,12 @@ $cart = Cart::where('user_id', $userId)
             ->first();
 
 if ($cart) {
-    // Product already in cart → increase quantity
-    $cart->qty = $cart->qty + 1;
-    $cart->save();
+ $productCount = Cart::where('user_id', $userId)->count();
+
+return response()->json([
+    'status' => 0,
+    'count' => $productCount
+]);
 } else {
     // New product → insert
     $cart = new Cart();
@@ -193,6 +196,8 @@ public function checkout(Request $request)
 {
     $shipping_id = $request->shipping_id;
     $userId = Auth::id();
+    $email = Auth::user()->email;
+    $shippingId=DB::table('shipping_address')->where('id',$shipping_id )->first();
 
     try {
 
@@ -262,7 +267,34 @@ if ($order == null) {
         $master->save();
 
         // Clear cart
-        DB::table('carts')->where('user_id', $userId)->delete();
+        // DB::table('carts')->where('user_id', $userId)->delete();
+        
+     
+      
+   $response = Http::withHeaders([
+    'x-client-id' => env('CASHFREE_APP_ID'),
+    'x-client-secret' => env('CASHFREE_SECRET_KEY'),
+    'x-api-version' => '2022-09-01',
+    'Content-Type' => 'application/json'
+])->post('https://api.cashfree.com/pg/orders', [
+    "order_id" =>"ORD".$id,
+    "order_amount" => (float) $total ,
+    "order_currency" => "INR",
+    "customer_details" => [
+        "customer_id" => "CUS_" . $userId,
+        "customer_email" => $email,
+        "customer_phone" => $shippingId->phone_number,
+    ],
+    "order_meta" => [
+        "return_url" => url('/payment-success?order_id={order_id}')
+    ]
+]);
+
+return response()->json($response->json());
+
+        
+        
+        
 
         // DB::commit();
 
@@ -275,6 +307,54 @@ if ($order == null) {
       return redirect()->route('success')->with('error', $e->getMessage());
 
     }
+}
+
+
+public function paymentSuccess(Request $request)
+{
+    $orderId = $request->query('order_id');
+    
+    
+
+
+    if (!$orderId) {
+        return "Order ID missing!";
+    }
+    
+ 
+
+    // Verify payment status with Cashfree
+    $response = Http::withHeaders([
+        'x-client-id' => env('CASHFREE_APP_ID'),
+        'x-client-secret' => env('CASHFREE_SECRET_KEY'),
+        'x-api-version' => '2022-09-01'
+    ])->get("https://api.cashfree.com/pg/orders/$orderId");
+
+    $data = $response->json();
+    
+    // echo "<pre>";print_r( $data);exit;
+    $oId = str_replace('ORD', '', $orderId);
+    
+      $updated = DB::table('order_masters')
+    ->where('order_id', $oId)
+    ->update([
+        'pay_status' => $data['order_status'],
+        'updated_at' => now()
+    ]);
+    
+   $userId=DB::table('order_masters') ->where('order_id', $oId)->first();
+
+   DB::table('carts')->where('user_id', $userId->cus_id)->delete();
+
+    if (isset($data['order_status']) && $data['order_status'] === 'PAID') {
+        
+         return redirect()->route('success')->with('success', $orderId);
+        
+        
+        //return redirect('sucess');
+    }
+
+    return view('payment.failed', compact('data'));
 }
 public function success(){
     return view('web.success');
@@ -289,7 +369,7 @@ public function orderview($id){
     // print_r($order_master);exit;
     $order_trans=DB::table('order_trans')
      ->leftJoin('items', 'order_trans.book_id', '=', 'items.id')
-     ->select('order_trans.*','items.name')
+     ->select('order_trans.*','items.name','items.pro_code')
     ->where('order_master_id',$id)->get();
   return view('web.orderview',compact('order_master','order_trans'));
 }

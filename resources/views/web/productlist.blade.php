@@ -29,25 +29,56 @@
 					<div class="tab-content">
 						<div id="all-genre" data-tab-content class="active">
 							<div class="row">
-							@foreach($items as $productList)
-								<div class="col-md-3">
-									<div class="product-item">
-										<figure class="product-style">
-											<a href="{{url('product/'.$productList->slug)}}"><img src="{{asset('assets/img/items/'.$productList->image)}}" alt="Books" class="product-item"></a>
-											<button type="button" class="add-to-cart" data-id="{{$productList->id}}" data-product-tile="add-to-cart">Add to
-												Cart</button>
-										</figure>
-										<figcaption>
-											<h3>{{ substr($productList->name, 0, 15) }}...</h3>
-											<span>{{$productList->author_name}}</span>
-										<div class="item-price">
-											<span class="prev-price">$ {{$productList->mrp}}</span>$ {{$productList->sr}}
-										</div>
-										</figcaption>
-									</div>
-								</div>
-								@endforeach
+						@foreach($items as $productList)
+<div class="col-6 col-md-3">
+    <div class="product-item">
+        <figure class="product-style">
+            
+            <a href="{{ url('product/'.$productList->slug) }}">
+                <img src="{{ asset('public/assets/img/items/'.$productList->image) }}" 
+                     alt="Books" 
+                     class="product-item">
+            </a>
 
+            @php
+                $inCart = in_array($productList->id, $cartProductIds);
+            @endphp
+
+            @if($inCart)
+                <a href="{{ url('cart') }}">
+                    <button type="button" 
+                            class="add-to-cart btn btn-primary" 
+                            data-id="{{ $productList->id }}">
+                        <span class="btn-text">Go To Cart</span>
+                        <span class="btn-loader d-none">
+                            <i class="fa fa-spinner fa-spin"></i> Loading...
+                        </span>
+                    </button>
+                </a>
+            @else
+                <button type="button" 
+                        class="add-to-cart btn btn-primary" 
+                        data-id="{{ $productList->id }}">
+                    <span class="btn-text">Add to Cart</span>
+                    <span class="btn-loader d-none">
+                        <i class="fa fa-spinner fa-spin"></i> Loading...
+                    </span>
+                </button>
+            @endif
+
+        </figure>
+
+        <figcaption>
+            <h3>{{ Str::limit($productList->name, 20) }}</h3>
+            <div class="item-price">
+                <span class="prev-price">₹ {{ $productList->mrp }}</span> 
+                ₹ {{ $productList->sr }}
+            </div>
+        </figcaption>
+
+    </div>
+</div>
+@endforeach
 							
 
 								

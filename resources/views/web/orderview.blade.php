@@ -150,6 +150,7 @@ margin-bottom: 0.5rem;
         <thead>
             <tr>
                 <th>#</th>
+                <th>P.Code</th>
                 <th>Product</th>
                 <th>MRP</th>
                 <th>Price</th>
@@ -164,6 +165,7 @@ margin-bottom: 0.5rem;
             @foreach($order_trans as $item)
             <tr>
                 <td>{{ $i++ }}</td>
+                <td>({{$item->pro_code}})</td>
                 <td>{{ $item->name }}</td>
                 <td>₹{{$item->mrp}}</td>
                 <td>₹{{ $item->sr }}</td>
@@ -179,7 +181,8 @@ margin-bottom: 0.5rem;
     <div class="total-box">
         <p>Subtotal: ₹ {{ $order_master->total_mrp}}</p>
         <p>Discount: ₹ {{ $order_master->total_mrp - $order_master->total_sr }}</p>
-        <h3>Grand Total: ₹ {{ $order_master->total_sr }}</h3>
+         <p>Shipping Charge: ₹ 60 </p>
+        <h3>Grand Total: ₹ {{ $order_master->total_amount }}</h3>
     </div>
 
 </div>

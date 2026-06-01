@@ -26,6 +26,8 @@ class IndexController extends Controller
          ->select('items.*','authors.author_name')
          ->limit(4)
          ->get();
+         
+         
 
         return view('web.index',compact('banner','dod','fastmovingProducts'));
     }
@@ -45,7 +47,12 @@ class IndexController extends Controller
           ->where('slug',$slug)
            ->select('items.*','authors.author_name','publishers.publisher_name')
           ->first();
-          return view('web.product',compact('product'));
+           $fastmovingProducts=DB::table('items')
+         ->leftJoin('authors', 'items.author_id', '=', 'authors.id')
+         ->select('items.*','authors.author_name')
+         ->limit(4)
+         ->get();
+          return view('web.product',compact('product','fastmovingProducts'));
     }
 
 }

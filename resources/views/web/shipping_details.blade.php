@@ -40,13 +40,13 @@
     color:#F59E0B;
 }
 .cart-img img{
-    width:120px;
+max-width:120px;
 }
 .cart-details{
     flex:1;
 }
 .cart-product{
-    font-size:18px;
+    font-size:14px;
     margin-bottom:8px;
 }
 .stock{
@@ -99,8 +99,7 @@
 }
 </style>
 
-<form class="mb-3" action="{{ route('checkout') }}" method="POST" id="checkout">
-@csrf
+
 
 <div class="cart-container row">
 
@@ -108,7 +107,7 @@
     <div class="col-sm-6">
 
         <div class="cart-header">
-            <h2>Shupping Address</h2>
+            <h2>Shipping Address</h2>
         </div>
 
       
@@ -148,7 +147,7 @@
             <div class="cart-item" id="cart-item_{{$item->product_id}}">
 
                 <div class="cart-img">
-                    <img src="{{ asset('assets/img/items/'.$item->image) }}">
+                    <img src="{{ asset('public/assets/img/items/'.$item->image) }}">
                 </div>
 
                 <div class="cart-details">
@@ -194,8 +193,8 @@
             <div class="empty-cart">Cart is empty</div>
         @endif
       @if($cusAddress->isNotEmpty())
-    <button type="submit" class="checkout-btn">
-        PROCEED TO CHECKOUT ->
+    <button type="button" class="checkout-btn" id="payNow">
+        PROCEED TO CHECKOUT >>
     </button>
 @endif
 
@@ -203,7 +202,7 @@
 
 </div>
 
-</form>
+
 
 <!-- MODAL -->
 <div class="modal fade" id="myModal" tabindex="-1">
@@ -238,23 +237,3 @@
 </div>
 
 @endsection
-
-<script>
-$('input[type="radio"]').on('change', function () {
-    $('input[type="radio"]').not(this).prop('checked', false);
-});
-</script>
-<script>
-$(document).ready(function () {
-
-    $('#checkout').on('submit', function (e) {
-
-        if (!$('input[name="shipping_id"]:checked').val()) {
-            e.preventDefault();
-            alert('Please select a shipping address');
-        }
-
-    });
-
-});
-</script>

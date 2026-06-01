@@ -1,89 +1,108 @@
 @extends('layouts.weblayout')
 
 @section('content')
-<div class="container-xxl">
-  <div class="authentication-wrapper authentication-basic container-p-y">
-    <div class="authentication-inner">
+<style>
+    .login-card {
+        max-width: 450px;
+        margin: auto;
+    }
 
-      <div class="card">
-        <div class="card-body">
+   
+</style>
 
-        @if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
+<div class="container">
+    <div class="d-flex justify-content-center align-items-center min-vh-100">
 
-    @if(session('error'))
-    <div class="alert alert-warning">
-        {{ session('error') }}
-    </div>
-@endif
+        <div class="login-card w-100">
 
-          <h3 class="mb-2 text-center">Welcome to Aron Books 👋</h3>
-          <p class="mb-4 text-center">Login to explore books and manage your account</p>
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-3">
 
-          <form class="mb-3" action="{{ route('signin') }}" method="POST">
-            @csrf
+                    {{-- Alerts --}}
+                    @if(session('success'))
+                        <div class="alert alert-success text-center small-text py-2">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
-            <div class="mb-3">
-              <label class="form-label">Email or Username</label>
-              <input
-                type="text"
-                class="form-control"
-                name="email"
-                placeholder="Enter your email or username"
-                required
-              />
+                    @if(session('error'))
+                        <div class="alert alert-danger text-center small-text py-2">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                    {{-- Title --}}
+                    <div class="text-center mb-3">
+                        <h5 class="mb-1">Login</h5>
+                        <p class="text-muted small-text mb-0">
+                            Access your account
+                        </p>
+                    </div>
+
+                    {{-- Form --}}
+                    <form action="{{ route('signin') }}" method="POST">
+                        @csrf
+
+                        {{-- Email --}}
+                        <div class="mb-2">
+                            <label>Email / Username</label>
+                            <input 
+                                type="text"
+                                class="form-control"
+                                name="email"
+                                placeholder="Enter email or username"
+                                required
+                            >
+                        </div>
+
+                        {{-- Password --}}
+                        <div class="mb-2">
+                            <div class="d-flex justify-content-between">
+                                <label>Password</label>
+                                <a href="{{ url('forget_password') }}" class="small-text">
+                                    Forgot?
+                                </a>
+                            </div>
+
+                            <input 
+                                type="password"
+                                class="form-control"
+                                name="password"
+                                placeholder="Enter password"
+                                required
+                            >
+                        </div>
+
+                        {{-- Remember --}}
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="remember" id="remember">
+                            <label class="form-check-label small-text" for="remember">
+                                Remember me
+                            </label>
+                        </div>
+
+                        {{-- Button --}}
+                        <div class="d-grid mb-2">
+                            <button class="btn btn-primary" type="submit">
+                                Login
+                            </button>
+                        </div>
+
+                    </form>
+
+                    {{-- Register --}}
+                    <div class="text-center">
+                        <span class="small-text">No account?</span>
+                        <a href="{{ url('user_registration') }}" class="small-text">
+                            Register
+                        </a>
+                    </div>
+
+                </div>
             </div>
-
-            <div class="mb-3 form-password-toggle">
-              <div class="d-flex justify-content-between">
-                <label class="form-label">Password</label>
-                <a href="#">
-                  <small>Forgot Password?</small>
-                </a>
-              </div>
-
-              <div class="input-group input-group-merge">
-                <input
-                  type="password"
-                  class="form-control"
-                  name="password"
-                  placeholder="Enter your password"
-                  required
-                />
-               
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="remember">
-                <label class="form-check-label">Remember Me</label>
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <button class="btn btn-primary w-100" type="submit">
-                Login
-              </button>
-            </div>
-
-          </form>
-
-          <p class="text-center">
-            <span>Don't have an account?</span>
-            <a href="{{url('user_registration')}}">
-              <span>Register</span>
-            </a>
-          </p>
 
         </div>
-      </div>
 
     </div>
-  </div>
 </div>
-
 @endsection

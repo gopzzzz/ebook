@@ -14,16 +14,17 @@ use App\Models\Customer;
 
 class ShippingAddressController extends Controller
 {
-   public function index(Request $request)
+   public function index($id)
 {
-    $search = $request->search;
+    // $search = $request->search;
 
-    $shippingaddress = ShippingAddress::when($search, function ($query, $search) {
-            $query->where('address', 'like', "%{$search}%");
-        })
+    $shippingaddress = ShippingAddress::where('shipping_address.cus_id',$id)
+     ->leftJoin('users', 'shipping_address.cus_id', '=', 'users.id')
+      ->leftJoin('customers', 'users.id', '=', 'customers.user_id')
+      ->select('shipping_address.*','customers.name')
         ->paginate(10);
 
-    $customers = Customer::all();
+    $customers = Customer::orderBy('id', 'desc')->get();
 
     return view('admin.shippingaddress', compact('shippingaddress','customers'));
 }
@@ -34,7 +35,8 @@ class ShippingAddressController extends Controller
             'address' => 'required',
             'pincode' => 'required',
             'district' => 'nullable',
-            'state' => 'required'
+            'state' => 'required',
+            'phone_number'=>'required',
         ]);
 
         ShippingAddress::create($request->all());
@@ -49,7 +51,8 @@ class ShippingAddressController extends Controller
         'address' => 'required',
         'pincode' => 'required',
         'district' => 'nullable',
-        'state' => 'required'
+        'state' => 'required',
+        
     ]);
 
     $address = ShippingAddress::findOrFail($id);
@@ -59,7 +62,7 @@ class ShippingAddressController extends Controller
         'address' => $request->address,
         'pincode' => $request->pincode,
         'district' => $request->district,
-        'state' => $request->state,
+        'state' => $request->state
     ]);
 
     return redirect()->back()->with('success', 'Shipping address updated successfully');

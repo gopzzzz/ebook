@@ -1,13 +1,32 @@
 @extends('layouts.mainlayout') @section('content') <h4 class="fw-bold py-3 mb-4">
   <span class="text-muted fw-light">Home /</span> Banner
 </h4>
+
+
 <!-- Bordered Table -->
 <div class="card">
+
+     @if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
+@if($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+</div>
   <div class="card-header d-flex justify-content-between align-items-center">
     <h5 class="mb-0">Banner</h5>
     <div class="d-flex align-items-center gap-2">
 
-      <form method="GET" action="{{ route('banners.index') }}" class="d-flex gap-2">
+      <form method="GET" action="{{ route('banners.store') }}" class="d-flex gap-2">
         <input 
           type="text" 
           name="search"
@@ -17,7 +36,8 @@
         >
         <button type="submit" class="btn btn-outline-primary">Search</button>
       </form>
-</div>
+
+ 
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter"> Add New Record </button>
     <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -62,7 +82,7 @@
 <tr>
   <td>{{ $banners->firstItem() + $loop->index }}</td>
   <td>
-    <img src="{{ asset('uploads/banners/'.$banner->banner) }}" width="50" height="50" style="object-fit: cover; border-radius: 6px;">
+    <img src="{{ asset('public/uploads/banners/'.$banner->banner) }}" width="50" height="50" style="object-fit: cover; border-radius: 6px;">
   </td>
    <td> {{ $banner->banner_title }}
   </td>

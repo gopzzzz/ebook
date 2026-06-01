@@ -1,7 +1,7 @@
 
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
-            <a href="index.html" class="app-brand-link">
+            <a href="{{url('dashboard')}}" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <svg
                   width="25"
@@ -150,7 +150,7 @@
               <ul class="menu-sub">
                
                 <li class="menu-item">
-                  <a href="{{url('banners')}}" class="menu-link">
+                  <a href="{{url('banner')}}" class="menu-link">
                     <div data-i18n="Account">Banner Creation</div>
                   </a>
                 </li>

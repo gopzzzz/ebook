@@ -9,89 +9,56 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Profile;
+use DB;
 
 class CompanyProfileController extends Controller
 {
-   public function index()
+public function index()
 {
-    $profile = Profile::first();
+    $profile =DB::table('profiles')->first();
 
     if (!$profile) {
         $profile = Profile::create([
             'name' => 'Aron Books'
         ]);
     }
-
-    return view('admin.profile', compact('profile'));
+    $admin=DB::table('profiles')->first();
+ //echo "<pre>";print_r( $profile);exit;
+    return view('admin.profile', compact('profile','admin'));
 }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'logo' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
-            'name' => 'required',
-            'description' => 'nullable',
-            'facebook_link' => 'nullable',
-            'youtube_link' => 'nullable',
-            'insta_link' => 'nullable',
-            'twitter_link' => 'nullable',
-            'address' => 'nullable',
-            'phone_number' => 'nullable',
-            'email' => 'nullable|email'
-]);
-        $logoName = null;
+  
+public function update(Request $request)
+{
+    try {
+
+        $data = [
+            'name' => $request->name ?? null,
+            'description' => $request->description ?? null,
+            'phone_number' => $request->phone_number ?? null,
+            'email' => $request->email ?? null,
+            'facebook_link' => $request->facebook_link ?? null,
+            'youtube_link' => $request->youtube_link ?? null,
+            'insta_link' => $request->insta_link ?? null,
+            'twitter_link' => $request->twitter_link ?? null,
+            'address' => $request->address ?? null,
+        ];
 
         if ($request->hasFile('logo')) {
-            $logoName = time().'_'.$request->logo->getClientOriginalName();
-            $request->logo->move(public_path('uploads/profile'), $logoName);
+            $file = $request->file('logo');
+            $filename = time().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('uploads/profile'), $filename);
+
+            $data['logo'] = $filename;
         }
 
-        Profile::create([
-            'logo' => $logoName,
-            'name' => $request->name,
-            'description' => $request->description,
-            'facebook_link' => $request->facebook_link,
-            'youtube_link' => $request->youtube_link,
-            'insta_link' => $request->insta_link,
-            'twitter_link' => $request->twitter_link,
-            'address' => $request->address,
-            'phone_number' => $request->phone_number,
-            'email' => $request->email
-        ]);
+        DB::table('profiles')->update($data);
 
-        return redirect()->back();
+        return back()->with('success', 'Profile updated');
+
+    } catch (\Exception $e) {
+        return back()->with('error', 'Something went wrong');
     }
-
-    public function update(Request $request, $id)
-    {
-        $profile = Profile::findOrFail($id);
-
-        $request->validate([
-            'logo' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
-            'name' => 'required'
-        ]);
-
-        $logoName = $profile->logo;
-
-        if ($request->hasFile('logo')) {
-            $logoName = time().'_'.$request->logo->getClientOriginalName();
-            $request->logo->move(public_path('uploads/profile'), $logoName);
-        }
-
-        $profile->update([
-            'logo' => $logoName,
-            'name' => $request->name,
-            'description' => $request->description,
-            'facebook_link' => $request->facebook_link,
-            'youtube_link' => $request->youtube_link,
-            'insta_link' => $request->insta_link,
-            'twitter_link' => $request->twitter_link,
-            'address' => $request->address,
-            'phone_number' => $request->phone_number,
-            'email' => $request->email
-        ]);
-
-        return redirect()->back();
-    }
+}
 
 }

@@ -60,19 +60,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/orders/edit/{id}', [OrderMasterController::class, 'edit'])->name('orders.edit');
     Route::post('/orders/update/{id}', [OrderMasterController::class, 'update'])->name('orders.update');
     Route::post('/orders/delete/{id}', [OrderMasterController::class, 'destroy'])->name('orders.destroy');
+    Route::post('/updateStatus', [OrderMasterController::class, 'updateStatus'])->name('updateStatus');
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
     Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
     Route::post('/customers/store', [CustomerController::class, 'store'])->name('customers.store');
     Route::get('/customers/edit/{id}', [CustomerController::class, 'edit'])->name('customers.edit');
     Route::post('/customers/update/{id}', [CustomerController::class, 'update'])->name('customers.update');
     Route::post('/customers/delete/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
-    Route::get('/shippingaddress', [ShippingAddressController::class, 'index'])->name('shippingaddress.index');
-    Route::get('/shippingaddress/create', [ShippingAddressController::class, 'create'])->name('shippingaddress.create');
+    Route::get('/shippingaddress/{id}', [ShippingAddressController::class, 'index'])->name('shippingaddress.index');
+    Route::post('/shippingaddress/create', [ShippingAddressController::class, 'create'])->name('shippingaddress.create');
     Route::post('/shippingaddress/store', [ShippingAddressController::class, 'store'])->name('shippingaddress.store');
     Route::get('/shippingaddress/edit/{id}', [ShippingAddressController::class, 'edit'])->name('shippingaddress.edit');
     Route::post('/shippingaddress/update/{id}', [ShippingAddressController::class, 'update'])->name('shippingaddress.update');
     Route::post('/shippingaddress/delete/{id}', [ShippingAddressController::class, 'destroy'])->name('shippingaddress.destroy');
-    Route::get('/banners', [BannerController::class, 'index'])->name('banners.index');
+    
+    Route::get('/banner', [BannerController::class, 'banners'])->name('banner');
     Route::get('/banners/create', [BannerController::class, 'create'])->name('banners.create');
     Route::post('/banners/store', [BannerController::class, 'store'])->name('banners.store');
     Route::get('/banners/edit/{id}', [BannerController::class, 'edit'])->name('banners.edit');
@@ -89,11 +91,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/ads/update/{id}', [AdController::class,'update'])->name('ads.update');
     Route::post('/ads/delete/{id}', [AdController::class,'destroy'])->name('ads.destroy');
     Route::get('/profiles', [CompanyProfileController::class, 'index'])->name('profiles.index');
-    Route::get('/profiles/create', [CompanyProfileController::class, 'create'])->name('profiles.create');
-    Route::post('/profiles/store', [CompanyProfileController::class, 'store'])->name('profiles.store');
-    Route::get('/profiles/edit/{id}', [CompanyProfileController::class, 'edit'])->name('profiles.edit');
-    Route::post('/profiles/update/{id}', [CompanyProfileController::class, 'update'])->name('profiles.update');
+  
+    Route::post('/profiles/update', [CompanyProfileController::class, 'update'])->name('profiles.update');
     Route::post('/profiles/delete/{id}', [CompanyProfileController::class, 'destroy'])->name('profiles.destroy');
+    Route::post('/getAddrees', [OrderMasterController::class, 'getAddrees'])->name('getAddrees');
+    
+
+    
 });
 
 
@@ -110,6 +114,14 @@ Route::redirect('/index', '/');
 Route::get('/product-list', [IndexController::class, 'productlist'])->name('product-list');
 Route::get('/product/{slug}', [IndexController::class, 'product'])->name('product');
 Route::get('/aboutus', [PageController::class, 'aboutus'])->name('aboutus');
+Route::get('/team', [PageController::class, 'team'])->name('team');
+Route::get('/contactus', [PageController::class, 'contactus'])->name('contactus');
+Route::get('/search-customers', [PageController::class, 'search'])
+    ->name('search.customers');
+Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
+Route::get('/term-conditions', [PageController::class, 'termconditions'])->name('term-conditions');
+Route::get('/refund', [PageController::class, 'refund'])->name('refund');
+
 
 Route::middleware('customer')->group(function () {
 Route::get('/cart', [OrderController::class, 'cart'])->name('cart');
@@ -129,6 +141,26 @@ Route::get('/userlogin', [CustomerController::class, 'login'])->name('userlogin'
 Route::get('/user_registration', [CustomerController::class, 'user_registration'])->name('user_registration');
 Route::post('/uregister', [CustomerController::class, 'uregister'])->name('uregister');
 Route::post('/signin', [CustomerController::class, 'signin'])->name('signin');
+Route::get('/forget_password', [AuthController::class, 'forget_password'])->name('forget_password');
+Route::post('/reset', [AuthController::class, 'reset'])->name('reset');
+
+Route::get('/payment-success',[OrderController::class, 'paymentSuccess'])->name('payment.success');
+
+Route::get('/register', [CustomerController::class, 'login'])->name('userlogin');
+
+Route::get('/reset-password/{token}', function ($token, Request $request) {
+
+    if (!$request->has('email')) {
+        abort(404, 'Email missing in reset link');
+    }
+
+    return view('auth.reset-password', [
+        'token' => $token,
+        'email' => $request->email
+    ]);
+
+})->name('password.reset');
+
 
 
 

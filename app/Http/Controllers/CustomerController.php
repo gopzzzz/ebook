@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
 use App\Models\Customer;
+use App\Models\ShippingAddress;
 use App\Models\User;
 use DB;
 
@@ -17,122 +14,175 @@ use Illuminate\Database\QueryException;
 
 class CustomerController extends Controller
 {
-     public function index(Request $request)
-{
-    $search = $request->search;
+    public function index(Request $request)
+    {
+        $search = $request->search;
 
-    $customers = Customer::when($search, function ($query, $search) {
-            $query->where('name', 'like', "%{$search}%");
-        })
-        ->paginate(10);
+        $customers = Customer::leftJoin('shipping_address', 'customers.user_id', '=', 'shipping_address.cus_id')
+            ->when($search, function ($query, $search) {
+                $query->where('customers.name', 'like', "%{$search}%");
+            })
+            ->select(
+                'customers.*',
+                'shipping_address.address as shipping_address','shipping_address.pincode','shipping_address.phone_number','shipping_address.district','shipping_address.state'
+            )
+           ->orderBy('id', 'desc')
+            ->paginate(10);
+            
+            // echo "<pre>";print_r($customers);exit;
+
         return view('admin.customer', compact('customers'));
     }
 
     public function store(Request $request)
     {
-       $request->validate([
-    'name' => 'required|string|max:255',
-    'phone_number' => 'required|string|max:20'
-]);
+        try {
 
-        Customer::create([
-    'name' => $request->name,
-    'phone_number' => $request->phone_number
-]);
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'address' => 'nullable|string|max:255',
+        'pincode' => 'nullable|string|max:20',
+        'district' => 'nullable|string|max:100',
+        'state' => 'nullable|string|max:100',
+        'phone_number' => 'required',
+    ]);
 
-        return redirect()->back()->with('success','Customer added successfully');
+ 
+    $customer = Customer::create([
+        'name' => $request->name,
+        'user_id' => 1
+    ]);
+
+    if ($customer->id) {
+        ShippingAddress::create([
+            'cus_id' => $customer->id,
+            'address' => $request->address,
+            'pincode' => $request->pincode,
+            'district' => $request->district,
+            'phone_number' => $request->phone_number,
+            'state' => $request->state,
+        ]);
     }
+
+     
+
+    return redirect()->back()->with('success', 'Customer added successfully');
+
+} catch (Exception $e) {
+
+     echo $e->getMessage();exit;
+
+    return redirect()->back()->with('error', 'Something went wrong: ' . $e->getMessage());
+}
+}
 
     public function update(Request $request, $id)
     {
         $customer = Customer::findOrFail($id);
 
         $request->validate([
-    'name' => 'required|string|max:255',
-    'phone_number' => 'required|string|max:20'
-]);
-        $customer->update([
-            'name'    => $request->name,
-            'phone_number'   => $request->phone_number
-            
+            'name' => 'required|string|max:255',
+            'shipping_address' => 'nullable|string|max:255',
         ]);
 
-        return redirect()->back()->with('success','Customer updated successfully');
+        $customer->update([
+            'name' => $request->name
+        ]);
+
+        $shipping = ShippingAddress::where('cus_id', $customer->id)->first();
+
+        if ($shipping) {
+            $shipping->update([
+                'address' => $request->shipping_address
+            ]);
+        } elseif ($request->shipping_address) {
+            ShippingAddress::create([
+                'cus_id' => $customer->id,
+                'address' => $request->shipping_address,
+                'pincode' => '',
+                'district' => '',
+                'state' => '',
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Customer updated successfully');
     }
-    public function login(){
+
+    public function login()
+    {
         return view('web.login');
     }
-    public function user_registration(){
+
+    public function user_registration()
+    {
         return view('web.register');
     }
-    public function uregister(Request $request){
-    try {
 
-    DB::beginTransaction();
+    public function uregister(Request $request)
+    {
+        try {
+            DB::beginTransaction();
 
-    $user = new User;
-    $user->name = $request->name;
-    $user->email = $request->email;
-    $user->password = Hash::make($request->cpassword);
-    $user->role = 2;
-    $user->save();
+            $user = new User;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->cpassword);
+            $user->role = 2;
+            $user->save();
 
-    $customer = new Customer;
-    $customer->user_id = $user->id;
-    $customer->name = $request->name;
-    $customer->save();
+            $customer = new Customer;
+            $customer->user_id = $user->id;
+            $customer->name = $request->name;
+            $customer->save();
 
-    DB::commit();
+            DB::commit();
 
     return redirect('userlogin')->with('success','User registered successfully');
 
-} catch (QueryException $e) {
+        } catch (QueryException $e) {
+            DB::rollBack();
 
-    DB::rollBack();
+            $errorCode = $e->errorInfo[1];
 
-    $errorCode = $e->errorInfo[1];
+            switch ($errorCode) {
+                case 1062:
+                    $message = "User already registered";
+                    break;
 
-    switch ($errorCode) {
+                case 1452:
+                    $message = "Invalid reference. Related record not found.";
+                    break;
 
-        case 1062:
-            $message = "User already registered";
-            break;
+                case 1048:
+                    $message = "Required field is missing.";
+                    break;
 
-        case 1452:
-            $message = "Invalid reference. Related record not found.";
-            break;
+                case 1364:
+                    $message = "Some required fields were not provided.";
+                    break;
 
-        case 1048:
-            $message = "Required field is missing.";
-            break;
+                default:
+                    $message = "Database error occurred. Please try again.";
+            }
 
-        case 1364:
-            $message = "Some required fields were not provided.";
-            break;
-
-        default:
-            $message = "Database error occurred. Please try again.";
+            return redirect('userlogin')->with('error', $message);
+        }
     }
 
-    return back()->with('error', $message);
-}
-    }
-    public function signin(Request $request){
-   $credentials = [
-        'email' => $request->email,
-        'password' => $request->password,
-        'role' => 2
-    ];
+    public function signin(Request $request)
+    {
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password,
+            'role' => 2
+        ];
 
-    if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->route('index');
+        }
 
-        $request->session()->regenerate();
-
-        return redirect()->route('index');
-              
-    }
-
-    return back()->with('error','Invalid email or password');
+        return back()->with('error', 'Invalid email or password');
     }
     public function userprofile(){
           $userId = Auth::id();

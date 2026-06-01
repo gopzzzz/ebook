@@ -5,241 +5,142 @@
 <style>
 .profile-card {
     background: #fff;
-    border-radius: 16px; /* smoother */
+    border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 6px 20px rgba(0,0,0,0.08);
     transition: 0.3s;
-    height: 100%;
 }
-
 .profile-card:hover {
     transform: translateY(-6px);
 }
-
 .profile-cover {
     height: 150px;
     background: linear-gradient(135deg, #4e73df, #224abe);
 }
-
 .profile-img {
-    margin-top: -60px; /* better overlap */
-    margin-bottom: 10px;
+    margin-top: -60px;
     text-align: center;
 }
-
 .profile-img img {
     width: 110px;
     height: 110px;
     border-radius: 50%;
     border: 5px solid #fff;
     object-fit: cover;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
-
 .profile-body {
-    padding: 20px 20px;
-}
-
-.profile-body p {
-    word-break: break-word;
-    margin-bottom: 8px;
-}
-
-.profile-body a {
-    color: #4e73df;
-    text-decoration: none;
-}
-
-.profile-body a:hover {
-    text-decoration: underline;
-}
-
-.card {
-    margin-bottom: 20px;
-}
-
-.card-header {
-    padding: 12px 15px;
+    padding: 20px;
 }
 </style>
 
+@php
+    $profile = $admin;
+    $logo = data_get($profile, 'logo');
+    $name = data_get($profile, 'name', 'No Name');
+    $desc = data_get($profile, 'description');
+    $email = data_get($profile, 'email', '-');
+    $phone = data_get($profile, 'phone_number', '-');
+    $address = data_get($profile, 'address', '-');
+
+    $facebook = data_get($profile, 'facebook_link');
+    $youtube = data_get($profile, 'youtube_link');
+    $insta = data_get($profile, 'insta_link');
+    $twitter = data_get($profile, 'twitter_link');
+    
+   
+@endphp
+
 <h4 class="fw-bold py-3 mb-4">
-  <span class="text-muted fw-light">Home /</span> Profiles
+  <span class="text-muted fw-light">Home /</span> Profile
 </h4>
 
 <div class="card mb-4">
-   
+<div class="row justify-content-center">
 
-    <!-- <div class="d-flex align-items-center gap-2">
-      <form method="GET" action="{{ route('profiles.index') }}" class="d-flex gap-2">
-        <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Search profile...">
-        <button type="submit" class="btn btn-outline-primary">Search</button>
-      </form>
-    </div> -->
-
-    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createProfileModal">
-      Add New Record
-    </button> -->
-
-    {{-- CREATE PROFILE MODAL --}}
-    <div class="modal fade" id="createProfileModal" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-
-          <form action="{{ route('profiles.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-
-            <div class="modal-header">
-              <h5 class="modal-title">Create Profile</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <div class="modal-body">
-
-              <div class="mb-3">
-                <label class="form-label">Logo</label>
-                <input type="file" name="logo" class="form-control" accept="image/png,image/jpeg" required>
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Name</label>
-                <input type="text" name="name" class="form-control" required>
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Description</label>
-                <textarea name="description" class="form-control"></textarea>
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Facebook</label>
-                <input type="text" name="facebook_link" class="form-control">
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Youtube</label>
-                <input type="text" name="youtube_link" class="form-control">
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Instagram</label>
-                <input type="text" name="insta_link" class="form-control">
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Twitter</label>
-                <input type="text" name="twitter_link" class="form-control">
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Address</label>
-                <textarea name="address" class="form-control"></textarea>
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Phone</label>
-                <input type="text" name="phone_number" class="form-control">
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" name="email" class="form-control">
-              </div>
-
-            </div>
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save</button>
-            </div>
-
-          </form>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-
-
-    <div class="row justify-content-center">
-
-@if ($profile)
+@if($profile)
 
 <div class="col-md-8 col-lg-6">
     <div class="profile-card">
 
         <div class="profile-cover"></div>
 
+        {{-- PROFILE IMAGE --}}
         <div class="profile-img">
-            <img src="{{ $profile->logo ? asset('uploads/profile/'.$profile->logo) : 'https://via.placeholder.com/100' }}" alt="Profile">
+            <img 
+                src="{{ !empty($logo) ? asset('public/uploads/profile/'.$logo) : 'https://via.placeholder.com/110' }}">
         </div>
 
         <div class="profile-body">
+
             <div class="text-center mb-4">
-                <h3 class="fw-bold mb-1">{{ $profile->name }}</h3>
-                @if($profile->description)
-                    <p class="text-muted mb-0">{{ $profile->description }}</p>
+                <h3 class="fw-bold">{{ $name }} </h3>
+
+                @if(!empty($desc))
+                    <p class="text-muted">{{ $desc }}</p>
                 @endif
             </div>
 
-            <div class="px-4 mt-3 text-start">
-    <p><strong>Email:</strong> {{ $profile->email ?: '-' }}</p>
-    <p><strong>Phone:</strong> {{ $profile->phone_number ?: '-' }}</p>
-    <p><strong>Address:</strong> {{ $profile->address ?: '-' }}</p>
+            <div class="px-4 text-start">
 
-    <p><strong>Facebook:</strong> 
-        <a href="{{ $profile->facebook_link }}" target="_blank">{{ $profile->facebook_link }}</a>
-    </p>
+                <p><strong>Email:</strong> {{ $email }}</p>
+                <p><strong>Phone:</strong> {{ $phone }}</p>
+                <p><strong>Address:</strong> {{ $address }}</p>
 
-    <p><strong>YouTube:</strong> 
-        <a href="{{ $profile->youtube_link }}" target="_blank">{{ $profile->youtube_link }}</a>
-    </p>
+               <div class="d-flex justify-content-start gap-3 mt-3">
 
-    <p><strong>Instagram:</strong> 
-        <a href="{{ $profile->insta_link }}" target="_blank">{{ $profile->insta_link }}</a>
-    </p>
+    @if(!empty($facebook))
+        <a href="{{ $facebook }}" target="_blank" class="social-icon fb">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+    @endif
 
-    <p><strong>Twitter:</strong> 
-        <a href="{{ $profile->twitter_link }}" target="_blank">{{ $profile->twitter_link }}</a>
-    </p>
+    @if(!empty($youtube))
+        <a href="{{ $youtube }}" target="_blank" class="social-icon yt">
+            <i class="fab fa-youtube"></i>
+        </a>
+    @endif
+
+    @if(!empty($insta))
+        <a href="{{ $insta }}" target="_blank" class="social-icon insta">
+            <i class="fab fa-instagram"></i>
+        </a>
+    @endif
+
+    @if(!empty($twitter))
+        <a href="{{ $twitter }}" target="_blank" class="social-icon tw">
+            <i class="fab fa-twitter"></i>
+        </a>
+    @endif
+
 </div>
 
-            <div class="d-flex justify-content-center gap-2 mt-4">
+            </div>
+
+            <div class="text-center mt-4">
                 <button class="btn btn-primary"
                     data-bs-toggle="modal"
-                    data-bs-target="#EditProfileModal"
-                    data-id="{{ $profile->id }}"
-                    data-logo="{{ $profile->logo }}"
-                    data-name="{{ $profile->name }}"
-                    data-phone="{{ $profile->phone_number }}"
-                    data-email="{{ $profile->email }}"
-                    data-address="{{ $profile->address }}"
-                    data-description="{{ $profile->description }}"
-                    data-facebook="{{ $profile->facebook_link }}"
-                    data-youtube="{{ $profile->youtube_link }}"
-                    data-insta="{{ $profile->insta_link }}"
-                    data-twitter="{{ $profile->twitter_link }}">
+                    data-bs-target="#EditProfileModal">
                     Edit Profile
                 </button>
             </div>
-        </div>
 
+        </div>
     </div>
 </div>
 
 @endif
 
 </div>
+</div>
 
-    <div class="modal fade" id="EditProfileModal" tabindex="-1">
+{{-- ================= MODAL ================= --}}
+@if($profile)
+<div class="modal fade" id="EditProfileModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
 
-      <form method="POST" id="editProfileForm" enctype="multipart/form-data">
+      <form method="POST" enctype="multipart/form-data" action="{{url('profiles/update')}}">
         @csrf
-        
 
         <div class="modal-header">
           <h5 class="modal-title">Edit Profile</h5>
@@ -248,66 +149,68 @@
 
         <div class="modal-body">
 
-          <div class="mb-3">
-            <label class="form-label">Current Logo</label>
-            <br>
-            <img id="editLogoPreview" src="" class="img-thumbnail mb-2" width="120">
+          <div class="mb-3 text-center">
+            <label>Current Logo</label><br>
+            
+            <img 
+                src="{{ !empty($logo) ? asset('public/uploads/profile/'.$logo) : 'https://via.placeholder.com/120' }}" 
+                class="img-thumbnail" width="120">
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Replace Logo</label>
+            <label>Replace Logo</label>
             <input type="file" name="logo" class="form-control">
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Name</label>
-            <input type="text" name="name" id="editName" class="form-control">
+            <label>Name</label>
+            <input type="text" name="name" class="form-control" value="{{ $name }}">
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Description</label>
-            <textarea name="description" id="editDescription" class="form-control"></textarea>
+            <label>Description</label>
+            <textarea name="description" class="form-control">{{ $desc ?? '' }}</textarea>
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Phone</label>
-            <input type="text" name="phone_number" id="editPhone" class="form-control">
+            <label>Phone</label>
+            <input type="text" name="phone_number" class="form-control" value="{{ $phone }}">
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input type="email" name="email" id="editEmail" class="form-control">
+            <label>Email</label>
+            <input type="email" name="email" class="form-control" value="{{ $email }}">
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Facebook</label>
-            <input type="text" name="facebook_link" id="editFacebook" class="form-control">
+            <label>Facebook</label>
+            <input type="text" name="facebook_link" class="form-control" value="{{ $facebook ?? '' }}">
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Youtube</label>
-            <input type="text" name="youtube_link" id="editYoutube" class="form-control">
+            <label>YouTube</label>
+            <input type="text" name="youtube_link" class="form-control" value="{{ $youtube ?? '' }}">
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Instagram</label>
-            <input type="text" name="insta_link" id="editInsta" class="form-control">
+            <label>Instagram</label>
+            <input type="text" name="insta_link" class="form-control" value="{{ $insta ?? '' }}">
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Twitter</label>
-            <input type="text" name="twitter_link" id="editTwitter" class="form-control">
+            <label>Twitter</label>
+            <input type="text" name="twitter_link" class="form-control" value="{{ $twitter ?? '' }}">
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Address</label>
-            <textarea name="address" id="editAddress" class="form-control"></textarea>
+            <label>Address</label>
+            <textarea name="address" class="form-control">{{ $address }}</textarea>
           </div>
 
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary">Update</button>
         </div>
 
@@ -316,62 +219,6 @@
     </div>
   </div>
 </div>
-    <script>
-
-document.addEventListener('DOMContentLoaded', function() {
-
-const editModal = document.getElementById('EditProfileModal');
-
-const form = document.getElementById('editProfileForm');
-
-const preview = document.getElementById('editLogoPreview');
-
-const nameInput = document.getElementById('editName');
-const descriptionInput = document.getElementById('editDescription');
-const phoneInput = document.getElementById('editPhone');
-const emailInput = document.getElementById('editEmail');
-const facebookInput = document.getElementById('editFacebook');
-const youtubeInput = document.getElementById('editYoutube');
-const instaInput = document.getElementById('editInsta');
-const twitterInput = document.getElementById('editTwitter');
-const addressInput = document.getElementById('editAddress');
-
-editModal.addEventListener('show.bs.modal', function(event) {
-
-const button = event.relatedTarget;
-
-const id = button.getAttribute('data-id');
-const logo = button.getAttribute('data-logo');
-const name = button.getAttribute('data-name');
-const description = button.getAttribute('data-description');
-const phone = button.getAttribute('data-phone');
-const email = button.getAttribute('data-email');
-const facebook = button.getAttribute('data-facebook');
-const youtube = button.getAttribute('data-youtube');
-const insta = button.getAttribute('data-insta');
-const twitter = button.getAttribute('data-twitter');
-const address = button.getAttribute('data-address');
-
-console.log(facebook, youtube, insta, twitter);
-
-preview.src = logo ? "{{ asset('uploads/profile') }}/" + logo : "";
-
-nameInput.value = name || "";
-descriptionInput.value = description || "";
-phoneInput.value = phone || "";
-emailInput.value = email || "";
-facebookInput.value = facebook || "";
-youtubeInput.value = youtube || "";
-instaInput.value = insta || "";
-twitterInput.value = twitter || "";
-addressInput.value = address || "";
-
-form.action = "{{ url('profiles/update') }}/" + id;
-
-});
-
-});
-
-</script>
+@endif
 
 @endsection

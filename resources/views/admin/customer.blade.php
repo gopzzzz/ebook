@@ -32,9 +32,28 @@
                 <input type="text" name="name" class="form-control" placeholder="Enter Name" required>
               </div>
               <div class="mb-3">
-<label class="form-label">Phone Number</label>
-<input type="text" name="phone_number" class="form-control" placeholder="Enter Number" required>
-</div>
+              <label class="form-label">Address</label>
+              <input type="text" name="address" class="form-control" placeholder="Enter Address">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Pincode</label>
+              <input type="text" name="pincode" class="form-control" placeholder="Enter Pincode">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">District</label>
+              <input type="text" name="district" class="form-control" placeholder="Enter District">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">State</label>
+              <input type="text" name="state" class="form-control" placeholder="Enter State">
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label">Phone Number</label>
+              <input type="text" name="phone_number" class="form-control" placeholder="Enter Phone Number">
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"> Close </button>
@@ -53,18 +72,17 @@
         <tr>
           <th>SL No.</th>
           <th>Name</th>
-          <th>Phone Number</th>
+          <th>Shipping address </th>
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody>
+<tbody>
 @foreach ($customers as $customer)
 <tr>
   <td>{{ $customers->firstItem() + $loop->index }}</td>
   <td>
     {{ $customer->name }}</td>
-   <td> {{ $customer->phone_number }}
-  </td>
+   <td>{{ $customer->shipping_address  }} , {{ $customer->district  }} ,{{ $customer->state  }} ,{{ $customer->pincode  }} ,{{ $customer->phone_number  }}  </td>
 
   <td>
     <div class="dropdown position-static">
@@ -73,19 +91,12 @@
       </button>
 
       <div class="dropdown-menu">
-        <a href="#"
-           class="dropdown-item"
-           data-bs-toggle="modal"
-           data-bs-target="#EditCustomermodal"
-           data-id="{{ $customer->id }}"
-           data-name="{{ $customer->name }}"
-           data-phone="{{ $customer->phone_number }}">
-          <i class="bx bx-edit-alt me-1"></i> Edit
+        <a href="{{url('shippingaddress/'.$customer->user_id)}}"
+           class="dropdown-item" target="_blank">
+          <i class="bx bx-edit-alt me-1"></i> Change Shipping Address
         </a>
 
-        <a class="dropdown-item text-danger" href="#">
-          <i class="bx bx-trash me-1"></i> Delete
-        </a>
+     
       </div>
     </div>
   </td>
@@ -96,38 +107,14 @@
     <div class="d-flex justify-content-center mt-3">
         {{ $customers->appends(request()->query())->links() }}
     </div>
-    <div class="modal fade" id="EditCustomermodal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <form method="POST" id="editCustomerForm"> @csrf @method('POST') <div class="modal-header">
-              <h5 class="modal-title">Edit Customer</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-              <div class="mb-3">
-                <label class="form-label"> Name</label>
-                <input type="text" name="name" id="editCustomerName" class="form-control" required>
-              </div>
-              <div class="mb-3">
-                <label class="form-label"> Phone Number</label>
-                <input type="text" name="phone_number" id="editPhoneNumber" class="form-control" required>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"> Close </button>
-              <button type="submit" class="btn btn-primary"> Update </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+ 
     <script>
       document.addEventListener('DOMContentLoaded', function() {
 
   const editCustomerModal = document.getElementById('EditCustomermodal');
   const form = document.getElementById('editCustomerForm');
   const nameInput = document.getElementById('editCustomerName');
-  const phoneInput = document.getElementById('editPhoneNumber');
+  const shippingInput = document.getElementById('editShippingAddress');
 
   editCustomerModal.addEventListener('show.bs.modal', function(event) {
 
@@ -135,10 +122,10 @@
 
     const id = button.getAttribute('data-id');
     const name = button.getAttribute('data-name');
-    const phone = button.getAttribute('data-phone');
+   const shippingAddress = button.getAttribute('data-shipping-address');
 
     nameInput.value = name;
-    phoneInput.value = phone;
+   shippingInput.value = shippingAddress ?? '';
 
     form.action = `/customers/update/${id}`;
 

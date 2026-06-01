@@ -7,22 +7,13 @@
     <h5 class="mb-0">Shipping Address</h5>
     <div class="d-flex align-items-center gap-2">
 
-      <form method="GET" action="{{ route('shippingaddress.index') }}" class="d-flex gap-2">
-        <input 
-          type="text" 
-          name="search"
-          value="{{ request('search') }}"
-          class="form-control"
-          placeholder="Search item..."
-        >
-        <button type="submit" class="btn btn-outline-primary">Search</button>
-      </form>
+   
 </div>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter"> Add New Record </button>
     <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form action="{{ route('shippingaddress.store') }}" method="POST"> @csrf <div class="modal-header">
+          <form action="{{route('shippingaddress.store')}}" method="POST"> @csrf <div class="modal-header">
               <h5 class="modal-title">Shipping Address Creation</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
@@ -30,7 +21,7 @@
               <div class="mb-3">
                 <label class="form-label">Customer ID</label>
                 <select name="cus_id" class="form-select" required>
-                  <option value="">Select Customer</option> @foreach ($customers as $customer) <option value="{{ $customer->id }}">{{ $customer->name }}</option> @endforeach
+                  <option value="">Select Customer</option> @foreach ($customers as $customer) <option value="{{ $customer->user_id }}">{{ $customer->name }}</option> @endforeach
                 </select>
               </div>
               <div class="mb-3">
@@ -49,6 +40,10 @@
                 <label class="form-label">State</label>
                 <input type="text" name="state" class="form-control" placeholder="Enter state">
               </div>
+                <div class="mb-3">
+                <label class="form-label">Phone Number</label>
+                <input type="text" name="phone_number" class="form-control" placeholder="Enter Phone Number">
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"> Close </button>
@@ -65,7 +60,7 @@
       <thead>
         <tr>
           <th>SL No.</th>
-          <th>Customer</th>
+          <!--<th>Customer</th>-->
           <th>Address</th>
           <th>Pincode</th>
           <th>District</th>
@@ -77,7 +72,7 @@
 @foreach($shippingaddress as $address)
 <tr>
 <td>{{ $shippingaddress->firstItem() + $loop->index }}</td>
-<td>{{ $address->customer->name ?? '-' }}</td>
+<!--<td>{{ $address->name ?? '-' }}</td>-->
 <td>{{ $address->address }}</td>
 <td>{{ $address->pincode }}</td>
 <td>{{ $address->district }}</td>

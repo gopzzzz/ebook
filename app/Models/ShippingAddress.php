@@ -16,7 +16,8 @@ class ShippingAddress extends Model
         'address',
         'pincode',
         'district',
-        'state'
+        'state',
+        'phone_number',
     ];
 
     public $timestamps = true;

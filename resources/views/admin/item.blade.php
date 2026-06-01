@@ -2,9 +2,37 @@
   <span class="text-muted fw-light">Home /</span> Items
 </h4>
 <!-- Bordered Table -->
+
+ @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
+
+@if($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
  <div class="card">
+
+
 <div class="card-header">
   <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+ 
 
     <h5 class="mb-0">Items</h5>
 
@@ -30,6 +58,14 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
+                
+                 <div class="mb-3">
+                <label class="form-label">Item Type</label>
+                <select name="itemtype" class="form-select" required>
+                  <option value="1">New Sale </option> <option value="2">Second Sale</option>
+                </select>
+              </div>
+             
               <div class="mb-3">
                 <label class="form-label">Name</label>
                 <input type="text" name="name" class="form-control" required>
@@ -64,7 +100,7 @@
                 <input type="number" name="sr" class="form-control" required>
               </div>
               <div class="mb-3">
-                <label class="form-label">Image</label>
+                <label class="form-label">Image (249 * 342 PX)</label>
                 <input type="file" name="image" class="form-control" accept="image/png,image/jpeg" required>
               </div>
               <div class="mb-3">
@@ -100,7 +136,7 @@
       <tbody> @foreach ($items as $item) <tr>
         <td>{{ $items->firstItem() + $loop->index }}</td>
           <td>
-            <img src="{{ asset('assets/img/items/'.$item->image) }}" width="50" height="50" style="object-fit: cover; border-radius: 6px;">
+            <img src="{{ asset('public/assets/img/items/'.$item->image) }}" width="50" height="50" style="object-fit: cover; border-radius: 6px;">
           </td>
           <td>{{ substr($item->name, 0, 25) }}...</td>
           <td>{{ $item->category->category_name ?? '-' }}</td>
@@ -134,6 +170,13 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
+                
+                 <div class="mb-3">
+                <label class="form-label">Item Type</label>
+                <select name="item_type" class="form-select" required id="edititemtype">
+                  <option value="1">New Sale </option> <option value="2">Second Sale</option>
+                </select>
+              </div>
               <div class="mb-3">
                 <label class="form-label">Name</label>
                 <input type="text" name="name" id="editName" class="form-control" required>
@@ -169,7 +212,7 @@
                 <img id="editImagePreview" src="" class="img-thumbnail mb-2" width="120">
               </div>
               <div class="mb-3">
-                <label class="form-label">Replace Image (optional)</label>
+                <label class="form-label">Replace Image (optional) Image (249 * 342 PX) </label>
                 <input type="file" name="image" class="form-control">
               </div>
               <div class="mt-3">
@@ -191,13 +234,14 @@
         const form = document.getElementById('editItemForm');
         editItemModal.addEventListener('show.bs.modal', function(event) {
           const button = event.relatedTarget;
-          form.action = `/items/update/${button.dataset.id}`;
+          form.action = "{{ url('items/update') }}/" + button.dataset.id;
           document.getElementById('editName').value = button.dataset.name;
           document.getElementById('editAuthor').value = button.dataset.author;
           document.getElementById('editPublisher').value = button.dataset.publisher;
           document.getElementById('editCategory').value = button.dataset.category;
           document.getElementById('editMrp').value = button.dataset.mrp;
           document.getElementById('editSr').value = button.dataset.sr;
+          document.getElementById('edititemtype').value = button.dataset.item_type;
           document.getElementById('editImagePreview').src = `/assets/img/items/${button.dataset.image}`;
           document.getElementById('editDescription').value = button.dataset.description ?? '';
         });

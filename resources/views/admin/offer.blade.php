@@ -3,6 +3,19 @@
 </h4>
 <!-- Bordered Table -->
 <div class="card">
+   @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
   <div class="card-header d-flex justify-content-between align-items-center">
     <h5 class="mb-0">Offer</h5>
     <div class="d-flex align-items-center gap-2">
@@ -27,10 +40,13 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-              <div class="mb-3">
-                <label class="form-label">Type</label>
-                <input type="text" name="type" class="form-control" placeholder="Enter Type" required>
-              </div>
+             <div class="mb-3">
+    <label class="form-label">Type</label>
+    <select name="type" class="form-control" required>
+        <option value="">Select Type</option>
+        <option value="1">Deal of the Day</option>
+    </select>
+</div>
             <div class="mb-3">
                 <label class="form-label">Product</label>
                 <select name="product_id" class="form-select" required>
@@ -111,44 +127,60 @@
     <div class="modal fade" id="EditOffermodal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form method="POST" id="editOfferForm"> @csrf @method('POST') <div class="modal-header">
-              <h5 class="modal-title">Edit offer</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-              <div class="mb-3">
-                <label class="form-label"> Type</label>
-                <input type="text" name="type" id="editOfferType" class="form-control" required>
-              </div>
-              <div class="mb-3">
-            <label class="form-label">Product</label>
-            <select name="product_id" id="editProductid" class="form-select">
-              @foreach ($items as $item)
-              <option value="{{ $item->id }}">
-                {{ $item->name }}
-              </option>
-              @endforeach
-            </select>
-          </div>
+         <form method="POST" id="editOfferForm">
+    @csrf
 
-              <div class="mb-3">
-                <label class="form-label"> Amount</label>
-                <input type="text" name="amount" id="editamount" class="form-control" required>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"> Close </button>
-              <button type="submit" class="btn btn-primary"> Update </button>
-            </div>
-          </form>
+    <div class="modal-header">
+        <h5 class="modal-title">Edit Offer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="mb-3">
+            <label class="form-label">Type</label>
+            <select name="type" id="editOfferType" class="form-control" required>
+                <option value="">Select Type</option>
+                <option value="1">Deal of the Day</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Product</label>
+            <select name="product_id" id="editProductid" class="form-select" required>
+                @foreach ($items as $item)
+                    <option value="{{ $item->id }}">
+                        {{ $item->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Amount</label>
+            <input type="text" name="amount" id="editamount" class="form-control" required>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            Close
+        </button>
+        <button type="submit" class="btn btn-primary">
+            Update
+        </button>
+    </div>
+</form>
         </div>
       </div>
     </div>
-    <script id="fix-offer-modal-js">
+    <script>
 document.addEventListener('DOMContentLoaded', function () {
 
     const editOfferModal = document.getElementById('EditOffermodal');
     const form = document.getElementById('editOfferForm');
+
     const typeInput = document.getElementById('editOfferType');
     const productIdInput = document.getElementById('editProductid');
     const amountInput = document.getElementById('editamount');
@@ -161,21 +193,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (!button) return;
 
-            const id = button.getAttribute('data-id');
-            const type = button.getAttribute('data-type');
-            const productId = button.getAttribute('data-productid');
-            const amount = button.getAttribute('data-amount');
+            const id = button.dataset.id;
+            const type = button.dataset.type;
+            const productId = button.dataset.productid;
+            const amount = button.dataset.amount;
 
-            typeInput.value = type ?? '';
-            productIdInput.value = productId ?? '';
-            amountInput.value = amount ?? '';
+            typeInput.value = type || '';
+            productIdInput.value = productId || '';
+            amountInput.value = amount || '';
 
-            if (id) {
-                form.action = `/offers/update/${id}`;
-            }
-
+            form.action = "{{ url('offers/update') }}/" + id;
         });
-
     }
 
 });

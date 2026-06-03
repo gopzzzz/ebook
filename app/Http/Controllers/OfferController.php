@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Offer;
 use App\Models\Item;
+use Illuminate\Support\Facades\Log;
 
 class OfferController extends Controller
 {
@@ -29,37 +30,64 @@ class OfferController extends Controller
 
     public function store(Request $request)
     {
-       $request->validate([
-    'type' => 'required|string|max:255',
-    'product_id' => 'required|string|max:20',
-    'amount' => 'required|string|max:20'
-]);
+    try {
 
-        Offer::create([
-    'type' => $request->type,
-    'product_id' => $request->product_id,
-    'amount' => $request->amount
-]);
+    $request->validate([
+        'type'       => 'required|string|max:255',
+        'product_id' => 'required|string|max:20',
+        'amount'     => 'required|string|max:20',
+    ]);
 
-        return redirect()->back()->with('success','Offer added successfully');
+    Offer::create([
+        'type'       => $request->type,
+        'product_id' => $request->product_id,
+        'amount'     => $request->amount,
+    ]);
+
+    return redirect()
+        ->back()
+        ->with('success', 'Offer added successfully.');
+
+} catch (\Exception $e) {
+
+    Log::error('Offer Create Error: ' . $e->getMessage());
+
+    return redirect()
+        ->back()
+        ->withInput()
+        ->with('error', $e->getMessage());
+}
     }
-
-    public function update(Request $request, $id)
+    public function update(Request $request , $id)
     {
-        $offer = Offer::findOrFail($id);
+     try {
 
-        $request->validate([
-    'type' => 'required|string|max:255',
-    'product_id' => 'required|string|max:20',
-    'amount' => 'required|string|max:20'
-]);
-        $offer->update([
-            'type' => $request->type,
-    'product_id' => $request->product_id,
-    'amount' => $request->amount
-            
-        ]);
+    $offer = Offer::findOrFail($id);
 
-        return redirect()->back()->with('success','Offer updated successfully');
+    $request->validate([
+        'type'       => 'required|string|max:255',
+        'product_id' => 'required|string|max:20',
+        'amount'     => 'required|string|max:20',
+    ]);
+
+    $offer->update([
+        'type'       => $request->type,
+        'product_id' => $request->product_id,
+        'amount'     => $request->amount,
+    ]);
+
+    return redirect()
+        ->back()
+        ->with('success', 'Offer updated successfully.');
+
+} catch (\Exception $e) {
+
+    Log::error('Offer Update Error: ' . $e->getMessage());
+
+    return redirect()
+        ->back()
+        ->withInput()
+        ->with('error',  $e->getMessage());
+}
     }
 }

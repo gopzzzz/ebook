@@ -78,34 +78,51 @@ class CustomerController extends Controller
 
     public function update(Request $request, $id)
     {
-        $customer = Customer::findOrFail($id);
+        try {
 
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'shipping_address' => 'nullable|string|max:255',
+    $customer = Customer::findOrFail($id);
+
+    $request->validate([
+        'name'             => 'required|string|max:255',
+        'shipping_address' => 'nullable|string|max:255',
+    ]);
+
+    $customer->update([
+        'name' => $request->name
+    ]);
+
+    $shipping = ShippingAddress::where('cus_id', $customer->id)->first();
+
+    if ($shipping) {
+
+        $shipping->update([
+            'address' => $request->shipping_address
         ]);
 
-        $customer->update([
-            'name' => $request->name
+    } elseif ($request->shipping_address) {
+
+        ShippingAddress::create([
+            'cus_id'   => $customer->id,
+            'address'  => $request->shipping_address,
+            'pincode'  => '',
+            'district' => '',
+            'state'    => '',
         ]);
+    }
 
-        $shipping = ShippingAddress::where('cus_id', $customer->id)->first();
+    return redirect()
+        ->back()
+        ->with('success', 'Customer updated successfully.');
 
-        if ($shipping) {
-            $shipping->update([
-                'address' => $request->shipping_address
-            ]);
-        } elseif ($request->shipping_address) {
-            ShippingAddress::create([
-                'cus_id' => $customer->id,
-                'address' => $request->shipping_address,
-                'pincode' => '',
-                'district' => '',
-                'state' => '',
-            ]);
-        }
+} catch (\Exception $e) {
 
-        return redirect()->back()->with('success', 'Customer updated successfully');
+    Log::error('Customer Update Error: ' . $e->getMessage());
+
+    return redirect()
+        ->back()
+        ->withInput()
+        ->with('error', 'Failed to update customer. Please try again.');
+}
     }
 
     public function login()

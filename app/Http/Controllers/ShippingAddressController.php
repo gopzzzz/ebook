@@ -24,47 +24,74 @@ class ShippingAddressController extends Controller
       ->select('shipping_address.*','customers.name')
         ->paginate(10);
 
-    $customers = Customer::orderBy('id', 'desc')->get();
+    $customers = Customer::where('user_id',$id)->first();
 
     return view('admin.shippingaddress', compact('shippingaddress','customers'));
 }
     public function store(Request $request)
     {
-        $request->validate([
-            'cus_id' => 'required',
-            'address' => 'required',
-            'pincode' => 'required',
-            'district' => 'nullable',
-            'state' => 'required',
-            'phone_number'=>'required',
-        ]);
+      try {
 
-        ShippingAddress::create($request->all());
+    $request->validate([
+        'cus_id'       => 'required',
+        'address'      => 'required',
+        'pincode'      => 'required',
+        'district'     => 'nullable',
+        'state'        => 'required',
+        'phone_number' => 'required',
+    ]);
 
-        return redirect()->back()->with('success', 'Shipping Address created successfully');
+    ShippingAddress::create($request->all());
+
+    return redirect()
+        ->back()
+        ->with('success', 'Shipping Address created successfully.');
+
+} catch (\Exception $e) {
+
+    Log::error('Shipping Address Create Error: ' . $e->getMessage());
+
+    return redirect()
+        ->back()
+        ->withInput()
+        ->with('error', 'Failed to create Shipping Address. Please try again.');
+}
     }
 
     public function update(Request $request, $id)
 {
+   try {
+
     $request->validate([
-        'cus_id' => 'required',
-        'address' => 'required',
-        'pincode' => 'required',
+        'cus_id'   => 'required',
+        'address'  => 'required',
+        'pincode'  => 'required',
         'district' => 'nullable',
-        'state' => 'required',
-        
+        'state'    => 'required',
     ]);
 
     $address = ShippingAddress::findOrFail($id);
 
     $address->update([
-        'cus_id' => $request->cus_id,
-        'address' => $request->address,
-        'pincode' => $request->pincode,
+        'cus_id'   => $request->cus_id,
+        'address'  => $request->address,
+        'pincode'  => $request->pincode,
         'district' => $request->district,
-        'state' => $request->state
+        'state'    => $request->state,
     ]);
 
-    return redirect()->back()->with('success', 'Shipping address updated successfully');
+    return redirect()
+        ->back()
+        ->with('success', 'Shipping address updated successfully.');
+
+} catch (\Exception $e) {
+
+    Log::error('Shipping Address Update Error: ' . $e->getMessage());
+
+    return redirect()
+        ->back()
+        ->withInput()
+        ->with('error', 'Failed to update shipping address. Please try again.');
+}
 }
 }

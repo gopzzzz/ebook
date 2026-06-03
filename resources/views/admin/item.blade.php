@@ -50,81 +50,137 @@
       </form>
 </div>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter"> Add New Record </button>
-    <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
+    
+<div class="modal fade" id="modalCenter" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
-          <form action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data"> @csrf <div class="modal-header">
-              <h5 class="modal-title">Items</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
 
-        
-            <div class="modal-body">
-                
-                 <div class="mb-3">
-                <label class="form-label">Item Type</label>
-                <select name="itemtype" class="form-select" required>
-                  <option value="1">New Sale </option> <option value="2">Second Sale</option>
-                </select>
-              </div>
-             
-              <div class="mb-3">
-              <label class="form-label">Item Type</label>
-              <select name="item_type" class="form-control" required>
-                <option value="1">New Sale</option>
-                <option value="2">Second Sale</option>
-              </select>
-  </div>
-              <div class="mb-3">
-                <label class="form-label">Name</label>
-                <input type="text" name="name" class="form-control" required>
-              </div>
+           
 
-              <div class="mb-3">
-                <label class="form-label">Author Name</label>
-                <select name="author_id" class="form-select" required>
-                  <option value="">Select </option> @foreach ($authors as $author) <option value="{{ $author->id }}">{{ $author->author_name }}</option> @endforeach
-                </select>
-              </div>
-             <div class="mb-3">
-                <label class="form-label">Publisher Name</label>
-                <select name="publisher_id" class="form-select" required>
-                  <option value="">Select </option> @foreach ($publishers as $publisher) <option value="{{ $publisher->id }}">{{ $publisher->publisher_name }}</option> @endforeach
-                </select>
-              </div>
-
+            <div class="modal-body" style="max-height:auto; overflow-y:auto;">
               
-              <div class="mb-3">
-                <label class="form-label">Category</label>
-                <select name="cat_id" class="form-select" required>
-                  <option value="">Select Category</option> @foreach ($categories as $category) <option value="{{ $category->id }}">{{ $category->category_name }}</option> @endforeach
-                </select>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">MRP</label>
-                <input type="number" name="mrp" class="form-control" required>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Selling Rate</label>
-                <input type="number" name="sr" class="form-control" required>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Image (249 * 342 PX)</label>
-                <input type="file" name="image" class="form-control" accept="image/png,image/jpeg" required>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Description</label>
-                <textarea name="description" class="form-control" rows="4" required></textarea>
-              </div>
+              <form action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <input type="hidden" name="itemtype" value="1">
+
+                    <div class="row g-3">
+
+                        <!-- Item Name -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Item Name</label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
+
+                        <!-- Category -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Category</label>
+                            <select name="cat_id" class="form-select" required>
+                                <option value="">Select Category</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">
+                                        {{ $category->category_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Brand -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Brand Name</label>
+                            <select name="author_id" class="form-select" required>
+                                <option value="">Select Brand</option>
+                                @foreach ($authors as $author)
+                                    <option value="{{ $author->id }}">
+                                        {{ $author->author_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Publisher -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Hsn Code</label>
+                            <select name="hsnid" class="form-select" required>
+                                <option value="">Select HSN Code</option>
+                                @foreach ($hsncode as $hsncodes)
+                                    <option value="{{ $hsncodes->id }}">
+                                        {{ $hsncodes->code }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- MRP -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">MRP (₹)</label>
+                            <input type="number" name="mrp" class="form-control" required>
+                        </div>
+
+                        <!-- Selling Rate -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Selling Rate (₹)</label>
+                            <input type="number" name="sr" class="form-control" required>
+                        </div>
+
+                        <!-- Image Upload -->
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">
+                                Product Image <small class="text-muted">(Recommended: 249 × 342 px)</small>
+                            </label>
+                            <input type="file"
+                                   name="image"
+                                   class="form-control"
+                                   accept="image/png,image/jpeg"
+                                   required>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">Description</label>
+                            <textarea name="description"
+                                      class="form-control"
+                                      rows="5"
+                                      placeholder="Enter product description..."
+                                      required></textarea>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-outline-secondary"
+                            data-bs-dismiss="modal">
+                        Close
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-primary px-4">
+                        Save Item
+                    </button>
+                </div>
+
+            </form>
+
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"> Close </button>
-              <button type="submit" class="btn btn-primary"> Save </button>
-            </div>
-          </form>
+
         </div>
-      </div>
     </div>
+</div>
+
+
+
+
+
   </div>
 </div>
 <div class="card-body">
@@ -161,7 +217,7 @@
                 <i class="bx bx-dots-vertical-rounded"></i>
               </button>
               <div class="dropdown-menu">
-                <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#EditItemmodal" data-id="{{ $item->id }}" data-name="{{ e($item->name) }}" data-author="{{ $item->author_id }}" data-publisher="{{ $item->publisher_id }}"  data-category="{{ $item->cat_id }}" data-mrp="{{ $item->mrp }}" data-sr="{{ $item->sr }}" data-image="{{ $item->image }}" data-description="{{ e($item->description) }}">
+                <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#EditItemmodal" data-id="{{ $item->id }}" data-name="{{ e($item->name) }}" data-author="{{ $item->author_id }}" data-hsnid="{{ $item->hsnid }}"  data-category="{{ $item->cat_id }}" data-mrp="{{ $item->mrp }}" data-sr="{{ $item->sr }}" data-image="{{ $item->image }}" data-description="{{ ($item->description) }}">
                   <i class="bx bx-edit-alt me-1"></i> Edit </a>
                 <a href="#" class="dropdown-item text-danger">
                   <i class="bx bx-trash me-1"></i> Delete </a>
@@ -183,32 +239,28 @@
             </div>
             <div class="modal-body">
                 
-                 <div class="mb-3">
+                 <!-- <div class="mb-3">
                 <label class="form-label">Item Type</label>
                 <select name="item_type" class="form-select" required id="edititemtype">
                   <option value="1">New Sale </option> <option value="2">Second Sale</option>
                 </select>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Item Type</label>
-                <select name="item_type" id="editItemType" class="form-control" required>
-                  <option value="1">New sale</option>
-                  <option value="2">Second sale</option>
-                </select>
-              </div>
+              </div> -->
+
+              <input type="hidden" name="item_type" value="1">
+           
               <div class="mb-3">
                 <label class="form-label">Name</label>
                 <input type="text" name="name" id="editName" class="form-control" required>
               </div>
 
               <div class="mb-3">
-                <label class="form-label">Author name</label>
+                <label class="form-label">Brand name</label>
                 <select name="author_id" id="editAuthor" class="form-select" required> @foreach ($authors as $author) <option value="{{ $author->id }}">{{ $author->author_name }}</option> @endforeach </select>
               </div>
 
               <div class="mb-3">
                 <label class="form-label">Publisher</label>
-                <select name="publisher_id" id="editPublisher" class="form-select" required> @foreach ($publishers as $publisher) <option value="{{ $publisher->id }}">{{ $publisher->publisher_name }}</option> @endforeach </select>
+                <select name="hsnid" id="editHnscode" class="form-select" required> @foreach ($hsncode as $hsncodes) <option value="{{ $hsncodes->id }}">{{ $hsncodes->code }}</option> @endforeach </select>
               </div>
               
               <div class="mb-3">
@@ -247,7 +299,6 @@
         </div>
       </div>
     </div>
-<<<<<<< HEAD
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         const editItemModal = document.getElementById('EditItemmodal');
@@ -257,39 +308,18 @@
           form.action = "{{ url('items/update') }}/" + button.dataset.id;
           document.getElementById('editName').value = button.dataset.name;
           document.getElementById('editAuthor').value = button.dataset.author;
-          document.getElementById('editPublisher').value = button.dataset.publisher;
+          document.getElementById('editHnscode').value = button.dataset.hsnid;
           document.getElementById('editCategory').value = button.dataset.category;
           document.getElementById('editMrp').value = button.dataset.mrp;
+          document.getElementById('editDescription').value = button.dataset.description;
           document.getElementById('editSr').value = button.dataset.sr;
           document.getElementById('edititemtype').value = button.dataset.item_type;
+          
           document.getElementById('editImagePreview').src = `/assets/img/items/${button.dataset.image}`;
-          document.getElementById('editDescription').value = button.dataset.description ?? '';
+         
         });
       });
     </script>
-=======
-   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const editItemModal = document.getElementById('EditItemmodal');
-    const form = document.getElementById('editItemForm');
-
-    editItemModal.addEventListener('show.bs.modal', function(event) {
-      const button = event.relatedTarget;
-
-      form.action = `/items/update/${button.dataset.id}`;
-      document.getElementById('editItemType').value = button.dataset.item_type;
-      document.getElementById('editName').value = button.dataset.name;
-      document.getElementById('editAuthor').value = button.dataset.author;
-      document.getElementById('editPublisher').value = button.dataset.publisher;
-      document.getElementById('editCategory').value = button.dataset.category;
-      document.getElementById('editMrp').value = button.dataset.mrp;
-      document.getElementById('editSr').value = button.dataset.sr;
-      document.getElementById('editImagePreview').src = `/assets/img/items/${button.dataset.image}`;
-      document.getElementById('editDescription').value = button.dataset.description ?? '';
-    });
-  });
-</script>
->>>>>>> fa958f4ce4125d3ac27e97483a62c283559aa76a
   </div>
 </div>
 </div>

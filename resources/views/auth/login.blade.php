@@ -12,7 +12,7 @@
   <head>
    
 
-    <title>Aron Books Admin Login</title>
+    <title>{{$app_profile->name}} Admin Login</title>
 
     <meta name="description" content="" />
 
@@ -116,11 +116,11 @@
                       </g>
                     </svg>
                   </span>
-                  <span class="app-brand-text demo text-body fw-bolder">Aron Books</span>
+                  <span class="app-brand-text demo text-body fw-bolder">{{$app_profile->name}}</span>
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2">Welcome to Aron Books Admin Panel! 👋</h4>
+              <h4 class="mb-2">Welcome to {{$app_profile->name}} Admin Panel! 👋</h4>
               <p class="mb-4">Please sign-in to your account and start the adventure</p>
 
               <form id="formAuthentication" class="mb-3"  action="{{ route('login') }}" method="POST">

@@ -44,7 +44,7 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">Aron Books</span>
+                            <span class="fw-semibold d-block">{{$app_profile->name}}</span>
                             <small class="text-muted">Admin</small>
                           </div>
                         </div>

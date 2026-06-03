@@ -1,10 +1,23 @@
 @extends('layouts.mainlayout') @section('content') <h4 class="fw-bold py-3 mb-4">
-  <span class="text-muted fw-light">Home /</span> Author Creation
+  <span class="text-muted fw-light">Home /</span> Brand List
 </h4>
 <!-- Bordered Table -->
 <div class="card">
+   @if(session('success'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+@endif
+
+@if(session('error'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ session('error') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+@endif
   <div class="card-header d-flex justify-content-between align-items-center">
-    <h5 class="mb-0">Author</h5>
+    <h5 class="mb-0">Brand</h5>
     <div class="d-flex align-items-center gap-2">
 
       <form method="GET" action="{{ route('authors.index') }}" class="d-flex gap-2">
@@ -23,12 +36,12 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <form action="{{ route('authors.store') }}" method="POST"> @csrf <div class="modal-header">
-              <h5 class="modal-title">Author Creation</h5>
+              <h5 class="modal-title">Brand Creation</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label class="form-label">Author name </label>
+                <label class="form-label">Brand name </label>
                 <input type="text" name="author_name" class="form-control" placeholder="Enter Name" required>
               </div>
             </div>
@@ -48,7 +61,7 @@
       <thead>
         <tr>
           <th>SL No.</th>
-          <th>Author Name</th>
+          <th>Brand Name</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -79,12 +92,12 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <form method="POST" id="editAuthorForm"> @csrf @method('POST') <div class="modal-header">
-              <h5 class="modal-title">Edit Author</h5>
+              <h5 class="modal-title">Edit Brand</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label class="form-label">Author Name</label>
+                <label class="form-label">Brand Name</label>
                 <input type="text" name="author_name" id="editAuthorName" class="form-control" required>
               </div>
             </div>
@@ -106,7 +119,8 @@
           const id = button.getAttribute('data-id');
           const name = button.getAttribute('data-name');
           nameInput.value = name;
-          form.action = `/authors/update/${id}`;
+          
+              form.action = "{{ url('authors/update') }}/" + button.dataset.id;
         });
       });
     </script>

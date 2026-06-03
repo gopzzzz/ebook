@@ -57,7 +57,7 @@
                   </g>
                 </svg>
               </span>
-              <span class="app-brand-text demo menu-text fw-bolder ms-2">Aronbooks</span>
+              <span class="app-brand-text demo menu-text fw-bolder ms-2">{{$app_profile->name}}</span>
             </a>
 
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -69,7 +69,7 @@
 
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
-            <li class="menu-item active">
+            <li class="menu-item {{ request()->is('dashboard') ? 'active' : '' }}">
               <a href="{{url('dashboard')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
@@ -77,105 +77,123 @@
             </li>
 
             <!-- Layouts -->
-            <li class="menu-item">
-              <a href="{{url('orders')}}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">Orders</div>
-              </a>
-
-              
-            </li>
+         <li class="menu-item {{ request()->is('orders') ? 'active' : '' }}">
+    <a href="{{ url('orders') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-layout"></i>
+        <div data-i18n="Layouts">Orders</div>
+    </a>
+</li>
 
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Pages</span>
             </li>
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Catelog Settings</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="{{url('categories')}}" class="menu-link">
-                    <div data-i18n="Account">Category</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                   <a href="{{url('items')}}" class="menu-link">
-                    <div data-i18n="Notifications">Items</div>
-                  </a>
-                </li>
-              
+            <li class="menu-item {{ request()->is('hsn*') || request()->is('categories*')|| request()->is('banner*')|| request()->is('offers*') || request()->is('items*')|| request()->is('authors*') ? 'active open' : '' }}">
+    
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-dock-top"></i>
+        <div data-i18n="Account Settings">Catalog Settings</div>
+    </a>
 
-                
+    <ul class="menu-sub">
 
-               
-               
-                
-              </ul>
-            </li>
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                <div data-i18n="Authentications">Account Creation</div>
-              </a>
-              <ul class="menu-sub">
-               <li class="menu-item">
-                  <a href="{{url('customers')}}" class="menu-link">
-                    <div data-i18n="Account">Customers</div>
-                  </a>
-                </li>
-                  <li class="menu-item">
-                  <a href="{{url('authors')}}" class="menu-link">
-                    <div data-i18n="Account">Author Creation</div>
-                  </a>
-                </li>
-                 <li class="menu-item">
-                  <a href="{{url('publishers')}}" class="menu-link">
-                    <div data-i18n="Account">Publisher</div>
-                  </a>
-                </li>
-                  <li class="menu-item">
-                  <a href="{{url('shippingaddress')}}" class="menu-link">
-                    <div data-i18n="Account">Shipping Address</div>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-                <div data-i18n="Misc">Settings </div>
-              </a>
-              <ul class="menu-sub">
-               
-                <li class="menu-item">
-                  <a href="{{url('banner')}}" class="menu-link">
-                    <div data-i18n="Account">Banner Creation</div>
-                  </a>
-                </li>
+        <li class="menu-item {{ request()->is('hsn*') ? 'active' : '' }}">
+            <a href="{{ url('hsn') }}" class="menu-link">
+                <div>HSN Code</div>
+            </a>
+        </li>
 
-                
-                <li class="menu-item">
-                  <a href="{{url('offers')}}" class="menu-link">
-                    <div data-i18n="Account">Offer Creation</div>
-                  </a>
-                </li>
+        <li class="menu-item {{ request()->is('categories*') ? 'active' : '' }}">
+            <a href="{{ url('categories') }}" class="menu-link">
+                <div>Category</div>
+            </a>
+        </li>
 
+          <li class="menu-item {{ request()->is('authors*') ? 'active' : '' }}">
+            <a href="{{ url('authors') }}" class="menu-link">
+                <div>Brands</div>
+            </a>
+        </li>
 
-                <li class="menu-item">
-                  <a href="{{url('ads')}}" class="menu-link">
-                    <div data-i18n="Account">Ad Creation</div>
-                  </a>
-                </li>
+        <li class="menu-item {{ request()->is('items*') ? 'active' : '' }}">
+            <a href="{{ url('items') }}" class="menu-link">
+                <div>Products</div>
+            </a>
+        </li>
 
-                <li class="menu-item">
-                  <a href="{{url('profiles')}}" class="menu-link">
-                    <div data-i18n="Account">Profile Settings</div>
-                  </a>
-                </li>
-              </ul>
-            </li>
+          <li class="menu-item {{ request()->is('banner*') ? 'active' : '' }}">
+            <a href="{{ url('banner') }}" class="menu-link">
+                <div>Banners</div>
+            </a>
+        </li>
+
+        <li class="menu-item {{ request()->is('offers*') ? 'active' : '' }}">
+            <a href="{{ url('offers') }}" class="menu-link">
+                <div>Offers</div>
+            </a>
+        </li>
+
+    </ul>
+</li>
+        <li class="menu-item {{ request()->is('customers*')  ? 'active open' : '' }}">
+
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+        <div data-i18n="Authentications">Account Creation</div>
+    </a>
+
+    <ul class="menu-sub">
+
+        <li class="menu-item {{ request()->is('customers*') ? 'active' : '' }}">
+            <a href="{{ url('customers') }}" class="menu-link">
+                <div>Customers</div>
+            </a>
+        </li>
+
+      
+<!-- 
+        <li class="menu-item {{ request()->is('publishers*') ? 'active' : '' }}">
+            <a href="{{ url('publishers') }}" class="menu-link">
+                <div>Publisher</div>
+            </a>
+        </li> -->
+
+        <!-- <li class="menu-item {{ request()->is('shippingaddress*') ? 'active' : '' }}">
+            <a href="{{ url('shippingaddress') }}" class="menu-link">
+                <div>Shipping Address</div>
+            </a>
+        </li> -->
+
+    </ul>
+
+</li>
+          <li class="menu-item {{  request()->is('profiles*') ? 'active open' : '' }}">
+
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+        <div data-i18n="Misc">Settings</div>
+    </a>
+
+    <ul class="menu-sub">
+
+      
+
+        
+        <!-- <li class="menu-item {{ request()->is('ads*') ? 'active' : '' }}">
+            <a href="{{ url('ads') }}" class="menu-link">
+                <div>Ad Creation</div>
+            </a>
+        </li> -->
+       
+
+        <li class="menu-item {{ request()->is('profiles*') ? 'active' : '' }}">
+            <a href="{{ url('profiles') }}" class="menu-link">
+                <div>Profile Settings</div>
+            </a>
+        </li>
+
+    </ul>
+
+</li>
             <!-- Components -->
           
           

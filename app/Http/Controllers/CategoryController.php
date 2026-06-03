@@ -26,6 +26,8 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
+       try {
+
         $request->validate([
             'category_name' => 'required'
         ]);
@@ -34,11 +36,25 @@ class CategoryController extends Controller
             'category_name' => $request->category_name
         ]);
 
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->with('success', 'Category added successfully.');
+
+    } catch (\Exception $e) {
+
+        Log::error('Category Create Error: ' . $e->getMessage());
+
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with('error', 'Failed to add category. Please try again.');
+    }
     }
 
     public function update(Request $request, $id)
     {
+          try {
+
         $category = Category::findOrFail($id);
 
         $request->validate([
@@ -49,7 +65,19 @@ class CategoryController extends Controller
             'category_name' => $request->category_name
         ]);
 
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->with('success', 'Category updated successfully.');
+
+    } catch (\Exception $e) {
+
+        Log::error('Category Update Error: ' . $e->getMessage());
+
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with('error', 'Failed to update category. Please try again.');
+    }
     }
     
 }

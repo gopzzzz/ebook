@@ -3,6 +3,31 @@
 </h4>
 <!-- Bordered Table -->
 <div class="card">
+  
+ @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
+
+@if($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
   <div class="card-header d-flex justify-content-between align-items-center">
     <h5 class="mb-0">Category</h5>
     <div class="d-flex align-items-center gap-2">
@@ -106,7 +131,8 @@
           const id = button.getAttribute('data-id');
           const name = button.getAttribute('data-name');
           nameInput.value = name;
-          form.action = `/categories/update/${id}`;
+          form.action = "{{ url('categories/update') }}/" + button.dataset.id;
+         
         });
       });
     </script>

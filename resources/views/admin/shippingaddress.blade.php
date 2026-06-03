@@ -1,8 +1,21 @@
 @extends('layouts.mainlayout') @section('content') <h4 class="fw-bold py-3 mb-4">
-  <span class="text-muted fw-light">Home /</span> Shipping Address
+  <span class="text-muted fw-light">Home /</span> {{$customers->name}}
 </h4>
 <!-- Bordered Table -->
 <div class="card">
+  @if(session('success'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+@endif
+
+@if(session('error'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ session('error') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+@endif
   <div class="card-header d-flex justify-content-between align-items-center">
     <h5 class="mb-0">Shipping Address</h5>
     <div class="d-flex align-items-center gap-2">
@@ -21,7 +34,7 @@
               <div class="mb-3">
                 <label class="form-label">Customer ID</label>
                 <select name="cus_id" class="form-select" required>
-                  <option value="">Select Customer</option> @foreach ($customers as $customer) <option value="{{ $customer->user_id }}">{{ $customer->name }}</option> @endforeach
+                  <option value="">Select Customer</option><option value="{{ $customers->user_id }}">{{ $customers->name }}</option>
                 </select>
               </div>
               <div class="mb-3">
@@ -127,11 +140,11 @@
           <div class="mb-3">
             <label class="form-label">Customer</label>
             <select name="cus_id" id="editCustomer" class="form-select">
-              @foreach ($customers as $customer)
-              <option value="{{ $customer->id }}">
-                {{ $customer->name }}
+              
+              <option value="{{ $customers->id }}">
+                {{ $customers->name }}
               </option>
-              @endforeach
+              
             </select>
           </div>
 

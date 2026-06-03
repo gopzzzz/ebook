@@ -12,7 +12,7 @@
 <meta name="author" content="AronBooks">
 <meta name="robots" content="index, follow">
 	
-	<link rel="icon" type="image/png" href="{{asset('public/uploads/profile/arobookslogo.png')}}">
+	<link rel="icon" type="image/png" href="{{asset('public/uploads/profile/'.$app_profile->logo)}}">
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">

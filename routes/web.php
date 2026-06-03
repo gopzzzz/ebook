@@ -16,6 +16,7 @@ use App\Http\Controllers\OfferController;
 use App\Http\Controllers\AdController;
 use App\Http\Controllers\CompanyProfileController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\HsnController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,12 +31,23 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/delete', [ProfileController::class, 'destroy'])->name('profile.destroy');
+  
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
     Route::post('/categories/store', [CategoryController::class, 'store'])->name('categories.store');
     Route::get('/categories/edit/{id}', [CategoryController::class, 'edit'])->name('categories.edit');
     Route::post('/categories/update/{id}', [CategoryController::class, 'update'])->name('categories.update');
     Route::post('/categories/delete/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+   
+
+    Route::get('/hsn', [HsnController::class, 'index'])->name('hsn.index');
+    Route::get('/hsn/create', [HsnController::class, 'create'])->name('hsn.create');
+    Route::post('/hsn/store', [HsnController::class, 'store'])->name('hsn.store');
+    Route::get('/hsn/edit/{id}', [HsnController::class, 'edit'])->name('hsn.edit');
+    Route::post('/hsn/update/{id}', [HsnController::class, 'update'])->name('hsn.update');
+    Route::post('/hsn/delete/{id}', [HsnController::class, 'destroy'])->name('hsn.destroy');
+   
+   
     Route::get('/authors', [AuthorController::class, 'index'])->name('authors.index');
     Route::get('/authors/create', [AuthorController::class, 'create'])->name('authors.create');
     Route::post('/authors/store', [AuthorController::class, 'store'])->name('authors.store');

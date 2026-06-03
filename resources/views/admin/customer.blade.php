@@ -3,6 +3,29 @@
 </h4>
 <!-- Bordered Table -->
 <div class="card">
+   @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
+
+@if($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
   <div class="card-header d-flex justify-content-between align-items-center">
     <h5 class="mb-0">Customer</h5>
     <div class="d-flex align-items-center gap-2">
@@ -82,7 +105,7 @@
   <td>{{ $customers->firstItem() + $loop->index }}</td>
   <td>
     {{ $customer->name }}</td>
-   <td>{{ $customer->shipping_address  }} , {{ $customer->district  }} ,{{ $customer->state  }} ,{{ $customer->pincode  }} ,{{ $customer->phone_number  }}  </td>
+   <td>{{ $customer->shipping_address  }} , <br> {{ $customer->district  }} , <br>{{ $customer->state  }} ,{{ $customer->pincode  }} , <br>{{ $customer->phone_number  }}  </td>
 
   <td>
     <div class="dropdown position-static">
@@ -92,7 +115,7 @@
 
       <div class="dropdown-menu">
         <a href="{{url('shippingaddress/'.$customer->user_id)}}"
-           class="dropdown-item" target="_blank">
+           class="dropdown-item" >
           <i class="bx bx-edit-alt me-1"></i> Change Shipping Address
         </a>
 

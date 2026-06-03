@@ -23,6 +23,7 @@ class Item extends Model
     'mrp',
     'sr',
     'image',
+    'hsnid',
     'description',
 ];
 

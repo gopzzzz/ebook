@@ -17,6 +17,7 @@ use App\Http\Controllers\AdController;
 use App\Http\Controllers\CompanyProfileController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HsnController;
+use App\Http\Controllers\VarientsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -46,8 +47,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/hsn/edit/{id}', [HsnController::class, 'edit'])->name('hsn.edit');
     Route::post('/hsn/update/{id}', [HsnController::class, 'update'])->name('hsn.update');
     Route::post('/hsn/delete/{id}', [HsnController::class, 'destroy'])->name('hsn.destroy');
-   
-   
+
+    Route::get('/varients', [VarientsController::class, 'index'])->name('varients.index');
+    Route::get('/varients/create', [VarientsController::class, 'create'])->name('varients.create');
+    Route::post('/varients/store', [VarientsController::class, 'store'])->name('varients.store');
+    Route::get('/varients/edit/{id}', [VarientsController::class, 'edit'])->name('varients.edit');
+    Route::post('/varients/update/{id}', [VarientsController::class, 'update'])->name('varients.update');
+    Route::post('/varients/delete/{id}', [VarientsController::class, 'destroy'])->name('varients.destroy');
+    Route::any('/attributes/{id}', [VarientsController::class, 'attributes'])->name('attributes');
+    Route::post('/addattributes', [VarientsController::class, 'add_attributes'])->name('addattributes');
+    Route::post('/editattributes/{id}', [VarientsController::class, 'edit_attributes'])->name('editattributes');
+    Route::get('/get-attributes/{id}', [VarientsController::class, 'getAttributes']);
+   Route::get('/get-productattributes/{id}', [VarientsController::class, 'getProductattributes']);
+    Route::get('/edititems/{id}', [ItemController::class, 'edititems']);
+  
     Route::get('/authors', [AuthorController::class, 'index'])->name('authors.index');
     Route::get('/authors/create', [AuthorController::class, 'create'])->name('authors.create');
     Route::post('/authors/store', [AuthorController::class, 'store'])->name('authors.store');

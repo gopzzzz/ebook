@@ -27,7 +27,7 @@
 								<div class="products-content">
 									<div class="author-name">By {{$product->author_name}}</div>
 									<h3 class="item-title">{{$product->publisher_name}}</h3>
-									<p>{{$product->description}}</p>
+									<p>{!! nl2br(e($product->description)) !!}</p>
 									<div class="item-price"><span class="prev-price">₹ {{$product->mrp}}</span>₹ {{$product->sr}}
 										</div>
 									<!-- <div class="btn-wrap">

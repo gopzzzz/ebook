@@ -11,6 +11,9 @@ use App\Models\Item;
 use App\Models\Author;
 use App\Models\Hsn_codes;
 use App\Models\Category;
+use App\Models\Varient_types;
+use App\Models\Product_attributes;
+use App\Models\Available_atributes;
 use Illuminate\Support\Str;
 use DB;
 use Log;
@@ -19,6 +22,7 @@ class ItemController extends Controller
 {
     public function index(Request $request)
     {
+        
         $search = $request->search;
 
         $items = Item::with(['author', 'publisher', 'category'])
@@ -30,66 +34,146 @@ class ItemController extends Controller
         $authors = Author::all();
         $hsncode = Hsn_codes::all();
         $categories = Category::all();
+        $variants =Varient_types::all();
+       
+        $attributes = Product_attributes::all();
 
+       
         return view('admin.item', compact(
             'items',
             'authors',
             'hsncode',
             'categories',
-            'search'
+            'search',
+            'variants',
+            'attributes'
+           
         ));
     }
+ public function edititems($id){
+    
+        $items = Item::where('id',$id)
+            ->first();
+      $authors = Author::all();
+        $hsncode = Hsn_codes::all();
+        $categories = Category::all();
+        $variants =Varient_types::all();
+       
+        $attributes = Product_attributes::all();
+         $availableAttributes = Available_atributes::where('product_id',$id)->get();
 
+return view('admin.edititems',compact('authors',
+            'hsncode',
+            'categories', 
+            'variants',
+            'attributes',
+            'items',
+             'availableAttributes'
+        ));
+ }
     public function store(Request $request)
     {  
-        
-    try {
+        try {
+  
 
-        $request->validate([
-            'item_type'    => 'nullable|in:1,2',
-            'name'         => 'required|string|max:255',
-            'author_id'    => 'required|exists:authors,id',
-            'hsnid'        => 'required',
-            'publisher_id' => 'nullable|exists:publishers,id',
-            'cat_id'       => 'required|exists:categories,id',
-            'mrp'          => 'required|numeric',
-            'sr'           => 'required|numeric',
-            'image'        => 'required|image|mimes:png,jpg,jpeg',
-            'description'  => 'nullable|string',
-        ]);
+    $validated = $request->validate([
+        'item_type'    => 'nullable|in:1,2',
+        'name'         => 'required|string|max:255',
+        'author_id'    => 'required|exists:authors,id',
+        'hsnid'        => 'required',
+        'publisher_id' => 'nullable|exists:publishers,id',
+        'cat_id'       => 'required|exists:categories,id',
+        'mrp'          => 'required|numeric',
+        'sr'           => 'required|numeric',
+        'image'        => 'required|image|mimes:jpg,jpeg,png',
+        'description'  => 'nullable|string',
+    ]);
 
-        $imageName = time() . '.' . $request->image->extension();
+    // Upload Image
+    $imageName = time() . '.' . $request->image->getClientOriginalExtension();
 
-        $request->image->move(
-            public_path('assets/img/items'),
-            $imageName
-        );
+    $request->image->move(
+        public_path('assets/img/items'),
+        $imageName
+    );
 
-        Item::create([
-            'item_type'    => 1,
-            'name'         => $request->name,
-            'slug'         => Str::slug($request->name),
-            'author_id'    => $request->author_id,
-            'publisher_id' => 0,
-            'hsnid'        =>$request->hsnid,
-            'cat_id'       => $request->cat_id,
-            'mrp'          => $request->mrp,
-            'sr'           => $request->sr,
-            'description'  => $request->description,
-            'image'        => $imageName,
-        ]);
+    // Create Product
+    $item = Item::create([
+        'item_type'    => 1,
+        'name'         => $validated['name'],
+        'slug'         => Str::slug($validated['name']),
+        'author_id'    => $validated['author_id'],
+        'publisher_id' => 0,
+        'hsnid'        => $validated['hsnid'],
+        'cat_id'       => $validated['cat_id'],
+        'mrp'          => $validated['mrp'],
+        'sr'           => $validated['sr'],
+        'description'  => $validated['description'] ?? null,
+        'image'        => $imageName,
+    ]);
 
-        return redirect()
-            ->back()
-            ->with('success', 'Item added successfully.');
+    // Save Variants & Attributes
+    $availableAttributes = [];
 
-    } catch (\Exception $e) {
+    if (!empty($request->variant_id)) {
 
-        return redirect()
-            ->back()
-            ->withInput()
-            ->with('error', 'Something went wrong: ' . $e->getMessage());
+        foreach ($request->variant_id as $key => $variantId) {
+
+           if (empty($variantId)) {
+            continue;
+        }
+
+        if (empty($request->attribute_ids[$key])) {
+            continue;
+        }
+
+            $attributeIds = '';
+
+            if (!empty($request->attribute_ids[$key])) {
+                $attributeIds = implode(',', $request->attribute_ids[$key]);
+            }
+
+          
+
+            $availableAttributes[] = [
+                'product_id'   => $item->id,
+                'variant_id'   => $variantId,
+                'attribute_id' => $attributeIds,
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ];
+        }
+
+        if (count($availableAttributes) > 0) {
+    DB::table('available_atributes')->insert($availableAttributes);
+}
+
+       
     }
+
+   
+
+    return redirect()
+        ->back()
+        ->with('success', 'Item added successfully.');
+
+} catch (\Exception $e) {
+
+    DB::rollBack();
+
+    Log::error('Item Create Error', [
+        'message' => $e->getMessage(),
+        'line'    => $e->getLine(),
+        'file'    => $e->getFile(),
+    ]);
+
+    return redirect()
+        ->back()
+        ->withInput()
+        ->with('error', $e->getMessage());
+
+    }
+
     }
 
     public function update(Request $request, $id)
@@ -145,6 +229,54 @@ class ItemController extends Controller
         }
 
         $item->update($data);
+if (!empty($request->variant_id)) {
+
+    foreach ($request->variant_id as $key => $variantId) {
+
+        if (empty($variantId)) {
+            continue;
+        }
+
+      if (empty($request->attribute_ids[$key])) {
+            continue;
+        }
+
+            $attributeIds = '';
+
+            if (!empty($request->attribute_ids[$key])) {
+                $attributeIds = implode(',', $request->attribute_ids[$key]);
+            }
+
+     //echo "<pre>";print_r($attributeIds);exit;
+
+        $existing = DB::table('available_atributes')
+            ->where('product_id', $item->id)
+            ->where('variant_id', $variantId)
+            ->first();
+
+        if ($existing) {
+
+            DB::table('available_atributes')
+                ->where('id', $existing->id)
+                ->update([
+                    'attribute_id' => $attributeIds,
+                    'updated_at'   => now()
+                ]);
+
+        } else {
+
+            DB::table('available_atributes')
+                ->insert([
+                    'product_id'   => $item->id,
+                    'variant_id'   => $variantId,
+                    'attribute_id' => $attributeIds,
+                    'created_at'   => now(),
+                    'updated_at'   => now()
+                ]);
+        }
+    }
+}
+        
 
         return redirect()
             ->back()

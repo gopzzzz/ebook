@@ -87,7 +87,7 @@
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Pages</span>
             </li>
-            <li class="menu-item {{ request()->is('hsn*') || request()->is('categories*')|| request()->is('banner*')|| request()->is('offers*') || request()->is('items*')|| request()->is('authors*') ? 'active open' : '' }}">
+            <li class="menu-item {{ request()->is('hsn*') || request()->is('varients*') || request()->is('attributes*') || request()->is('categories*') || request()->is('items*')|| request()->is('authors*') ? 'active open' : '' }}">
     
     <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-dock-top"></i>
@@ -114,23 +114,19 @@
             </a>
         </li>
 
+         <li class="menu-item {{ request()->is('varients*') ||request()->is('attributes*')  ? 'active' : '' }}">
+            <a href="{{ url('varients') }}" class="menu-link">
+                <div>Varients</div>
+            </a>
+        </li>
+
         <li class="menu-item {{ request()->is('items*') ? 'active' : '' }}">
             <a href="{{ url('items') }}" class="menu-link">
                 <div>Products</div>
             </a>
         </li>
 
-          <li class="menu-item {{ request()->is('banner*') ? 'active' : '' }}">
-            <a href="{{ url('banner') }}" class="menu-link">
-                <div>Banners</div>
-            </a>
-        </li>
-
-        <li class="menu-item {{ request()->is('offers*') ? 'active' : '' }}">
-            <a href="{{ url('offers') }}" class="menu-link">
-                <div>Offers</div>
-            </a>
-        </li>
+       
 
     </ul>
 </li>
@@ -166,7 +162,7 @@
     </ul>
 
 </li>
-          <li class="menu-item {{  request()->is('profiles*') ? 'active open' : '' }}">
+          <li class="menu-item {{  request()->is('profiles*') || request()->is('banner*')|| request()->is('offers*') ? 'active open' : '' }}">
 
     <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-cube-alt"></i>
@@ -183,6 +179,18 @@
                 <div>Ad Creation</div>
             </a>
         </li> -->
+
+           <li class="menu-item {{ request()->is('banner*') ? 'active' : '' }}">
+            <a href="{{ url('banner') }}" class="menu-link">
+                <div>Banners</div>
+            </a>
+        </li>
+
+        <li class="menu-item {{ request()->is('offers*') ? 'active' : '' }}">
+            <a href="{{ url('offers') }}" class="menu-link">
+                <div>Offers</div>
+            </a>
+        </li>
        
 
         <li class="menu-item {{ request()->is('profiles*') ? 'active' : '' }}">

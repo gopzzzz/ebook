@@ -17,15 +17,6 @@
     </div>
 @endif
 
-@if($errors->any())
-    <div class="alert alert-danger">
-        <ul class="mb-0">
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
  <div class="card">
 
 
@@ -34,199 +25,9 @@
 
  
 
-    <h5 class="mb-0">Items</h5>
+    <h5 class="mb-0">Edit Items</h5>
 
-    <div class="d-flex align-items-center gap-2">
-
-      <form method="GET" action="{{ route('items.index') }}" class="d-flex gap-2">
-        <input 
-          type="text" 
-          name="search"
-          value="{{ request('search') }}"
-          class="form-control"
-          placeholder="Search item..."
-        >
-        <button type="submit" class="btn btn-outline-primary">Search</button>
-      </form>
-</div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter"> Add New Record </button>
-    
-<div class="modal fade" id="modalCenter" tabindex="-1">
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-
-           
-
-            <div class="modal-body" style="max-height:auto; overflow-y:auto;">
-              
-              <form action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Item</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <div class="modal-body">
-
-                    <input type="hidden" name="itemtype" value="1">
-
-                    <div class="row g-3">
-
-                        <!-- Item Name -->
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Item Name</label>
-                            <input type="text" name="name" class="form-control" required>
-                        </div>
-
-                        <!-- Category -->
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Category</label>
-                            <select name="cat_id" class="form-select" required>
-                                <option value="">Select Category</option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">
-                                        {{ $category->category_name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <!-- Brand -->
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Brand Name</label>
-                            <select name="author_id" class="form-select" required>
-                                <option value="">Select Brand</option>
-                                @foreach ($authors as $author)
-                                    <option value="{{ $author->id }}">
-                                        {{ $author->author_name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <!-- Publisher -->
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Hsn Code</label>
-                            <select name="hsnid" class="form-select" required>
-                                <option value="">Select HSN Code</option>
-                                @foreach ($hsncode as $hsncodes)
-                                    <option value="{{ $hsncodes->id }}">
-                                        {{ $hsncodes->code }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <!-- MRP -->
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">MRP (₹)</label>
-                            <input type="number" name="mrp" class="form-control" required>
-                        </div>
-
-                        <!-- Selling Rate -->
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Selling Rate (₹)</label>
-                            <input type="number" name="sr" class="form-control" required>
-                        </div>
-
-                        <!-- Image Upload -->
-                        <div class="col-12">
-                            <label class="form-label fw-semibold">
-                                Product Image <small class="text-muted">(Recommended: 249 × 342 px)</small>
-                            </label>
-                            <input type="file"
-                                   name="image"
-                                   class="form-control"
-                                   accept="image/png,image/jpeg"
-                                   required>
-                        </div>
-
-                        <!-- Description -->
-                        <div class="col-12">
-                            <label class="form-label fw-semibold">Description</label>
-                            <textarea name="description"
-                                      class="form-control"
-                                      rows="5"
-                                      placeholder="Enter product description..."
-                                      required></textarea>
-                        </div>
-
-                    </div>
-
-<div class="card">
-    <div class="card-header">
-        <h5>Product Variants</h5>
-    </div>
-
-    <div id="variantContainer">
-
-    <div class="variant-item border rounded p-3 mb-3">
-        <div class="row">
-
-            <div class="col-md-4">
-                <label>Variant</label>
-                <select name="variant_id[]" class="form-control variant-select" data-index="0">
-                    <option value="">Select Variant</option>
-
-                    @foreach($variants as $variant)
-                        <option value="{{ $variant->id }}" >
-                            {{ $variant->varient_name }}
-                        </option>
-                    @endforeach
-
-                </select>
-            </div>
-
-            <div class="col-md-6 ">
-             <label>Product Attributes</label>
-              <div id="attribute-select-0" ></div>
-            </div>
-
-            <div class="col-md-2 d-flex align-items-end">
-                <button type="button"
-                        class="btn btn-danger removeVariant">
-                    Remove
-                </button>
-            </div>
-
-        </div>
-
-       
-    </div>
-
-</div>
-<div class="mt-2 text-start">
-    <button type="button"
-            id="addVariant"
-            class="btn btn-primary btn-sm addVariant">
-        <i class="bx bx-plus"></i> Add Variant
-    </button>
-</div>
-</div>
-  </div>
-
-                <div class="modal-footer">
-                    <button type="button"
-                            class="btn btn-outline-secondary"
-                            data-bs-dismiss="modal">
-                        Close
-                    </button>
-
-                    <button type="submit"
-                            class="btn btn-primary px-4">
-                        Save Item
-                    </button>
-                </div>
-
-            </form>
-
-            </div>
-
-        </div>
-    </div>
-</div>
-
+  
 
 
 
@@ -235,58 +36,8 @@
 </div>
 <div class="card-body">
   <div class="table-responsive text-nowrap">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>SL No.</th>
-          <th>Image</th>
-          <!-- <th>Item Type</th> -->
-          <th>Name</th>
-          <th>Category Name</th>
-          <th>MRP</th>
-          <th>Selling Price</th>
-          
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody> @foreach ($items as $item) <tr>
-        <td>{{ $items->firstItem() + $loop->index }}</td>
-          <td>
-            <img src="{{ asset('public/assets/img/items/'.$item->image) }}" width="50" height="50" style="object-fit: cover; border-radius: 6px;">
-          </td>
-    
-          <td>{{ substr($item->name, 0, 25) }}...</td>
-          <td>{{ $item->category->category_name ?? '-' }}</td>
-          <td>{{ $item->mrp }}</td>
-          <td>{{ $item->sr }}</td>
-          
-          <td>
-            <div class="dropdown position-static">
-              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                <i class="bx bx-dots-vertical-rounded"></i>
-              </button>
-              <div class="dropdown-menu">
-                <a href="#" class="dropdown-item edititemvarients" data-bs-toggle="modal" data-bs-target="#EditItemmodal" data-id="{{ $item->id }}" data-name="{{ e($item->name) }}" data-author="{{ $item->author_id }}" data-hsnid="{{ $item->hsnid }}"  data-category="{{ $item->cat_id }}" data-mrp="{{ $item->mrp }}" data-sr="{{ $item->sr }}" data-image="{{ $item->image }}" data-description="{{ ($item->description) }}">
-                  <i class="bx bx-edit-alt me-1"></i> Edit </a>
-                <a href="#" class="dropdown-item text-danger">
-                  <i class="bx bx-trash me-1"></i> Delete </a>
-              </div>
-            </div>
-          </td>
-        </tr> @endforeach </tbody>
-    </table>
-</div>
-<div class="d-flex justify-content-center mt-3">
-        {{ $items->appends(request()->query())->links() }}
-    </div>
-    
-        <div class="modal fade" id="EditItemmodal" tabindex="-1">
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
 
-           
-
-            <div class="modal-body" style="max-height:auto; overflow-y:auto;">
+   <div class="modal-body" style="max-height:auto; overflow-y:auto;">
          
 <form method="POST"
       id="editItemForm"
@@ -295,7 +46,7 @@
     @csrf
 
     <div class="modal-header">
-        <h5 class="modal-title">Edit Item</h5>
+      
         <button type="button"
                 class="btn-close"
                 data-bs-dismiss="modal"></button>
@@ -316,7 +67,7 @@
                 <input type="text"
                        name="name"
                        id="editName"
-                       class="form-control"
+                       class="form-control" value="{{$items->name}}"
                        required>
             </div>
 
@@ -333,12 +84,12 @@
 
                     <option value="">Select Category</option>
 
-                    @foreach($categories as $category)
-                        <option value="{{ $category->id }}">
-                            {{ $category->category_name }}
-                        </option>
-                    @endforeach
-
+                   @foreach($categories as $category)
+    <option value="{{ $category->id }}"
+        @selected($category->id == $items->cat_id)>
+        {{ $category->category_name }}
+    </option>
+@endforeach
                 </select>
             </div>
 
@@ -355,8 +106,10 @@
 
                     <option value="">Select Brand</option>
 
+
+
                     @foreach($authors as $author)
-                        <option value="{{ $author->id }}">
+                        <option value="{{ $author->id }}"  @selected($author->id == $items->author_id)>
                             {{ $author->author_name }}
                         </option>
                     @endforeach
@@ -378,7 +131,7 @@
                     <option value="">Select HSN Code</option>
 
                     @foreach($hsncode as $hsncodes)
-                        <option value="{{ $hsncodes->id }}">
+                        <option value="{{ $hsncodes->id }}"  @selected($hsncodes->id == $items->hsnid)>
                             {{ $hsncodes->code }}
                         </option>
                     @endforeach
@@ -395,7 +148,7 @@
                 <input type="number"
                        name="mrp"
                        id="editMrp"
-                       class="form-control">
+                       class="form-control" value="{{$items->mrp}}">
             </div>
 
             <!-- Selling Rate -->
@@ -407,7 +160,7 @@
                 <input type="number"
                        name="sr"
                        id="editSr"
-                       class="form-control">
+                       class="form-control" value="{{$items->sr}}">
             </div>
 
             <!-- Current Image -->
@@ -448,29 +201,93 @@
                 <textarea name="description"
                           id="editDescription"
                           rows="4"
-                          class="form-control"></textarea>
+                          class="form-control">{{$items->description}}</textarea>
             </div>
 
         </div>
 
         <!-- Product Variants -->
 
-        <div class="card mt-4">
-
-            <div class="card-header">
-                <h5 class="mb-0">Product Variants</h5>
-            </div>
-
+        
             <div class="card-body">
 
-                <div id="editVariantContainer">
+               <div class="card">
+    <div class="card-header">
+        <h5>Product Variants</h5>
+    </div>
 
-                    <!-- Existing Variant Rows Loaded Here -->
+    @foreach($availableAttributes as $varients)
 
-                </div>
+    <div id="variantContainer">
+
+    <div class="variant-item border rounded p-3 mb-3">
+        <div class="row">
+
+            <div class="col-md-4">
+                <label>Variant</label>
+                <select name="variant_id[]" class="form-control variant-select" data-index="0">
+                    <option value="">Select Variant</option>
+
+                    @foreach($variants as $variant)
+                        <option value="{{ $variant->id }}"  @selected($variant->id == $varients->variant_id)>
+                            {{ $variant->varient_name }}
+                        </option>
+                    @endforeach
+
+                </select>
+            </div>
+
+            <div class="col-md-6 ">
+             <label>Product Attributes</label>
+             @php 
+                $type=$varients->variant_id;
+                $attributes=DB::table('product_attributes')->where('varient_id',$type)->get();
+                $i=0;
+                 $selectedAttributes = explode(',', $varients->attribute_id);
+             @endphp
+            @foreach($attributes as $attr)
+
+    <div class="form-check form-check-inline me-3">
+
+        <input
+            type="checkbox"
+            class="form-check-input"
+            name="attribute_ids[{{ $i }}][]"
+            value="{{ $attr->id }}"
+            id="attr_{{ $i }}_{{ $attr->id }}"
+            {{ in_array($attr->id, $selectedAttributes) ? 'checked' : '' }}
+        >
+
+        <label
+            class="form-check-label"
+            for="attr_{{ $i }}_{{ $attr->id }}">
+            {{ $attr->value }}
+        </label>
+
+    </div>
+
+@endforeach
+
+           
+            </div>
+
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="button"
+                        class="btn btn-danger removeVariant">
+                    Remove
+                </button>
+            </div>
+
+        </div>
+
+       
+    </div>
+
+    @endforeach
+
 
                 <div class="mt-2">
-                  <button type="button" class="btn btn-primary btn-sm editAddVariant">
+                  <button type="button" class="btn btn-primary btn-sm AddVariant">
     Add Variant
 </button>
                 </div>
@@ -499,9 +316,11 @@
 </form>
 
         </div>
-      </div>
-    </div>
- </div>
+
+    
+</div>
+
+      
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         const editItemModal = document.getElementById('EditItemmodal');

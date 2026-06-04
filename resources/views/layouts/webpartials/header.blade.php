@@ -129,7 +129,7 @@
                 <li><a href="#">Footwear</a></li>
                 <li><a href="#">Accessories</a></li>
                 <li><a href="#">New Arrivals</a></li>
-                <li><a href="#">Sale</a></li>
+             
             </ul>
         </div>
     </div>

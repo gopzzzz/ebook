@@ -18,15 +18,7 @@
     </div>
 @endif
 
-@if($errors->any())
-    <div class="alert alert-danger">
-        <ul class="mb-0">
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+
 
   <div class="card-header d-flex justify-content-between align-items-center">
     <h5 class="mb-0">HSN CODE</h5>
@@ -154,8 +146,7 @@
               <div class="dropdown-menu">
                 <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Editmodal" data-id="{{ $samples->id }}" data-name="{{ $samples->code }}" data-tax="{{ $samples->tax }}" data-igst="{{ $samples->igst }}" data-cgst="{{ $samples->cgst }}" data-sgst="{{ $samples->sgst }}">
                   <i class="bx bx-edit-alt me-1"></i> Edit </a>
-                <a class="dropdown-item" href="#">
-                  <i class="bx bx-trash me-1"></i> Delete </a>
+               
               </div>
             </div>
           </td>

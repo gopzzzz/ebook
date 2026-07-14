@@ -166,7 +166,7 @@ margin-bottom: 0.5rem;
             <tr>
                 <td>{{ $i++ }}</td>
                 <td>({{$item->pro_code}})</td>
-                <td>{{ $item->name }}</td>
+                <td>{{ $item->name }}({{$item->size}})</td>
                 <td>₹{{$item->mrp}}</td>
                 <td>₹{{ $item->sr }}</td>
                 <td>{{ $item->qty }}</td>

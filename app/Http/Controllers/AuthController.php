@@ -22,6 +22,7 @@ public function logout(Request $request)
 
     $request->session()->invalidate();
     $request->session()->regenerateToken();
+    session()->forget('guest_cart');
 
     return redirect('/index');
 }
@@ -69,7 +70,7 @@ $message = "
 
 $headers = "MIME-Version: 1.0\r\n";
 $headers .= "Content-type:text/html;charset=UTF-8\r\n";
-$headers .= "From: Aronbooks@aronbooks.in\r\n";
+$headers .= "From: support@brandsonclothing.com\r\n";
 
 if (mail($to, $subject, $message, $headers)) {
     return redirect('userlogin')->with('success', 'Reset link sent to your email');

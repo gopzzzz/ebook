@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
    
 
-    <title>Dashboard - Aron Books </title>
+    <title>Dashboard - {{$app_profile->name}} </title>
 
   
 

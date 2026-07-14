@@ -18,17 +18,19 @@ use App\Http\Controllers\CompanyProfileController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HsnController;
 use App\Http\Controllers\VarientsController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
+     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/delete', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -38,7 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/categories/store', [CategoryController::class, 'store'])->name('categories.store');
     Route::get('/categories/edit/{id}', [CategoryController::class, 'edit'])->name('categories.edit');
     Route::post('/categories/update/{id}', [CategoryController::class, 'update'])->name('categories.update');
-    Route::post('/categories/delete/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::get('/categories/delete/{id}', [CategoryController::class, 'destroy'])->name('categories.delete');
    
 
     Route::get('/hsn', [HsnController::class, 'index'])->name('hsn.index');
@@ -53,10 +55,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/varients/store', [VarientsController::class, 'store'])->name('varients.store');
     Route::get('/varients/edit/{id}', [VarientsController::class, 'edit'])->name('varients.edit');
     Route::post('/varients/update/{id}', [VarientsController::class, 'update'])->name('varients.update');
-    Route::post('/varients/delete/{id}', [VarientsController::class, 'destroy'])->name('varients.destroy');
+    Route::get('/varients/delete/{id}', [VarientsController::class, 'destroy'])->name('varients.delete');
+
+
     Route::any('/attributes/{id}', [VarientsController::class, 'attributes'])->name('attributes');
     Route::post('/addattributes', [VarientsController::class, 'add_attributes'])->name('addattributes');
     Route::post('/editattributes/{id}', [VarientsController::class, 'edit_attributes'])->name('editattributes');
+    Route::get('/attributedestroy/{id}', [VarientsController::class, 'attributedestroy'])->name('attributedestroy');
+
+
     Route::get('/get-attributes/{id}', [VarientsController::class, 'getAttributes']);
    Route::get('/get-productattributes/{id}', [VarientsController::class, 'getProductattributes']);
     Route::get('/edititems/{id}', [ItemController::class, 'edititems']);
@@ -66,7 +73,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/authors/store', [AuthorController::class, 'store'])->name('authors.store');
     Route::get('/authors/edit/{id}', [AuthorController::class, 'edit'])->name('authors.edit');
     Route::post('/authors/update/{id}', [AuthorController::class, 'update'])->name('authors.update');
-    Route::post('/authors/delete/{id}', [AuthorController::class, 'destroy'])->name('authors.destroy');
+    Route::get('/authors/delete/{id}', [AuthorController::class, 'destroy'])->name('authors.delete');
+
+
     Route::get('/publishers', [PublisherController::class, 'index'])->name('publishers.index');
     Route::get('/publishers/create', [PublisherController::class, 'create'])->name('publishers.create');
     Route::post('/publishers/store', [PublisherController::class, 'store'])->name('publishers.store');
@@ -78,7 +87,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/items/store', [ItemController::class, 'store'])->name('items.store');
     Route::get('/items/edit/{id}', [ItemController::class, 'edit'])->name('items.edit');
     Route::post('/items/update/{id}', [ItemController::class, 'update'])->name('items.update');
-    Route::post('/items/delete/{id}', [ItemController::class, 'destroy'])->name('items.destroy');
+    Route::get('/items/delete/{id}', [ItemController::class, 'destroy'])->name('items.delete');
+
+
     Route::get('/orders', [OrderMasterController::class, 'index'])->name('orders.index');
     Route::get('/orders/create', [OrderMasterController::class, 'create'])->name('orders.create');
     Route::post('/orders/store', [OrderMasterController::class, 'store'])->name('orders.store');
@@ -136,7 +147,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/', [IndexController::class, 'home'])->name('index');
 Route::redirect('/index', '/');
-Route::get('/product-list', [IndexController::class, 'productlist'])->name('product-list');
+Route::get('/product-list/{id}', [IndexController::class, 'productlist'])->name('product-list');
 Route::get('/product/{slug}', [IndexController::class, 'product'])->name('product');
 Route::get('/aboutus', [PageController::class, 'aboutus'])->name('aboutus');
 Route::get('/team', [PageController::class, 'team'])->name('team');
@@ -147,9 +158,13 @@ Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
 Route::get('/term-conditions', [PageController::class, 'termconditions'])->name('term-conditions');
 Route::get('/refund', [PageController::class, 'refund'])->name('refund');
 
+Route::get('/cart', [OrderController::class, 'cart'])->name('cart');
+
+Route::post('/save-guest-cart', [OrderController::class, 'saveGuestCart'])
+    ->name('saveGuestCart');
 
 Route::middleware('customer')->group(function () {
-Route::get('/cart', [OrderController::class, 'cart'])->name('cart');
+
 Route::get('/shipping_details', [OrderController::class, 'shipping_details'])->name('shipping_details');
 Route::post('/addshippingaddress', [OrderController::class, 'addshippingaddress'])->name('addshippingaddress');
 Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
@@ -169,9 +184,22 @@ Route::post('/signin', [CustomerController::class, 'signin'])->name('signin');
 Route::get('/forget_password', [AuthController::class, 'forget_password'])->name('forget_password');
 Route::post('/reset', [AuthController::class, 'reset'])->name('reset');
 
+
+Route::post('/payment-success-razorpay', [OrderController::class, 'paymentSuccesswithrazorpay']);
+
 Route::get('/payment-success',[OrderController::class, 'paymentSuccess'])->name('payment.success');
 
 Route::get('/register', [CustomerController::class, 'login'])->name('userlogin');
+
+Route::post('/save-cart-session', function (Illuminate\Http\Request $request) {
+    session()->put('cart_product_id', $request->product_id);
+
+    return response()->json([
+        'status' => true
+    ]);
+});
+
+Route::post('/merge-cart', [CustomerController::class, 'mergeCart']);
 
 Route::get('/reset-password/{token}', function ($token, Request $request) {
 

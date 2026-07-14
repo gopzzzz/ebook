@@ -32,7 +32,7 @@
 							</div>
 						</div>
 						<a href="#" class="symbol symbol-70 flex-shrink-0">
-							<img src="assets/media/stock-600x400/img-1.jpg" title="" alt="" />
+							<img src="{{asset('public/uploads/profile/'.$app_profile->logo)}}" title="" alt="" />
 						</a>
 					</div>
 					<!--end::Item-->

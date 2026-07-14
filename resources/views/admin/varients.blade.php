@@ -35,7 +35,7 @@
         <button type="submit" class="btn btn-outline-primary">Search</button>
       </form>
 </div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter"> Add New Record </button>
+    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter"> Add New Record </button> -->
     <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -86,7 +86,7 @@
               <div class="dropdown-menu">
                 <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Editmodal" data-id="{{ $varient->id }}" data-name="{{ $varient->varient_name }}">
                   <i class="bx bx-edit-alt me-1"></i> Edit </a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item  delete-btn" href="{{ route('varients.delete', $varient->id) }}">
                   <i class="bx bx-trash me-1"></i> Delete </a>
               </div>
             </div>
@@ -132,6 +132,38 @@
         });
       });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    document.querySelectorAll('.delete-btn').forEach(function(btn) {
+
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            let deleteUrl = this.getAttribute('href');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This record will be permanently deleted!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, Delete it!'
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl;
+                }
+
+            });
+        });
+
+    });
+
+});
+</script>
   </div>
 </div>
 </div>

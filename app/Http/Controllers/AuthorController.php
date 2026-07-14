@@ -19,6 +19,7 @@ class AuthorController extends Controller
     $authors = Author::when($search, function ($query, $search) {
             $query->where('author_name', 'like', "%{$search}%");
         })
+        ->where('status',0)
         ->paginate(10);
 
     return view('admin.author', compact('authors'));
@@ -50,5 +51,23 @@ class AuthorController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Author updated successfully');
+    }
+
+        public function destroy($id){
+           try {
+
+        $author = Author::findOrFail($id);
+        $author->status = 1;
+        $author->save();
+
+        return redirect()->back()
+            ->with('success', 'Brand Deleted successfully.');
+
+    } catch (\Exception $e) {
+
+        return redirect()->back()
+            ->with('error', 'Failed to update Brand. ' . $e->getMessage());
+
+    }
     }
 }

@@ -24,20 +24,42 @@ class IndexController extends Controller
         $fastmovingProducts=DB::table('items')
          ->leftJoin('authors', 'items.author_id', '=', 'authors.id')
          ->select('items.*','authors.author_name')
+         ->where('items.status',0)
          ->limit(4)
          ->get();
+
+        $catlimit = DB::table('categories')
+    // ->skip(5)
+    // ->take(8)
+    ->where('status',0)
+    ->get();
+         
+    // echo "<pre>";print_r( $catlimit);exit;
+          
          
          
 
-        return view('web.index',compact('banner','dod','fastmovingProducts'));
+        return view('web.index',compact('banner','dod','fastmovingProducts','catlimit'));
     }
-    public function productlist(){
-         $category=DB::table('categories')->get();
+    public function productlist($id){
+          $category=DB::table('categories')
+          ->leftJoin('items', 'categories.id', '=', 'items.cat_id')
+          ->where('items.item_type',$id)
+          ->where('categories.status',0)
+          ->where('items.status',0)
+          ->groupBy('categories.id')
+          ->get();
+
           $items=DB::table('items')
          ->leftJoin('authors', 'items.author_id', '=', 'authors.id')
          ->select('items.*','authors.author_name')
+         ->where('items.status',0)
+         ->where('items.cat_id',$id)
+         ->orderBy('items.id', 'desc')
         //  ->limit(4)
          ->get();
+
+         
          return view('web.productlist',compact('category','items'));
     }
     public function product($slug){
@@ -47,12 +69,20 @@ class IndexController extends Controller
           ->where('slug',$slug)
            ->select('items.*','authors.author_name','publishers.publisher_name')
           ->first();
+          $varient_types=DB::table('available_atributes')
+          ->leftJoin('varient_types', 'available_atributes.variant_id', '=', 'varient_types.id')
+          ->where('product_id',$product->id)
+          ->select('available_atributes.*','varient_types.varient_name')
+          ->get();
            $fastmovingProducts=DB::table('items')
          ->leftJoin('authors', 'items.author_id', '=', 'authors.id')
          ->select('items.*','authors.author_name')
          ->limit(4)
          ->get();
-          return view('web.product',compact('product','fastmovingProducts'));
+
+         
+
+          return view('web.product',compact('product','fastmovingProducts','varient_types'));
     }
 
 }

@@ -80,7 +80,14 @@
          <li class="menu-item {{ request()->is('orders') ? 'active' : '' }}">
     <a href="{{ url('orders') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-layout"></i>
-        <div data-i18n="Layouts">Orders</div>
+        <div data-i18n="Layouts">Orders 
+
+          @if($orderPending > 0)
+                <span class="badge bg-danger ms-2">
+                    {{ $orderPending }}
+                </span>
+            @endif
+        </div>
     </a>
 </li>
 

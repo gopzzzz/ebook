@@ -3,13 +3,10 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Brandson Clothings | Buy Clothings Online in Kerala </title>
+	<title>{{$app_profile->name}} | Buy Clothings Online in Kerala </title>
 
-<meta name="description" content="Shop quality books at AronBooks – Kerala’s trusted online bookstore for competitive exams, PSC, school guides, and study materials. Fast delivery across India.">
 
-<meta name="keywords" content="AronBooks, Kerala books online, PSC books Kerala, competitive exam books, study materials India, school books, buy books online Kerala">
-
-<meta name="author" content="AronBooks">
+<meta name="author" content="{{$app_profile->name}}">
 <meta name="robots" content="index, follow">
 	
 	<link rel="icon" type="image/png" href="{{asset('public/uploads/profile/'.$app_profile->logo)}}">

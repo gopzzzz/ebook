@@ -16,6 +16,7 @@ class VarientsController extends Controller
     $varients = Varient_types::when($search, function ($query, $search) {
             $query->where('varient_name', 'like', "%{$search}%");
         })
+        ->where('status',0)
         ->paginate(10);
 
     return view('admin.varients', compact('varients'));
@@ -79,6 +80,7 @@ class VarientsController extends Controller
     $attributes = Product_attributes::when($search, function ($query, $search) {
             $query->where('value', 'like', "%{$search}%");
         })
+        ->where('status',0)
         ->where('varient_id',$id)
         ->paginate(10);
 
@@ -89,11 +91,13 @@ class VarientsController extends Controller
  try {
 
         $request->validate([
+            'attribute'   =>'required',
             'attribute_name' => 'required'
         ]);
 
         Product_attributes::create([
             'varient_id'     =>$request->varientid,
+            'name'      =>$request->attribute,
             'value' => $request->attribute_name
         ]);
 
@@ -119,7 +123,8 @@ class VarientsController extends Controller
         ]);
 
         $attributes->update([
-            'value' => $request->attribute_name
+            'value' => $request->attribute_name,
+             'name'      =>$request->attribute,
         ]);
 
         return redirect()
@@ -168,4 +173,45 @@ public function getProductattributes($id){
     ]);
    
 }
+
+        public function destroy($id){
+           try {
+
+        $varient = Varient_types::findOrFail($id);
+        $varient->status = 1;
+        $varient->save();
+
+        return redirect()->back()
+            ->with('success', 'Varient Deleted successfully.');
+
+    } catch (\Exception $e) {
+
+        return redirect()->back()
+            ->with('error', 'Failed to update Varient. ' . $e->getMessage());
+
+    }
+
+
+    }
+
+    public function attributedestroy($id){
+           try {
+
+        $varient = Product_attributes::findOrFail($id);
+        $varient->status = 1;
+        $varient->save();
+
+        return redirect()->back()
+            ->with('success', 'Attribute Deleted successfully.');
+
+    } catch (\Exception $e) {
+
+        return redirect()->back()
+            ->with('error', 'Failed to update Attribute. ' . $e->getMessage());
+
+    }
+
+    }
+
+
 }

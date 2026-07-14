@@ -15,7 +15,7 @@
 /* Image styling */
 .carousel-item img {
     width: 100%;
-    height: 450px; /* adjust as needed */
+   
     object-fit: cover;
 }
 .carousel-control-prev,
@@ -31,6 +31,117 @@
     background-size: 100% 100%;
     width: 40px;
     height: 40px;
+}
+
+.category-section{
+    padding:30px 20px;
+}
+
+.category-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:8px;
+}
+
+.category-card{
+    position:relative;
+    overflow:hidden;
+    height:320px;
+    text-decoration:none;
+    background:#000;
+    cursor:pointer;
+}
+
+.category-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:all .6s ease;
+}
+
+.category-card .overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        to top,
+        rgba(0,0,0,.85) 0%,
+        rgba(0,0,0,.25) 50%,
+        rgba(0,0,0,.05) 100%
+    );
+    transition:.4s;
+}
+
+.category-card h3{
+    position:absolute;
+    left:50%;
+    bottom:30px;
+    transform:translateX(-50%);
+    color:#fff;
+    text-align:center;
+    width:90%;
+    font-size:22px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    line-height:1.3;
+    z-index:2;
+    transition:.4s;
+}
+
+.category-card:hover img{
+    transform:scale(1.12);
+}
+
+.category-card:hover .overlay{
+    background:linear-gradient(
+        to top,
+        rgba(0,0,0,.95),
+        rgba(0,0,0,.35)
+    );
+}
+
+.category-card:hover h3{
+    bottom:40px;
+    letter-spacing:2px;
+}
+
+/* Large Screens */
+@media (max-width: 1200px) {
+    .category-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .category-card {
+        height: 220px;
+    }
+
+    .category-card h3 {
+        font-size: 15px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .category-card {
+        height: 180px;
+    }
+
+    .category-card h3 {
+        font-size: 13px;
+    }
 }
 </style>
 
@@ -68,6 +179,24 @@
     </button>
 
 </div>
+
+<section class="category-section">
+    <div class="category-grid">
+
+    @foreach($catlimit as $catcall)
+
+        <a href="{{url('product-list/'.$catcall->id)}}" class="category-card">
+            <img src="{{ asset('public/uploads/banners/'.$catcall->image) }}" alt="">
+            <div class="overlay"></div>
+            <h3>{{$catcall->category_name}}</h3>
+        </a>
+
+        @endforeach
+
+       
+
+    </div>
+</section>
 
 	<!--<section id="special-offer" class="bookshelf pb-5 mb-5">-->
 
@@ -138,58 +267,108 @@
 						<h2 class="section-title">Fast Moving Products</h2>
 					</div>
 
-					<div class="product-list" data-aos="fade-up">
-						<div class="row">
-					@foreach($fastmovingProducts as $productList)
-<div class="col-6 col-md-3">
-    <div class="product-item">
-        <figure class="product-style">
-            
-            <a href="{{ url('product/'.$productList->slug) }}">
-                <img src="{{ asset('public/assets/img/items/'.$productList->image) }}" 
-                     alt="Books" 
-                     class="product-item">
-            </a>
+			
+		<style>
+.hp-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:8px; }
+.hp-card { background:#fff; border:1px solid #ddd; border-radius:3px; overflow:hidden; display:flex; flex-direction:column; transition:box-shadow .2s; }
+.hp-card:hover { box-shadow:0 4px 20px rgba(0,0,0,.1); }
+.hp-card-img { position:relative; aspect-ratio:4/5; background:#f9f9f9; overflow:hidden; border-bottom:1px solid #f0f0f0; }
+.hp-card-img a { display:block; height:100%; }
+.hp-card-img img { width:100%; height:100%; object-fit:cover; transition:transform .35s; display:block; }
+.hp-card:hover .hp-card-img img { transform:scale(1.04); }
+.hp-disc { position:absolute; top:8px; left:8px; background:#388e3c; color:#fff; font-size:11px; font-weight:700; padding:3px 7px; border-radius:2px; z-index:2; }
+.hp-card-body { padding:11px; flex:1; display:flex; flex-direction:column; }
+.hp-brand { font-size:11px; font-weight:700; color:#2874f0; text-transform:uppercase; margin-bottom:3px; }
+.hp-name { font-size:13px; color:#212121; font-weight:400; line-height:1.4; margin-bottom:6px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; height:37px; }
+.hp-rating { display:flex; align-items:center; gap:5px; margin-bottom:7px; }
+.hp-chip { display:inline-flex; align-items:center; gap:3px; background:#388e3c; color:#fff; font-size:11px; font-weight:700; padding:2px 6px; border-radius:2px; }
+.hp-chip i { font-size:9px; }
+.hp-cnt { font-size:11px; color:#878787; }
+.hp-prices { display:flex; align-items:baseline; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
+.hp-sp { font-size:16px; font-weight:700; color:#212121; }
+.hp-mrp { font-size:12px; color:#878787; text-decoration:line-through; }
+.hp-off { font-size:12px; color:#388e3c; font-weight:600; }
+.hp-foot { margin-top:auto; border-top:1px solid #f0f0f0; }
+.hp-atc,
+.hp-go {
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:7px !important;
+    width:100% !important;
+    padding:12px 10px !important;
+    border:none !important;
+    margin:0 !important;
+    font-size:14px !important;
+    font-weight:700 !important;
+    cursor:pointer !important;
+    background:#ff9f00 !important;
+    color:#fff !important;
+    transition:background .2s !important;
+    text-decoration:none !important;
+    letter-spacing:.3px !important;
+    white-space:nowrap !important;
+    box-sizing:border-box !important;
+    font-family:inherit !important;
+    line-height:1 !important;
+    position:static !important;
+    bottom:auto !important;
+    left:auto !important;
+    z-index:auto !important;
+    text-transform:none !important;
+    text-align:center !important;
+}
+.hp-atc:hover, .hp-go:hover { background:#e08e00 !important; color:#fff !important; }
+.hp-atc *, .hp-go * { color:#fff !important; }
+@media(max-width:900px){ .hp-grid{ grid-template-columns:repeat(2,1fr); } }
+</style>
 
-            @php
-                $inCart = in_array($productList->id, $cartProductIds);
-            @endphp
-
-            @if($inCart)
-                <a href="{{ url('cart') }}">
-                    <button type="button" 
-                            class="add-to-cart btn btn-primary" 
-                            data-id="{{ $productList->id }}">
-                        <span class="btn-text">Go To Cart</span>
-                        <span class="btn-loader d-none">
-                            <i class="fa fa-spinner fa-spin"></i> Loading...
-                        </span>
-                    </button>
+		<div class="hp-grid">
+        @foreach($fastmovingProducts as $productList)
+        @php
+            $inCart  = in_array($productList->id, $cartProductIds);
+            $dPct    = ($productList->mrp > 0 && $productList->mrp > $productList->sr) ? round((($productList->mrp - $productList->sr)/$productList->mrp)*100) : 0;
+            $bname   = !empty($productList->author_name) ? $productList->author_name : 'Brandson';
+        @endphp
+        <div class="hp-card">
+            <div class="hp-card-img">
+                <a href="{{ url('product/'.$productList->slug) }}">
+                    <img src="{{ asset('public/assets/img/items/'.$productList->image) }}" alt="{{ $productList->name }}" loading="lazy">
                 </a>
-            @else
-                <button type="button" 
-                        class="add-to-cart btn btn-primary" 
-                        data-id="{{ $productList->id }}">
-                    <span class="btn-text">Add to Cart</span>
-                    <span class="btn-loader d-none">
-                        <i class="fa fa-spinner fa-spin"></i> Loading...
-                    </span>
-                </button>
-            @endif
-
-        </figure>
-
-        <figcaption>
-            <h3>{{ Str::limit($productList->name, 20) }}</h3>
-            <div class="item-price">
-                <span class="prev-price">₹ {{ $productList->mrp }}</span> 
-                ₹ {{ $productList->sr }}
+                @if($dPct > 0)<span class="hp-disc">{{ $dPct }}% OFF</span>@endif
             </div>
-        </figcaption>
+            <div class="hp-card-body">
+                <div class="hp-brand">{{ $bname }}</div>
+                <div class="hp-name">{{ $productList->name }}</div>
+                <div class="hp-rating">
+                    <div class="hp-chip">4.1 <i class="fa-solid fa-star"></i></div>
+                    <span class="hp-cnt">(128)</span>
+                </div>
+                <div class="hp-prices">
+                    <span class="hp-sp">₹{{ number_format($productList->sr, 2) }}</span>
+                    @if($productList->mrp > $productList->sr)
+                    <span class="hp-mrp">₹{{ number_format($productList->mrp, 2) }}</span>
+                    @if($dPct > 0)<span class="hp-off">{{ $dPct }}% off</span>@endif
+                    @endif
+                </div>
+                <div class="hp-foot">
+                    @if($inCart)
+                    <a href="{{ url('cart') }}" class="hp-go">
+                        <i class="fa-solid fa-cart-shopping" style="font-size:13px;"></i> Go to Cart
+                    </a>
+                    @else
+                    <a href="{{ url('product/'.$productList->slug) }}" class="hp-atc " data-id="{{ $productList->id }}">
+                        <i class="fa-solid fa-cart-plus" style="font-size:13px;"></i>
+                        <span class="btn-text">View Details</span>
+                        <span class="btn-loader d-none"><i class="fa fa-spinner fa-spin"></i></span>
+                    </a>
+                    @endif
+                </div>
+            </div>
+        </div>
+        @endforeach
+		</div>
 
-    </div>
-</div>
-@endforeach
 							
 
 						</div><!--ft-books-slider-->
@@ -197,13 +376,13 @@
 
 
 				</div><!--inner-content-->
-			</div>
+			</div> 
 
 			<div class="row">
 				<div class="col-md-12">
 
 					<div class="btn-wrap align-right">
-						<a href="{{url('product-list')}}" class="btn-accent-arrow">View all products <i
+						<a href="{{url('product-list/1')}}" class="btn-accent-arrow">View all products <i
 								class="icon icon-ns-arrow-right"></i></a>
 					</div>
 

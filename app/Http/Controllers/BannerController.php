@@ -33,7 +33,7 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'banner' => 'required|image|mimes:png,jpg,jpeg|max:2048',
+            'banner' => 'required|image|mimes:png,jpg,jpeg',
             'banner_title' => 'required|string|max:255'
         ]);
 

@@ -14,6 +14,7 @@ use App\Models\Cart;
 use App\Models\ShippingAddress;
 use App\Models\OrderMaster;
 use App\Models\Order_trans;
+use App\Models\Item;
 use DB;
 use Illuminate\Support\Facades\Http;
 
@@ -25,6 +26,7 @@ public function addtocart(Request $request){
   if (Auth::check()) {
 $userId = Auth::user()->id;
 $productId = $request->id;
+$size = $request->size;
 
 $cart = Cart::where('user_id', $userId)
             ->where('product_id', $productId)
@@ -42,6 +44,7 @@ return response()->json([
     $cart = new Cart();
     $cart->user_id = $userId;
     $cart->product_id = $productId;
+    $cart->size = $size;
     $cart->qty = 1;
     $cart->save();
 }
@@ -54,6 +57,7 @@ return response()->json([
 ]);
 
     } else {
+
 
         return response()->json([
             'status' => 1,
@@ -142,6 +146,7 @@ return response()->json([
 ]);
 
 } else {
+    
 
     return response()->json([
         'status' => 1,
@@ -199,6 +204,7 @@ public function checkout(Request $request)
     $email = Auth::user()->email;
     $shippingId=DB::table('shipping_address')->where('id',$shipping_id )->first();
 
+   
     try {
 
         // DB::beginTransaction();
@@ -228,6 +234,9 @@ if ($order == null) {
         $master->total_sr = 0;
         $master->status = 0;
         $master->address_id = $shipping_id;
+         $master->payment_order_id = $request->razorpay_order_id;
+          $master->razorpay_payment_id = $request->razorpay_payment_id;
+           $master->razorpay_signature = $request->razorpay_signature;
         $master->save();
 
         $total = 0;
@@ -256,6 +265,7 @@ if ($order == null) {
             $trans->qty = $items->qty;
             $trans->total_amount = $lineTotal;
             $trans->taxable_amount = 0;
+            $trans->size = $items->size;
             $trans->save();
         }
 
@@ -267,30 +277,30 @@ if ($order == null) {
         $master->save();
 
         // Clear cart
-        // DB::table('carts')->where('user_id', $userId)->delete();
+        DB::table('carts')->where('user_id', $userId)->delete();
         
      
       
-   $response = Http::withHeaders([
-    'x-client-id' => env('CASHFREE_APP_ID'),
-    'x-client-secret' => env('CASHFREE_SECRET_KEY'),
-    'x-api-version' => '2022-09-01',
-    'Content-Type' => 'application/json'
-])->post('https://api.cashfree.com/pg/orders', [
-    "order_id" =>"ORD".$id,
-    "order_amount" => (float) $total ,
-    "order_currency" => "INR",
-    "customer_details" => [
-        "customer_id" => "CUS_" . $userId,
-        "customer_email" => $email,
-        "customer_phone" => $shippingId->phone_number,
-    ],
-    "order_meta" => [
-        "return_url" => url('/payment-success?order_id={order_id}')
-    ]
-]);
+//    $response = Http::withHeaders([
+//     'x-client-id' => env('CASHFREE_APP_ID'),
+//     'x-client-secret' => env('CASHFREE_SECRET_KEY'),
+//     'x-api-version' => '2022-09-01',
+//     'Content-Type' => 'application/json'
+// ])->post('https://sandbox.cashfree.com/pg/orders', [
+//     "order_id" =>"ORD".$id,
+//     "order_amount" => (float) $total ,
+//     "order_currency" => "INR",
+//     "customer_details" => [
+//         "customer_id" => "CUS_" . $userId,
+//         "customer_email" => $email,
+//         "customer_phone" => $shippingId->phone_number,
+//     ],
+//     "order_meta" => [
+//         "return_url" => url('/payment-success?order_id={order_id}')
+//     ]
+// ]);
 
-return response()->json($response->json());
+// return response()->json($response->json());
 
         
         
@@ -372,6 +382,43 @@ public function orderview($id){
      ->select('order_trans.*','items.name','items.pro_code')
     ->where('order_master_id',$id)->get();
   return view('web.orderview',compact('order_master','order_trans'));
+}
+public function paymentSuccesswithrazorpay(Request $reques){
+
+ $secret = env('RAZORPAY_SECRET');
+
+        $generated_signature = hash_hmac(
+            'sha256',
+            $request->razorpay_order_id . "|" . $request->razorpay_payment_id,
+            $secret
+        );
+
+        if ($generated_signature === $request->razorpay_signature) {
+
+            // Update order status here
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Payment Verified Successfully'
+            ]);
+
+        } else {
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Signature Verification Failed'
+            ]);
+        }
+    
+}
+public function saveGuestCart(Request $request)
+{
+    session()->put('guest_cart', $request->cart);
+
+    return response()->json([
+        'status' => true,
+        'data' => session('guest_cart')
+    ]);
 }
 
 }

@@ -73,6 +73,18 @@
 
                     <div class="row g-3">
 
+                     <div class="col-md-6">
+                            <label class="form-label fw-semibold">Item For</label>
+                            <select name="type" class="form-select" required>
+                                <option value="">Select </option>
+                               
+                                    <option value="1"> MEN  </option>
+                                    <option value="2"> WOMEN  </option>
+                                    <option value="3"> KIDS  </option>
+                               
+                            </select>
+                        </div>
+
                         <!-- Item Name -->
                         <div class="col-md-6">
                             <label class="form-label fw-semibold">Item Name</label>
@@ -266,9 +278,9 @@
                 <i class="bx bx-dots-vertical-rounded"></i>
               </button>
               <div class="dropdown-menu">
-                <a href="#" class="dropdown-item edititemvarients" data-bs-toggle="modal" data-bs-target="#EditItemmodal" data-id="{{ $item->id }}" data-name="{{ e($item->name) }}" data-author="{{ $item->author_id }}" data-hsnid="{{ $item->hsnid }}"  data-category="{{ $item->cat_id }}" data-mrp="{{ $item->mrp }}" data-sr="{{ $item->sr }}" data-image="{{ $item->image }}" data-description="{{ ($item->description) }}">
+                <a href="#" class="dropdown-item edititemvarients" data-bs-toggle="modal" data-bs-target="#EditItemmodal" data-id="{{ $item->id }}" data-name="{{ e($item->name) }}"  data-itemtype="{{ $item->item_type }}" data-author="{{ $item->author_id }}" data-hsnid="{{ $item->hsnid }}"  data-category="{{ $item->cat_id }}" data-mrp="{{ $item->mrp }}" data-sr="{{ $item->sr }}" data-image="{{ $item->image }}" data-description="{{ ($item->description) }}">
                   <i class="bx bx-edit-alt me-1"></i> Edit </a>
-                <a href="#" class="dropdown-item text-danger">
+                  <a class="dropdown-item  delete-btn" href="{{ route('items.delete', $item->id) }}">
                   <i class="bx bx-trash me-1"></i> Delete </a>
               </div>
             </div>
@@ -304,6 +316,18 @@
     
 
         <input type="hidden" name="item_type" value="1">
+
+          <div class="col-md-6">
+                            <label class="form-label fw-semibold">Item For</label>
+                            <select name="type" class="form-select" id="edititemtype" required>
+                                <option value="">Select </option>
+                               
+                                    <option value="1"> MEN  </option>
+                                    <option value="2"> WOMEN  </option>
+                                    <option value="3"> KIDS  </option>
+                               
+                            </select>
+                        </div>
 
         <div class="row g-3">
 
@@ -511,12 +535,13 @@
           form.action = "{{ url('items/update') }}/" + button.dataset.id;
           document.getElementById('editName').value = button.dataset.name;
           document.getElementById('editAuthor').value = button.dataset.author;
+          document.getElementById('edititemtype').value = button.dataset.itemtype;
           document.getElementById('editHnscode').value = button.dataset.hsnid;
           document.getElementById('editCategory').value = button.dataset.category;
           document.getElementById('editMrp').value = button.dataset.mrp;
           document.getElementById('editDescription').value = button.dataset.description;
           document.getElementById('editSr').value = button.dataset.sr;
-          document.getElementById('edititemtype').value = button.dataset.item_type;
+          
           
           document.getElementById('editImagePreview').src = `/assets/img/items/${button.dataset.image}`;
          
@@ -563,7 +588,7 @@ function createVariantRow(index, container, selectedVariant = '', selectedAttrib
                     <label>Variant</label>
 
                     <select
-                        name="variant_id[]"
+                        name="variant_id[${index}]"
                         class="form-control variant-select"
                         data-index="${index}">
 
@@ -722,7 +747,7 @@ $.each(attributes, function (_, attr) {
                                 <div class="col-md-4">
                                     <label>Variant</label>
                                     <select
-                                        name="variant_id[]"
+                                        name="variant_id[${editIndex}]"
                                         class="form-control variant-select"
                                         data-index="${editIndex}">
                                         ${options}
@@ -814,6 +839,39 @@ editIndex++;
     );
 
 });
+
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    document.querySelectorAll('.delete-btn').forEach(function(btn) {
+
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            let deleteUrl = this.getAttribute('href');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This record will be permanently deleted!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, Delete it!'
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl;
+                }
+
+            });
+        });
+
+    });
 
 });
 </script>

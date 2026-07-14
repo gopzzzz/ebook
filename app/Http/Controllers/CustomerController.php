@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Customer;
 use App\Models\ShippingAddress;
 use App\Models\User;
+use App\Models\Cart;
 use DB;
 
 use Hash;
@@ -196,14 +197,68 @@ class CustomerController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+
+            $guestCart = session('guest_cart', []); 
+            // echo "<pre>";print_r( $guestCart);exit;
+
+
+foreach ($guestCart as $item) {
+
+    $cart = Cart::where('user_id', auth()->id())
+                ->where('product_id', $item['product_id'])
+                ->first();
+
+    if ($cart) {
+        $cart->qty += $item['qty'];
+        $cart->size =$item['size'];
+        $cart->save();
+    } else {
+        Cart::create([
+            'user_id'    => auth()->id(),
+            'product_id' => $item['product_id'],
+            'qty'        => $item['qty'],
+              'size'        => $item['size']
+        ]);
+    }
+}
+
+// Clear guest cart after merging
+session()->forget('guest_cart');
+            
+           
             return redirect()->route('index');
         }
 
         return back()->with('error', 'Invalid email or password');
     }
     public function userprofile(){
-          $userId = Auth::id();
+        $userId = Auth::id();
         $orders=DB::table('order_masters')->where('cus_id',$userId)->orderBy('id', 'desc')->get();
         return view('web.profile',compact('orders'));
     }
+
+    public function mergeCart(Request $request)
+{
+    foreach ($request->cart as $item) {
+
+        $cart = Cart::where('user_id', auth()->id())
+                    ->where('product_id', $item['product_id'])
+                    ->first();
+
+        if ($cart) {
+            $cart->qty += $item['qty'];
+            $cart->save();
+        } else {
+            Cart::create([
+                'user_id'    => auth()->id(),
+                'product_id' => $item['product_id'],
+                'qty'        => $item['qty']
+            ]);
+        }
+    }
+
+    return response()->json([
+        'status' => true
+    ]);
+}
 }

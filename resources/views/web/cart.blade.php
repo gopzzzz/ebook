@@ -351,9 +351,9 @@
                     <div class="nc-items-header">
                         <div class="nc-items-title">My Cart <span style="color:#878787;font-size:14px;">({{$cartCount}} items)</span></div>
                     </div>
-                    <div class="nc-free-delivery-banner">
+                    <!-- <div class="nc-free-delivery-banner">
                         <i class="fa-solid fa-truck-fast"></i> Free delivery on this order
-                    </div>
+                    </div> -->
 
                     @foreach($cartItems as $item)
                     <div class="nc-item" id="cart-item_{{$item->product_id}}">
@@ -362,7 +362,9 @@
                         </div>
                         <div class="nc-item-info">
                             <div class="nc-item-name">{{$item->name}}</div>
-                            <div class="nc-item-seller">Seller: BrandsonStore &nbsp;<span style="color:#388e3c;font-size:12px;">✓ Trusted</span></div>
+                            <div class="nc-item-seller">Seller: BrandsonStore &nbsp;<span style="color:#388e3c;font-size:12px;">✓ Trusted</span> <br>
+                            Size : {{$item->size}} 
+                        </div>
                             <div class="nc-item-price-row">
                                 <span class="nc-item-sp">₹{{$item->sr}}</span>
                                 <span class="nc-item-mrp">₹{{$item->mrp}}</span>
@@ -388,12 +390,12 @@
                     </div>
                     @endforeach
                 </div>
-
+<!-- 
                 <div style="background:#fff;border:1px solid #ddd;border-top:none;border-radius:0 0 3px 3px;padding:16px 20px;text-align:right;">
                     <a href="{{url('shipping_details')}}" style="display:inline-block;">
                         <button type="button" class="checkout-btn" style="width:auto;padding:14px 56px;">Place Order</button>
                     </a>
-                </div>
+                </div> -->
             </div>
 
             <div>
@@ -410,17 +412,17 @@
                         </div>
                         <div class="nc-sum-row">
                             <span class="nc-sum-label">Delivery Charges</span>
-                            <span class="nc-sum-val disc">FREE</span>
+                            <span class="nc-sum-val disc">₹ 60 </span>
                         </div>
                         <hr class="nc-sum-divider">
                         <div class="nc-sum-total-row">
                             <span>Total Amount</span>
-                            <span id="grandtotal">₹{{$sum}}</span>
-                        </div>
+                            <span id="grandtotal">₹{{$sum + 60}}</span>
+                        </div> 
                         @if($mrp > $sum)
                         <div class="nc-sum-savings">You will save ₹{{$mrp - $sum}} on this order</div>
                         @endif
-                        <a href="{{url('shipping_details')}}" class="nc-checkout-btn">Proceed to Checkout</a>
+                        <a href="{{url('shipping_details')}}" class="nc-checkout-btn">Place Order</a>
                         <div class="nc-secure-txt">
                             <i class="fa-solid fa-lock" style="font-size:11px;color:#388e3c;"></i> Safe and Secure Payments
                         </div>
@@ -434,7 +436,7 @@
             <div class="nc-empty-img">🛒</div>
             <div class="nc-empty-title">Your cart is empty!</div>
             <div class="nc-empty-sub">Add items to it now.</div>
-            <a href="{{url('product-list')}}" class="nc-empty-btn">Shop Now</a>
+            <a href="{{url('index')}}" class="nc-empty-btn">Shop Now</a>
         </div>
         @endif
     </div>

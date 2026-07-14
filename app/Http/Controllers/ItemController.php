@@ -29,12 +29,14 @@ class ItemController extends Controller
             ->when($search, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%");
             })
+            ->where('status',0)
+            ->orderBy('items.id', 'desc')
             ->paginate(10);
 
-        $authors = Author::all();
+        $authors = Author::where('status',0)->get();
         $hsncode = Hsn_codes::all();
-        $categories = Category::all();
-        $variants =Varient_types::all();
+        $categories = Category::where('status',0)->get();
+        $variants =Varient_types::where('status',0)->get();
        
         $attributes = Product_attributes::all();
 
@@ -99,7 +101,7 @@ return view('admin.edititems',compact('authors',
 
     // Create Product
     $item = Item::create([
-        'item_type'    => 1,
+        'item_type'    => $request->type,
         'name'         => $validated['name'],
         'slug'         => Str::slug($validated['name']),
         'author_id'    => $validated['author_id'],
@@ -229,53 +231,60 @@ return view('admin.edititems',compact('authors',
         }
 
         $item->update($data);
+
+
+             
+   // Remove old variants not submitted
+$submittedVariantIds = array_filter($request->variant_id ?? []);
+
+
+
+DB::table('available_atributes')
+    ->where('product_id', $item->id)
+    ->whereNotIn('variant_id', $submittedVariantIds)
+    ->delete();
+
+// Prepare insert/update data
+$availableAttributes = [];
+
 if (!empty($request->variant_id)) {
 
-    foreach ($request->variant_id as $key => $variantId) {
+       foreach ($request->variant_id as $key => $variantId) {
 
-        if (empty($variantId)) {
-            continue;
-        }
+       $attributeIds = implode(',', $request->attribute_ids[$key] ?? []);
 
-      if (empty($request->attribute_ids[$key])) {
-            continue;
-        }
-
-            $attributeIds = '';
-
-            if (!empty($request->attribute_ids[$key])) {
-                $attributeIds = implode(',', $request->attribute_ids[$key]);
-            }
-
-     //echo "<pre>";print_r($attributeIds);exit;
-
-        $existing = DB::table('available_atributes')
-            ->where('product_id', $item->id)
-            ->where('variant_id', $variantId)
+       $variantIdisexisted=DB::table('available_atributes') 
+             ->where('variant_id', $request->variant_id[$key])
+            ->where('product_id', $id)
             ->first();
 
-        if ($existing) {
+    if (!empty($variantIdisexisted)) {
+        // echo "hi gopika";exit;
 
-            DB::table('available_atributes')
-                ->where('id', $existing->id)
-                ->update([
-                    'attribute_id' => $attributeIds,
-                    'updated_at'   => now()
-                ]);
+        DB::table('available_atributes')
+            ->where('id', $variantIdisexisted->id)
+            ->update([
+                'attribute_id' => $attributeIds,
+                'updated_at'   => now(),
+            ]);
 
-        } else {
-
-            DB::table('available_atributes')
-                ->insert([
-                    'product_id'   => $item->id,
-                    'variant_id'   => $variantId,
-                    'attribute_id' => $attributeIds,
-                    'created_at'   => now(),
-                    'updated_at'   => now()
-                ]);
-        }
+    } else {
+//   echo "ho gopika";exit;
+        DB::table('available_atributes')->insert([
+            'product_id'   => $item->id,
+            'variant_id'   => $variantId,
+            'attribute_id' => $attributeIds,
+            'created_at'   => now(),
+            'updated_at'   => now(),
+        ]);
     }
+
+   
 }
+
+    
+}
+  
         
 
         return redirect()
@@ -289,7 +298,25 @@ if (!empty($request->variant_id)) {
         return redirect()
             ->back()
             ->withInput()
-            ->with('error', 'Failed to update item. Please try again.');
+            ->with('error', $e->getMessage());
+    }
+    }
+
+       public function destroy($id){
+           try {
+
+        $item = Item::findOrFail($id);
+        $item->status = 1;
+        $item->save();
+
+        return redirect()->back()
+            ->with('success', 'Product Deleted successfully.');
+
+    } catch (\Exception $e) {
+
+        return redirect()->back()
+            ->with('error', 'Failed to update Product. ' . $e->getMessage());
+
     }
     }
 }

@@ -8,6 +8,7 @@ class Product_attributes extends Model
 {
      protected $fillable = [
         'varient_id',
-        'value'
+        'value',
+        'name'
     ];
 }

@@ -289,7 +289,8 @@
         </div>
     </div>
 </div>
-
+ <form action="{{ route('checkout') }}" method="POST" id="checkoutForm">
+            @csrf
 <div class="ns-page">
     <div class="ns-wrap">
         <div class="ns-layout">
@@ -299,6 +300,7 @@
                         <div class="ns-panel-head-num">1</div>
                         <div class="ns-panel-head-title">Delivery Address</div>
                     </div>
+                   
                     <div class="ns-panel-body">
                         @forelse($cusAddress as $shipping)
                         <label class="ns-addr-option">
@@ -324,9 +326,14 @@
                 </div>
             </div>
 
+      
+
             <div class="ns-right-col">
                 <div class="ns-order-panel">
                     <div class="ns-order-panel-head">Order Summary</div>
+                          <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
+<input type="hidden" name="razorpay_order_id" id="razorpay_order_id">
+<input type="hidden" name="razorpay_signature" id="razorpay_signature">
 
                     @if($cartItems->count() > 0)
                     @php $sum = 0; $mrp = 0; @endphp
@@ -356,21 +363,26 @@
                         </div>
                         <div class="ns-price-row">
                             <span class="ns-price-label">Delivery Charges</span>
-                            <span class="ns-price-val green">FREE</span>
+                            <span class="ns-price-val green"> ₹ 60</span>
                         </div>
                         <hr class="ns-price-divider">
                         <div class="ns-price-total">
                             <span>Total Amount</span>
-                            <span id="grandtotal">₹{{$sum}}</span>
+                            <span id="grandtotal">₹{{$sum + 60 }}</span>
+                            <input type="hidden" id="totalAmount" value="{{$sum + 60}}">
                         </div>
                         @if($mrp > $sum)
-                        <div class="ns-savings-pill">You will save ₹{{$mrp - $sum}} on this order</div>
+                        <div class="ns-savings-pill" >You will save ₹{{$mrp - $sum}} on this order</div>
                         @endif
 
                         @if($cusAddress->isNotEmpty())
-                        <button type="button" class="ns-pay-btn" id="payNow">
-                            Proceed to Payment
-                        </button>
+                        <!-- <button type="button" class="ns-pay-btn" id="payNow">
+                            Cash Free
+                        </button> -->
+
+                         <button type="button" class="ns-pay-btn" id="payBtn">
+    Proced to checkout
+</button>
                         @else
                         <div class="ns-no-addr-msg">Please add a delivery address to continue</div>
                         @endif
@@ -386,6 +398,7 @@
         </div>
     </div>
 </div>
+</form>
 
 <div class="modal fade ns-modal" id="myModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">

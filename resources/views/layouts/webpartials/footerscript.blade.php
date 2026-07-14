@@ -6,6 +6,7 @@
 	<script src="{{asset('public/web/js/plugins.js')}}"></script>
 	<script src="{{asset('public/web/js/script.js')}}"></script>
 	 <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -20,6 +21,35 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 	
 <script>
 $(document).ready(function(){
+
+function savecart(callback = null) {
+
+    let guestCart = JSON.parse(sessionStorage.getItem('guest_cart')) || [];
+
+    // alert(guestCart.length);
+
+    $.ajax({
+        url: "{{ url('save-guest-cart') }}",
+        type: "POST",
+        data: {
+            cart: guestCart,
+            _token: "{{ csrf_token() }}"
+        },
+        success: function(response) {
+
+            console.log('Cart Saved');
+
+            if (callback) {
+                callback(response);
+            }
+        }
+    });
+}
+
+
+
+
+
 
     $("#confirm_password").keyup(function(){
 
@@ -38,8 +68,13 @@ $('.add-to-cart').on('click', function () {
 
     var button = $(this);
     var id = button.data('id');
+    var qty = 1;
+    var size =$("#sizeselection").val();
 
-    if (id) {
+  
+    
+
+    if (size) {
 
         // 🔄 Show loader
         button.find('.btn-text').addClass('d-none');
@@ -51,7 +86,7 @@ $('.add-to-cart').on('click', function () {
             url: "{{ route('add-to-cart') }}",
             data: {
                 _token: "{{ csrf_token() }}",
-                id: id
+                id: id,size:size
             },
             success: function (res) {
 
@@ -60,6 +95,7 @@ $('.add-to-cart').on('click', function () {
                 if (res.status == 0) {
 
                     $('#carts').text(res.count);
+                    $('#mobilecart').text(res.count);
 
                     // ⏳ Delay 2 seconds then redirect
                     setTimeout(function () {
@@ -68,10 +104,32 @@ $('.add-to-cart').on('click', function () {
 
                 } 
                 else if (res.status == 1) {
+                     let guestCart = JSON.parse(sessionStorage.getItem('guest_cart')) || [];
 
-                    setTimeout(function () {
-                        window.location.href = "{{ url('userlogin') }}";
-                    }, 2000);
+let existingProduct = guestCart.find(item =>
+    item.product_id == id && item.size == size
+);
+
+if (existingProduct) {
+    existingProduct.qty += parseInt(qty);
+} else {
+    guestCart.push({
+        product_id: id,
+        qty: parseInt(qty),
+        size: size
+    });
+}
+
+sessionStorage.setItem('guest_cart', JSON.stringify(guestCart));
+
+$('#carts').text(guestCart.length);
+$('#mobilecart').text(guestCart.length);
+// console.log(guestCart);
+
+savecart(function () {
+    location.reload();
+});
+                 
                 }
 
             },
@@ -85,15 +143,30 @@ $('.add-to-cart').on('click', function () {
                 button.prop('disabled', false);
             }
         });
+    }else{
+        alert("Select size");
     }
 });
 
+$('.pd-size-btn').on('click', function () {
+ var size = $(this).data('id');
+    $('#sizeselection').val(size);
+
+    console.log($('#sizeselection').val()); // XL
+});
+
 $('.btn-increment').on('click', function () {
+  
+  
 
     var id = $(this).data('id');
     var vid = $(this).data('vid');
+    var userId = "{{ Auth::id() }}";
 
-    if (id) {
+    
+  
+
+    if (userId) {
         $.ajax({
             type: "POST",
             url: "{{ route('changeqty') }}",
@@ -104,6 +177,8 @@ $('.btn-increment').on('click', function () {
             },
             success: function (res) {
 
+            
+
                 console.log(res);
 
                 if (res.status == 0) {
@@ -113,7 +188,8 @@ $('.btn-increment').on('click', function () {
                     $('#subtotal').text(res.subtotal);
                     $('#discount').text(res.discount);
                     $('#grandtotal').text(res.grandtotal + 60 );
-                    $('#carts').text(res.count);
+                    // $('#carts').text(res.count);
+                    //  $('#mobilecart').text(res.count);
                     
 
                      if(res.qty == 0){
@@ -133,10 +209,53 @@ $('.btn-increment').on('click', function () {
                 alert('Something went wrong');
             }
         });
+    }else{
+        let guestCart = JSON.parse(sessionStorage.getItem('guest_cart')) || [];
+
+console.log(guestCart);
+console.log("Product ID:", id);
+console.log("VID:", vid);
+
+let existingProduct = guestCart.find(item => item.product_id == parseInt(id));
+
+if (existingProduct) {
+
+    if (vid == 1) {
+
+        existingProduct.qty++;
+
+    } else {
+
+        existingProduct.qty--;
+
+        if (existingProduct.qty <= 0) {
+            guestCart = guestCart.filter(item => item.product_id != id);
+            $('#cart-item_' + id).remove();
+        }
+    }
+
+ sessionStorage.setItem('guest_cart', JSON.stringify(guestCart));
+
+$('#qty_' + id).text(existingProduct.qty > 0 ? existingProduct.qty : 0);
+$('#carts').text(guestCart.length);
+$('#mobilecart').text(guestCart.length);
+
+savecart(function () {
+    location.reload();
+});
+   
+
+} else {
+
+    console.log('Product not found in guest cart');
+}
+
+//  window.location.reload();
+
     }
 });
 
-});
+
 
 $('#search').on('keyup', function () {
     let query = $(this).val();
@@ -160,9 +279,7 @@ $(document).on('click', '#search-list div', function () {
     $('#search').val($(this).text());
     $('#search-list').hide();
 });
-</script>
 
-<script>
 $("form").submit(function(){
 
     var pass = $("#password").val();
@@ -174,10 +291,8 @@ $("form").submit(function(){
     }
 
 });
-</script>
 
-<script>
-$(document).ready(function () {
+
 
     $("#payNow").click(function (e) {
         e.preventDefault();
@@ -224,11 +339,8 @@ $(document).ready(function () {
         });
     });
 
-});
-</script>
 
-<script>
-    $(document).ready(function(){
+
 $('input[type="radio"]').on('change', function () {
     $('input[type="radio"]').not(this).prop('checked', false);
 });
@@ -241,6 +353,53 @@ $('#checkout').on('submit', function (e) {
         }
 
     });
+
+
+
+document.getElementById('payBtn').onclick = function () {
+
+    if (!$('input[name="shipping_id"]:checked').length) {
+        alert('Please select a shipping address.');
+        return false;
+    }
+
+    var options = {
+        key: "{{ env('RAZORPAY_KEY') }}",
+        amount: ((parseFloat($('#totalAmount').val()) || 0) * 100) ,
+        currency: "INR",
+        name: "Brandson Clothings",
+        description: "Order Payment",
+  handler: function (response) {
+    console.log(response);
+
+            document.getElementById('razorpay_payment_id').value =
+                response.razorpay_payment_id;
+
+            document.getElementById('razorpay_order_id').value =
+                response.razorpay_order_id;
+
+            document.getElementById('razorpay_signature').value =
+                response.razorpay_signature;
+
+            document.getElementById('checkoutForm').submit();
+        },
+    };
+
+    var rzp = new Razorpay(options);
+    rzp.open();
+};
+
+
+
+   
+
+    let guestCart = JSON.parse(sessionStorage.getItem('guest_cart')) || [];
+
+     $('#carts').text(guestCart.length);
+      $('#mobilecart').text(guestCart.length);
+
+     
+
 
 });
 </script>

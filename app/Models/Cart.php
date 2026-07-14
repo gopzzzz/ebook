@@ -12,5 +12,7 @@ class Cart extends Model
         'user_id',
         'product_id',
           'qty',
+          'size',
+          'color'
     ];
 }

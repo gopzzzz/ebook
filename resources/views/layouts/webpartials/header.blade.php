@@ -16,6 +16,7 @@
                     <div class="right-element">
                         @if(Auth::check())
                         <a href="{{url('userprofile')}}"><i class="icon icon-user"></i><span> {{ Auth::user()->name }}</span></a>
+<<<<<<< HEAD
                         @endif
                             <a href="{{url('cart')}}" class="cart for-buy"><i class="icon icon-clipboard"></i><span  id="carts" >:{{ $cartCount }}</span></a>
                         
@@ -23,6 +24,12 @@
                         
                       
                       
+=======
+                        <a href="{{url('cart')}}" class="cart for-buy"><i class="icon icon-clipboard"></i><span id="carts">:{{ $cartCount }}</span></a>
+                        @else
+                        <a href="{{url('userlogin')}}" class="user-account for-buy"><span>Sign In</span></a>
+                        @endif
+>>>>>>> 521198415b418be242a5aa36920cd3ed7f96de1b
                         <div class="action-menu">
                             <div class="search-bar">
                                 <a href="#" class="search-button search-toggle" data-selector="#header-wrap">
@@ -55,7 +62,11 @@
                         <div class="main-menu stellarnav">
                             <ul class="menu-list">
                                 <li class="menu-item {{ Route::currentRouteName() == 'index' ? 'active' : '' }}"><a href="{{url('index')}}">Home</a></li>
+<<<<<<< HEAD
                                 <!-- <li class="menu-item {{ Route::currentRouteName() == 'product-list' ? 'active' : '' }}"><a href="{{url('product-list')}}" class="nav-link">Products</a></li> -->
+=======
+                                <li class="menu-item {{ Route::currentRouteName() == 'product-list' ? 'active' : '' }}"><a href="{{url('product-list')}}" class="nav-link">Products</a></li>
+>>>>>>> 521198415b418be242a5aa36920cd3ed7f96de1b
                                 <li class="menu-item {{ Route::currentRouteName() == 'aboutus' ? 'active' : '' }}"><a href="{{url('aboutus')}}" class="nav-link">About Us</a></li>
                                 <li class="menu-item {{ Route::currentRouteName() == 'team' ? 'active' : '' }}"><a href="{{url('team')}}" class="nav-link">Team</a></li>
                                 <li class="menu-item {{ Route::currentRouteName() == 'contactus' ? 'active' : '' }}"><a href="{{url('contactus')}}" class="nav-link">Contact Us</a></li>
@@ -72,6 +83,7 @@
         </div>
     </header>
 
+<<<<<<< HEAD
     <!--<div class="category-bar">-->
     <!--    <div class="container-fluid">-->
     <!--        <ul class="category-menu">-->
@@ -119,6 +131,23 @@
             <button class="mob-icon mob-hamburger" id="mobMenuBtn" title="Menu" style="background:none;border:none;padding:0;cursor:pointer;">
                 <i class="fa-solid fa-bars" style="font-size:18px;color:#212121;"></i>
             </button>
+=======
+    <div class="category-bar">
+        <div class="container-fluid">
+            <ul class="category-menu">
+                <li><a href="#">Men</a></li>
+                <li><a href="#">Women</a></li>
+                <li><a href="#">Kids</a></li>
+                <li><a href="#">T-Shirts</a></li>
+                <li><a href="#">Shirts</a></li>
+                <li><a href="#">Jeans</a></li>
+                <li><a href="#">Jackets</a></li>
+                <li><a href="#">Footwear</a></li>
+                <li><a href="#">Accessories</a></li>
+                <li><a href="#">New Arrivals</a></li>
+                <li><a href="#" style="color:#e53935;">Sale 🔥</a></li>
+            </ul>
+>>>>>>> 521198415b418be242a5aa36920cd3ed7f96de1b
         </div>
     </div>
 
@@ -133,6 +162,94 @@
            
         </ul> 
     </div> 
+
+    <div class="mob-drawer-overlay" id="mobDrawerOverlay"></div>
+    <div class="mob-drawer" id="mobDrawer">
+        <div class="mob-drawer-header">
+            <img src="{{asset('public/uploads/profile/'.$app_profile->logo)}}" alt="logo" style="height:28px;">
+            <button class="mob-drawer-close" id="mobDrawerClose">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <nav class="mob-drawer-nav">
+            <a href="{{url('index')}}" class="mob-drawer-link {{ Route::currentRouteName() == 'index' ? 'mob-drawer-active' : '' }}">
+                <i class="fa-solid fa-house"></i> Home
+            </a>
+            <a href="{{url('product-list')}}" class="mob-drawer-link {{ Route::currentRouteName() == 'product-list' ? 'mob-drawer-active' : '' }}">
+                <i class="fa-solid fa-shirt"></i> Products
+            </a>
+            <a href="{{url('aboutus')}}" class="mob-drawer-link {{ Route::currentRouteName() == 'aboutus' ? 'mob-drawer-active' : '' }}">
+                <i class="fa-solid fa-circle-info"></i> About Us
+            </a>
+            <a href="{{url('team')}}" class="mob-drawer-link {{ Route::currentRouteName() == 'team' ? 'mob-drawer-active' : '' }}">
+                <i class="fa-solid fa-users"></i> Team
+            </a>
+            <a href="{{url('contactus')}}" class="mob-drawer-link {{ Route::currentRouteName() == 'contactus' ? 'mob-drawer-active' : '' }}">
+                <i class="fa-solid fa-envelope"></i> Contact Us
+            </a>
+            <div class="mob-drawer-divider"></div>
+            @if(Auth::check())
+            <a href="{{url('userprofile')}}" class="mob-drawer-link">
+                <i class="fa-solid fa-user"></i> My Profile
+            </a>
+            <a href="{{url('cart')}}" class="mob-drawer-link">
+                <i class="fa-solid fa-cart-shopping"></i> My Cart
+                @if($cartCount > 0)<span class="mob-drawer-badge">{{ $cartCount }}</span>@endif
+            </a>
+            @else
+            <a href="{{url('userlogin')}}" class="mob-drawer-link">
+                <i class="fa-solid fa-right-to-bracket"></i> Sign In
+            </a>
+            @endif
+        </nav>
+    </div>
+</div>
+
+<div class="d-block d-md-none mob-header-wrap">
+    <div class="mob-topbar">
+        <a href="{{url('index')}}" class="mob-logo-link">
+            <img src="{{asset('public/uploads/profile/'.$app_profile->logo)}}" alt="logo" class="mob-logo-img">
+        </a>
+        <div class="mob-action-icons">
+            <a href="{{url('product-list')}}" class="mob-icon" title="Products">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
+            @if(Auth::check())
+            <a href="{{url('cart')}}" class="mob-icon" title="Cart">
+                <i class="fa-solid fa-cart-shopping"></i>
+                @if($cartCount > 0)
+                <span class="mob-badge">{{ $cartCount }}</span>
+                @endif
+            </a>
+            <a href="{{url('userprofile')}}" class="mob-icon" title="Profile">
+                <i class="fa-solid fa-user"></i>
+            </a>
+            @else
+            <a href="{{url('userlogin')}}" class="mob-icon" title="Sign In">
+                <i class="fa-solid fa-user"></i>
+            </a>
+            @endif
+            <button class="mob-icon mob-hamburger" id="mobMenuBtn" title="Menu" style="background:none;border:none;padding:0;cursor:pointer;">
+                <i class="fa-solid fa-bars" style="font-size:18px;color:#212121;"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="mob-cat-bar">
+        <ul class="mob-cat-list" id="mobCatList">
+            <li><a href="#" class="mob-cat-link active">Men</a></li>
+            <li><a href="#" class="mob-cat-link">Women</a></li>
+            <li><a href="#" class="mob-cat-link">Kids</a></li>
+            <li><a href="#" class="mob-cat-link">T-Shirts</a></li>
+            <li><a href="#" class="mob-cat-link">Shirts</a></li>
+            <li><a href="#" class="mob-cat-link">Jeans</a></li>
+            <li><a href="#" class="mob-cat-link">Jackets</a></li>
+            <li><a href="#" class="mob-cat-link">Footwear</a></li>
+            <li><a href="#" class="mob-cat-link">Accessories</a></li>
+            <li><a href="#" class="mob-cat-link">New Arrivals</a></li>
+            <li><a href="#" class="mob-cat-link mob-sale">Sale 🔥</a></li>
+        </ul>
+    </div>
 
     <div class="mob-drawer-overlay" id="mobDrawerOverlay"></div>
     <div class="mob-drawer" id="mobDrawer">

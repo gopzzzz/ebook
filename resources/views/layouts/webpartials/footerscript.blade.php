@@ -70,13 +70,19 @@ $('.add-to-cart').on('click', function () {
     var id = button.data('id');
     var qty = 1;
     var size =$("#sizeselection").val();
+    var hasSize = $(".pd-size-btn").length > 0;
+   
 
-  
+//   alert(size);
     
 
-    if (size) {
+   if (hasSize && (!size || size == 0)) {
 
-        // 🔄 Show loader
+         alert("Please select a size.");
+        return;
+    }
+
+     // 🔄 Show loader
         button.find('.btn-text').addClass('d-none');
         button.find('.btn-loader').removeClass('d-none');
         button.prop('disabled', true);
@@ -143,9 +149,7 @@ savecart(function () {
                 button.prop('disabled', false);
             }
         });
-    }else{
-        alert("Select size");
-    }
+    
 });
 
 $('.pd-size-btn').on('click', function () {

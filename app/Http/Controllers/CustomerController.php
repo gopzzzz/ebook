@@ -226,7 +226,7 @@ foreach ($guestCart as $item) {
 session()->forget('guest_cart');
             
            
-            return redirect()->route('index');
+            return redirect()->route('cart');
         }
 
         return back()->with('error', 'Invalid email or password');

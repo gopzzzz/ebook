@@ -69,11 +69,11 @@
 
                 <div class="modal-body">
 
-                    <input type="hidden" name="itemtype" value="1">
+                    <input type="hidden" name="type" value="1">
 
                     <div class="row g-3">
 
-                     <div class="col-md-6">
+                     <!-- <div class="col-md-6">
                             <label class="form-label fw-semibold">Item For</label>
                             <select name="type" class="form-select" required>
                                 <option value="">Select </option>
@@ -83,7 +83,7 @@
                                     <option value="3"> KIDS  </option>
                                
                             </select>
-                        </div>
+                        </div> -->
 
                         <!-- Item Name -->
                         <div class="col-md-6">
@@ -143,7 +143,7 @@
                         </div>
 
                         <!-- Image Upload -->
-                        <div class="col-12">
+                        <div class="col-6">
                             <label class="form-label fw-semibold">
                                 Product Image <small class="text-muted">(Recommended: 249 × 342 px)</small>
                             </label>
@@ -151,6 +151,17 @@
                                    name="image"
                                    class="form-control"
                                    accept="image/png,image/jpeg"
+                                   required>
+                        </div>
+
+                         <div class="col-6">
+                            <label class="form-label fw-semibold">
+                                Product Stock 
+                            </label>
+                            <input type="text"
+                                   name="stock"
+                                   class="form-control"
+                                  
                                    required>
                         </div>
 
@@ -254,10 +265,10 @@
           <th>Image</th>
           <!-- <th>Item Type</th> -->
           <th>Name</th>
-          <th>Category Name</th>
+          <!-- <th>Category Name</th> -->
           <th>MRP</th>
           <th>Selling Price</th>
-          
+          <th>Stock</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -268,9 +279,20 @@
           </td>
     
           <td>{{ substr($item->name, 0, 25) }}...</td>
-          <td>{{ $item->category->category_name ?? '-' }}</td>
+          <!-- <td>{{ $item->category->category_name ?? '-' }}</td> -->
           <td>{{ $item->mrp }}</td>
           <td>{{ $item->sr }}</td>
+           <td>@if($item->stock == 0)
+    <span class="badge bg-danger">Out of Stock</span>
+@elseif($item->stock < 5)
+    <span class="badge bg-warning text-dark">
+        Low Stock ({{ $item->stock }} left)
+    </span>
+@else
+    <span class="badge bg-success">
+        In Stock ({{ $item->stock }})
+    </span>
+@endif</td>
           
           <td>
             <div class="dropdown position-static">
@@ -278,7 +300,7 @@
                 <i class="bx bx-dots-vertical-rounded"></i>
               </button>
               <div class="dropdown-menu">
-                <a href="#" class="dropdown-item edititemvarients" data-bs-toggle="modal" data-bs-target="#EditItemmodal" data-id="{{ $item->id }}" data-name="{{ e($item->name) }}"  data-itemtype="{{ $item->item_type }}" data-author="{{ $item->author_id }}" data-hsnid="{{ $item->hsnid }}"  data-category="{{ $item->cat_id }}" data-mrp="{{ $item->mrp }}" data-sr="{{ $item->sr }}" data-image="{{ $item->image }}" data-description="{{ ($item->description) }}">
+                <a href="#" class="dropdown-item edititemvarients" data-bs-toggle="modal" data-bs-target="#EditItemmodal" data-id="{{ $item->id }}" data-name="{{ e($item->name) }}"  data-itemtype="{{ $item->item_type }}" data-author="{{ $item->author_id }}" data-hsnid="{{ $item->hsnid }}"  data-category="{{ $item->cat_id }}" data-mrp="{{ $item->mrp }}" data-sr="{{ $item->sr }}" data-image="{{ $item->image }}" data-description="{{ ($item->description) }}"  data-stock="{{ ($item->stock) }}">
                   <i class="bx bx-edit-alt me-1"></i> Edit </a>
                   <a class="dropdown-item  delete-btn" href="{{ route('items.delete', $item->id) }}">
                   <i class="bx bx-trash me-1"></i> Delete </a>
@@ -315,9 +337,9 @@
 
     
 
-        <input type="hidden" name="item_type" value="1">
+        <input type="hidden" name="type" value="1">
 
-          <div class="col-md-6">
+          <!-- <div class="col-md-6">
                             <label class="form-label fw-semibold">Item For</label>
                             <select name="type" class="form-select" id="edititemtype" required>
                                 <option value="">Select </option>
@@ -327,7 +349,7 @@
                                     <option value="3"> KIDS  </option>
                                
                             </select>
-                        </div>
+                        </div> -->
 
         <div class="row g-3">
 
@@ -434,19 +456,7 @@
                        class="form-control">
             </div>
 
-            <!-- Current Image -->
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">
-                    Current Image
-                </label>
-
-                <div>
-                    <img id="editImagePreview"
-                         src=""
-                         class="img-thumbnail"
-                         width="120">
-                </div>
-            </div>
+           
 
             <!-- New Image -->
             <div class="col-md-6">
@@ -462,6 +472,18 @@
                        class="form-control"
                        accept="image/png,image/jpeg">
             </div>
+
+            <div class="col-6">
+                            <label class="form-label fw-semibold">
+                                Product Stock 
+                            </label>
+                            <input type="text"
+                                   name="stock"
+                                   class="form-control" id="editstock"
+                                  
+                                   required>
+                        </div>
+
 
             <!-- Description -->
             <div class="col-12">
@@ -535,12 +557,13 @@
           form.action = "{{ url('items/update') }}/" + button.dataset.id;
           document.getElementById('editName').value = button.dataset.name;
           document.getElementById('editAuthor').value = button.dataset.author;
-          document.getElementById('edititemtype').value = button.dataset.itemtype;
+        
           document.getElementById('editHnscode').value = button.dataset.hsnid;
           document.getElementById('editCategory').value = button.dataset.category;
           document.getElementById('editMrp').value = button.dataset.mrp;
           document.getElementById('editDescription').value = button.dataset.description;
           document.getElementById('editSr').value = button.dataset.sr;
+          document.getElementById('editstock').value = button.dataset.stock;
           
           
           document.getElementById('editImagePreview').src = `/assets/img/items/${button.dataset.image}`;

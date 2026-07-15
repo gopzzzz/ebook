@@ -87,6 +87,7 @@ return view('admin.edititems',compact('authors',
         'cat_id'       => 'required|exists:categories,id',
         'mrp'          => 'required|numeric',
         'sr'           => 'required|numeric',
+        'stock'           => 'required|numeric',
         'image'        => 'required|image|mimes:jpg,jpeg,png',
         'description'  => 'nullable|string',
     ]);
@@ -110,6 +111,7 @@ return view('admin.edititems',compact('authors',
         'cat_id'       => $validated['cat_id'],
         'mrp'          => $validated['mrp'],
         'sr'           => $validated['sr'],
+        'stock'           => $validated['stock'],
         'description'  => $validated['description'] ?? null,
         'image'        => $imageName,
     ]);
@@ -193,6 +195,7 @@ return view('admin.edititems',compact('authors',
             'cat_id'       => 'required|exists:categories,id',
             'mrp'          => 'required|numeric',
             'sr'           => 'required|numeric',
+             'stock'           => 'required|numeric',
             'image'        => 'nullable|image|mimes:png,jpg,jpeg',
             'description'  => 'nullable|string',
         ]);
@@ -206,6 +209,7 @@ return view('admin.edititems',compact('authors',
             'cat_id',
             'mrp',
             'sr',
+            'stock',
             'description'
         ]);
 

@@ -338,6 +338,8 @@
     <span style="color:#1c1c1c;font-weight:500;">Shopping Cart</span>
 </div>
 
+
+
 <div class="nc-page">
     <div class="nc-wrap">
         @if($cartItems->count() > 0)
@@ -362,8 +364,8 @@
                         </div>
                         <div class="nc-item-info">
                             <div class="nc-item-name">{{$item->name}}</div>
-                            <div class="nc-item-seller">Seller: BrandsonStore &nbsp;<span style="color:#388e3c;font-size:12px;">✓ Trusted</span> <br>
-                            Size : {{$item->size}} 
+                            <div class="nc-item-seller">Seller: {{$item->author_name}} &nbsp;<span style="color:#388e3c;font-size:12px;">✓ Trusted</span> <br>
+                           {{ !empty($item->size) ? 'Size : '.$item->size : '' }}
                         </div>
                             <div class="nc-item-price-row">
                                 <span class="nc-item-sp">₹{{$item->sr}}</span>

@@ -226,17 +226,23 @@
                 </div>
                 <div class="pd-img-btn-row">
                      @if($inCart)
+                        @if($product->stock != 0)
                      <button type="button" class="pd-bn-btn pd-buynow-btn" data-id="{{ $product->id }}">
                        <a href="{{ url('cart') }}"> <span class="pd-bn-text"><i class="fa-solid fa-bolt"></i>GO TO CART</span></a>
                        
                     </button>
+                      
+                        @endif
                       @else
+
+                       @if($product->stock != 0)
                   
                      <button type="button" class="pd-atc-btn add-to-cart" data-id="{{ $product->id }}" data-action="cart">
                         <span class="btn-text"><i class="fa-solid fa-cart-plus"></i> ADD TO CART</span>
                         <span class="btn-loader d-none"><i class="fa fa-spinner fa-spin"></i> Loading...</span>
                     </button>
                      @endif
+                    @endif
                 </div>
             </div>
 
@@ -258,9 +264,21 @@
                         <span class="pd-verified-tag">256 Reviews</span>
                     </div>
 
-                    <div class="pd-stock-badge">
-                        <i class="fa-solid fa-circle-check"></i> In Stock
-                    </div>
+                    @if($product->stock == 0)
+    <div class="pd-stock-badge text-danger">
+        <i class="fa-solid fa-circle-xmark"></i> Out of Stock
+    </div>
+@elseif($product->stock < 5)
+    <div class="pd-stock-badge text-warning">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        Low Stock (Only {{ $product->stock }} left)
+    </div>
+@else
+    <div class="pd-stock-badge text-success">
+        <i class="fa-solid fa-circle-check"></i>
+        In Stock 
+    </div>
+@endif
 
                     <div class="pd-price-section">
                         <div class="pd-price-lbl">Special Price</div>
@@ -276,6 +294,15 @@
                         </div>
                         <!-- <div class="pd-emi-txt">EMI from ₹99/month · <a href="#">View Plans</a></div> -->
                     </div>
+
+                    @php
+    $hasSize = $varient_types->contains(function($item){
+        return stripos($item->varient_name, 'size') !== false;
+    });
+@endphp
+                    <input type="hidden" id="has_size" value="{{ $hasSize ? 1 : 0 }}">
+                    <input type="hidden" id="sizeselection" value="{{ $size ?? 0 }}"> 
+                    <input type="hidden" id="color" value="{{ $size ?? 0 }}">
 
                     @foreach($varient_types as $varients)
 
@@ -303,7 +330,7 @@
 
                     @if($attr)
 
-                     <input type="hidden" id="color" value="">
+                    
                         <div class="pd-color-item {{ $i == 0 ? 'selected' : '' }}"
                              onclick="pdSelectColor(this,'{{ $attr->name }}')">
 
@@ -332,8 +359,12 @@
                 <span id="pdVariant{{ $varients->id }}">:</span>
             </div>
 
+            
+          
+            
            
-            <input type="hidden" id="sizeselection" value="{{$size}}"> 
+           
+           
 
             @php
     $allattributes = DB::table('product_attributes')
@@ -379,7 +410,7 @@
                     <div class="pd-seller-row">
                         <div class="pd-seller-lbl">Sold by</div>
                         <div>
-                            <span class="pd-seller-name">Brandson Clothings</span>
+                            <span class="pd-seller-name">{{ $brand }}</span>
                             <span class="pd-seller-tag">✓ Trusted</span>
                         </div>
                     </div>

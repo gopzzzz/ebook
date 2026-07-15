@@ -40,7 +40,8 @@ class AppServiceProvider extends ServiceProvider
             $cartCount = Cart::where('user_id', Auth::id())->count();
                $cartItems = Cart::where('user_id', Auth::id())
                  ->leftJoin('items', 'carts.product_id', '=', 'items.id')
-                 ->select('carts.*','items.name','items.image','items.mrp','items.sr')
+                  ->leftJoin('authors', 'items.author_id', '=', 'authors.id')
+                 ->select('carts.*','items.name','items.image','items.mrp','items.sr','authors.author_name')
                 ->get();
 
                 $cusAddress=ShippingAddress::where('shipping_address.cus_id', Auth::id())

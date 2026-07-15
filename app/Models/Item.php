@@ -22,6 +22,7 @@ class Item extends Model
     'cat_id',
     'mrp',
     'sr',
+    'stock',
     'image',
     'hsnid',
     'description',

@@ -16,7 +16,6 @@
                     <div class="right-element">
                         @if(Auth::check())
                         <a href="{{url('userprofile')}}"><i class="icon icon-user"></i><span> {{ Auth::user()->name }}</span></a>
-<<<<<<< HEAD
                         @endif
                             <a href="{{url('cart')}}" class="cart for-buy"><i class="icon icon-clipboard"></i><span  id="carts" >:{{ $cartCount }}</span></a>
                         
@@ -24,12 +23,6 @@
                         
                       
                       
-=======
-                        <a href="{{url('cart')}}" class="cart for-buy"><i class="icon icon-clipboard"></i><span id="carts">:{{ $cartCount }}</span></a>
-                        @else
-                        <a href="{{url('userlogin')}}" class="user-account for-buy"><span>Sign In</span></a>
-                        @endif
->>>>>>> 521198415b418be242a5aa36920cd3ed7f96de1b
                         <div class="action-menu">
                             <div class="search-bar">
                                 <a href="#" class="search-button search-toggle" data-selector="#header-wrap">
@@ -62,11 +55,7 @@
                         <div class="main-menu stellarnav">
                             <ul class="menu-list">
                                 <li class="menu-item {{ Route::currentRouteName() == 'index' ? 'active' : '' }}"><a href="{{url('index')}}">Home</a></li>
-<<<<<<< HEAD
                                 <!-- <li class="menu-item {{ Route::currentRouteName() == 'product-list' ? 'active' : '' }}"><a href="{{url('product-list')}}" class="nav-link">Products</a></li> -->
-=======
-                                <li class="menu-item {{ Route::currentRouteName() == 'product-list' ? 'active' : '' }}"><a href="{{url('product-list')}}" class="nav-link">Products</a></li>
->>>>>>> 521198415b418be242a5aa36920cd3ed7f96de1b
                                 <li class="menu-item {{ Route::currentRouteName() == 'aboutus' ? 'active' : '' }}"><a href="{{url('aboutus')}}" class="nav-link">About Us</a></li>
                                 <li class="menu-item {{ Route::currentRouteName() == 'team' ? 'active' : '' }}"><a href="{{url('team')}}" class="nav-link">Team</a></li>
                                 <li class="menu-item {{ Route::currentRouteName() == 'contactus' ? 'active' : '' }}"><a href="{{url('contactus')}}" class="nav-link">Contact Us</a></li>
@@ -83,7 +72,6 @@
         </div>
     </header>
 
-<<<<<<< HEAD
     <!--<div class="category-bar">-->
     <!--    <div class="container-fluid">-->
     <!--        <ul class="category-menu">-->
@@ -131,23 +119,6 @@
             <button class="mob-icon mob-hamburger" id="mobMenuBtn" title="Menu" style="background:none;border:none;padding:0;cursor:pointer;">
                 <i class="fa-solid fa-bars" style="font-size:18px;color:#212121;"></i>
             </button>
-=======
-    <div class="category-bar">
-        <div class="container-fluid">
-            <ul class="category-menu">
-                <li><a href="#">Men</a></li>
-                <li><a href="#">Women</a></li>
-                <li><a href="#">Kids</a></li>
-                <li><a href="#">T-Shirts</a></li>
-                <li><a href="#">Shirts</a></li>
-                <li><a href="#">Jeans</a></li>
-                <li><a href="#">Jackets</a></li>
-                <li><a href="#">Footwear</a></li>
-                <li><a href="#">Accessories</a></li>
-                <li><a href="#">New Arrivals</a></li>
-                <li><a href="#" style="color:#e53935;">Sale 🔥</a></li>
-            </ul>
->>>>>>> 521198415b418be242a5aa36920cd3ed7f96de1b
         </div>
     </div>
 

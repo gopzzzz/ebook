@@ -6,16 +6,13 @@
 <body>
 
     <div id="header-wrap">
-
-
         @include('layouts.webpartials.header')
-
     </div>
 
+    @yield('content')
 
-    @yield('content') @include('layouts.webpartials.footer') @include('layouts.webpartials.footerscript')
-
-
+    @include('layouts.webpartials.footer')
+    @include('layouts.webpartials.footerscript')
 
 </body>
 

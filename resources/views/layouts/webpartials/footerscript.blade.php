@@ -3,8 +3,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
 		crossorigin="anonymous"></script>
-	<script src="{{asset('public/web/js/plugins.js')}}"></script>
-	<script src="{{asset('public/web/js/script.js')}}"></script>
+	<script src="{{asset('web/js/plugins.js')}}"></script>
+	<script src="{{asset('web/js/script.js')}}"></script>
 	 <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>

@@ -2321,7 +2321,7 @@ span.prev-price {
 footer#footer {
   padding-top: 20px;
   padding-bottom: 80px;
-  margin-top: 100px;
+  margin-top: 0;
  
   border-bottom: 1px solid var(--background-light);
   background-color: var(--background-light);

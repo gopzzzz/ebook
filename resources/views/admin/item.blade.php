@@ -1,7 +1,6 @@
 @extends('layouts.mainlayout') @section('content') <h4 class="fw-bold py-3 mb-4">
   <span class="text-muted fw-light">Home /</span> Items
 </h4>
-<!-- Bordered Table -->
 
  @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -73,25 +72,12 @@
 
                     <div class="row g-3">
 
-                     <!-- <div class="col-md-6">
-                            <label class="form-label fw-semibold">Item For</label>
-                            <select name="type" class="form-select" required>
-                                <option value="">Select </option>
-                               
-                                    <option value="1"> MEN  </option>
-                                    <option value="2"> WOMEN  </option>
-                                    <option value="3"> KIDS  </option>
-                               
-                            </select>
-                        </div> -->
 
-                        <!-- Item Name -->
                         <div class="col-md-6">
                             <label class="form-label fw-semibold">Item Name</label>
                             <input type="text" name="name" class="form-control" required>
                         </div>
 
-                        <!-- Category -->
                         <div class="col-md-6">
                             <label class="form-label fw-semibold">Category</label>
                             <select name="cat_id" class="form-select" required>
@@ -104,7 +90,6 @@
                             </select>
                         </div>
 
-                        <!-- Brand -->
                         <div class="col-md-6">
                             <label class="form-label fw-semibold">Brand Name</label>
                             <select name="author_id" class="form-select" required>
@@ -117,7 +102,6 @@
                             </select>
                         </div>
 
-                        <!-- Publisher -->
                         <div class="col-md-6">
                             <label class="form-label fw-semibold">Hsn Code</label>
                             <select name="hsnid" class="form-select" required>
@@ -130,19 +114,16 @@
                             </select>
                         </div>
 
-                        <!-- MRP -->
                         <div class="col-md-6">
                             <label class="form-label fw-semibold">MRP (₹)</label>
                             <input type="number" name="mrp" class="form-control" required>
                         </div>
 
-                        <!-- Selling Rate -->
                         <div class="col-md-6">
                             <label class="form-label fw-semibold">Selling Rate (₹)</label>
                             <input type="number" name="sr" class="form-control" required>
                         </div>
 
-                        <!-- Image Upload -->
                         <div class="col-6">
                             <label class="form-label fw-semibold">
                                 Product Image <small class="text-muted">(Recommended: 249 × 342 px)</small>
@@ -165,7 +146,6 @@
                                    required>
                         </div>
 
-                        <!-- Description -->
                         <div class="col-12">
                             <label class="form-label fw-semibold">Description</label>
                             <textarea name="description"
@@ -263,9 +243,7 @@
         <tr>
           <th>SL No.</th>
           <th>Image</th>
-          <!-- <th>Item Type</th> -->
           <th>Name</th>
-          <!-- <th>Category Name</th> -->
           <th>MRP</th>
           <th>Selling Price</th>
           <th>Stock</th>
@@ -279,7 +257,6 @@
           </td>
     
           <td>{{ substr($item->name, 0, 25) }}...</td>
-          <!-- <td>{{ $item->category->category_name ?? '-' }}</td> -->
           <td>{{ $item->mrp }}</td>
           <td>{{ $item->sr }}</td>
            <td>@if($item->stock == 0)
@@ -339,21 +316,9 @@
 
         <input type="hidden" name="type" value="1">
 
-          <!-- <div class="col-md-6">
-                            <label class="form-label fw-semibold">Item For</label>
-                            <select name="type" class="form-select" id="edititemtype" required>
-                                <option value="">Select </option>
-                               
-                                    <option value="1"> MEN  </option>
-                                    <option value="2"> WOMEN  </option>
-                                    <option value="3"> KIDS  </option>
-                               
-                            </select>
-                        </div> -->
 
         <div class="row g-3">
 
-            <!-- Item Name -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">
                     Item Name
@@ -366,7 +331,6 @@
                        required>
             </div>
 
-            <!-- Category -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">
                     Category
@@ -388,7 +352,6 @@
                 </select>
             </div>
 
-            <!-- Brand -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">
                     Brand Name
@@ -410,7 +373,6 @@
                 </select>
             </div>
 
-            <!-- HSN -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">
                     HSN Code
@@ -432,7 +394,6 @@
                 </select>
             </div>
 
-            <!-- MRP -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">
                     MRP (₹)
@@ -444,7 +405,6 @@
                        class="form-control">
             </div>
 
-            <!-- Selling Rate -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">
                     Selling Rate (₹)
@@ -458,7 +418,6 @@
 
            
 
-            <!-- New Image -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">
                     Replace Image
@@ -485,7 +444,6 @@
                         </div>
 
 
-            <!-- Description -->
             <div class="col-12">
                 <label class="form-label fw-semibold">
                     Description
@@ -499,7 +457,6 @@
 
         </div>
 
-        <!-- Product Variants -->
 
         <div class="card mt-4">
 
@@ -511,7 +468,6 @@
 
                 <div id="editVariantContainer">
 
-                    <!-- Existing Variant Rows Loaded Here -->
 
                 </div>
 
@@ -925,5 +881,6 @@ document.addEventListener('DOMContentLoaded', function () {
 </style>
 
 
-<!--/ Bordered Table --> @endsection
+ @endsection
+
 

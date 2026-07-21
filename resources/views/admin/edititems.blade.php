@@ -1,7 +1,6 @@
 @extends('layouts.mainlayout') @section('content') <h4 class="fw-bold py-3 mb-4">
   <span class="text-muted fw-light">Home /</span> Items
 </h4>
-<!-- Bordered Table -->
 
  @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -58,7 +57,6 @@
 
         <div class="row g-3">
 
-            <!-- Item Name -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">
                     Item Name
@@ -71,7 +69,6 @@
                        required>
             </div>
 
-            <!-- Category -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">
                     Category
@@ -93,7 +90,6 @@
                 </select>
             </div>
 
-            <!-- Brand -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">
                     Brand Name
@@ -117,7 +113,6 @@
                 </select>
             </div>
 
-            <!-- HSN -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">
                     HSN Code
@@ -139,7 +134,6 @@
                 </select>
             </div>
 
-            <!-- MRP -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">
                     MRP (₹)
@@ -151,7 +145,6 @@
                        class="form-control" value="{{$items->mrp}}">
             </div>
 
-            <!-- Selling Rate -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">
                     Selling Rate (₹)
@@ -163,7 +156,6 @@
                        class="form-control" value="{{$items->sr}}">
             </div>
 
-            <!-- Current Image -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">
                     Current Image
@@ -177,7 +169,6 @@
                 </div>
             </div>
 
-            <!-- New Image -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">
                     Replace Image
@@ -192,7 +183,6 @@
                        accept="image/png,image/jpeg">
             </div>
 
-            <!-- Description -->
             <div class="col-12">
                 <label class="form-label fw-semibold">
                     Description
@@ -206,7 +196,6 @@
 
         </div>
 
-        <!-- Product Variants -->
 
         
             <div class="card-body">
@@ -663,5 +652,6 @@ editIndex++;
 </style>
 
 
-<!--/ Bordered Table --> @endsection
+ @endsection
+
 

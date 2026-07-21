@@ -1,135 +1,23 @@
 <head>
-
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>{{$app_profile->name}} | Buy Clothings Online in Kerala </title>
+	<title>{{$app_profile->name ?? 'Pouch Gallery'}} | Premium Tech & Gaming Accessories</title>
 
-
-<meta name="author" content="{{$app_profile->name}}">
-<meta name="robots" content="index, follow">
+	<meta name="author" content="{{$app_profile->name ?? 'Pouch Gallery'}}">
+	<meta name="robots" content="index, follow">
 	
-	<link rel="icon" type="image/png" href="{{asset('public/uploads/profile/'.$app_profile->logo)}}">
+	<link rel="icon" type="image/png" href="{{asset('public/assets/logo.png')}}">
+    <link rel="apple-touch-icon" href="{{asset('public/assets/logo.png')}}" />
 
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-	<link rel="stylesheet" type="text/css" href="{{asset('public/web/css/normalize.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{asset('public/web/icomoon/icomoon.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{asset('public/web/css/vendor.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{asset('public/web/style.css')}}">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-	<style>
+		<link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+		<link rel="stylesheet" type="text/css" href="{{asset('public/style.css')}}">
 	
-.search-wrapper {
-    position: relative;
-    width: 300px;
-}
+		</head>
 
-/* input */
-.search-input {
-    width: 100%;
-    padding: 8px 12px;
-}
-
-/* dropdown */
-.dropdown-box {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: #fff;
-    border: 1px solid #ddd;
-    max-height: 250px;
-    overflow-y: auto;
-    display: none;
-    z-index: 99999;
-}
-
-/* item */
-.dropdown-item {
-    padding: 10px;
-    cursor: pointer;
-    color: #000;
-}
-
-/* hover */
-.dropdown-item:hover {
-    background: #f5f5f5;
-}
-html {
-    scroll-behavior: smooth;
-}
-body {
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-}
-
-.category-bar {
-    background: #f9f9f9;
-    border-top: 1px solid #e5e5e5;
-    border-bottom: 1px solid #e5e5e5;
-}
-
-.category-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-}
-
-.category-menu::-webkit-scrollbar {
-    display: none;
-}
-
-.category-menu li {
-    flex-shrink: 0;
-    padding: 13px 18px;
-    border-right: 1px solid #e5e5e5;
-}
-
-.category-menu li:last-child {
-    border-right: none;
-}
-
-.category-menu li a {
-    text-decoration: none;
-    color: #333;
-    font-size: 13px;
-    font-weight: 500;
-    transition: color 0.3s ease;
-    display: block;
-    white-space: nowrap;
-}
-
-.category-menu li a:hover {
-    color: #F59E0B;
-}
-
-@media (max-width: 768px) {
-    .category-menu li {
-        padding: 11px 14px;
-        font-size: 12px;
-    }
-
-    .category-menu li a {
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 576px) {
-    .category-menu li {
-        padding: 10px 12px;
-    }
-
-    .category-menu li a {
-        font-size: 11px;
-    }
-}
-	</style>
-	
-
-</head>

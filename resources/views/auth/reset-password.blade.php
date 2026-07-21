@@ -11,10 +11,8 @@
             <form method="POST" action="{{ route('password.store') }}">
                 @csrf
 
-                <!-- Token -->
                 <input type="hidden" name="token" value="{{ request()->route('token') }}">
 
-                <!-- Email -->
                 <div class="mb-3">
                     <label>Email Address</label>
                     <input type="email" name="email" 
@@ -27,7 +25,6 @@
                     @enderror
                 </div>
 
-                <!-- Password -->
                 <div class="mb-3">
                     <label>New Password</label>
                     <input type="password" name="password" 
@@ -38,14 +35,12 @@
                     @enderror
                 </div>
 
-                <!-- Confirm Password -->
                 <div class="mb-3">
                     <label>Confirm Password</label>
                     <input type="password" name="password_confirmation" 
                            class="form-control" required>
                 </div>
 
-                <!-- Button -->
                 <div class="d-grid">
                     <button type="submit" class="btn btn-primary">
                         Reset Password

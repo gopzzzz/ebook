@@ -112,13 +112,11 @@
 
 <div class="policy-wrapper">
 
-    <!-- Hero -->
     <div class="policy-hero">
         <h1>Shipping & Replacement Policy</h1>
         <p>Brandson Clothings – Last Updated: 02 March 2024</p>
     </div>
 
-    <!-- Content -->
     <div class="policy-container">
 
         <p>
@@ -130,7 +128,6 @@
             📦 Orders are dispatched within 24 hours from our office.
         </div>
 
-        <!-- Shipping -->
         <div class="policy-section">
             <h2><span>1</span>Shipping</h2>
             <ul>
@@ -141,7 +138,6 @@
             </ul>
         </div>
 
-        <!-- Replacement -->
         <div class="policy-section">
             <h2><span>2</span>Replacement Policy</h2>
             <p>
@@ -158,7 +154,6 @@
             </p>
         </div>
 
-        <!-- Process -->
         <div class="policy-section">
             <h2><span>3</span>Replacement Process</h2>
             <ul>
@@ -168,7 +163,6 @@
             </ul>
         </div>
 
-        <!-- Exceptions -->
         <div class="policy-section">
             <h2><span>4</span>Exceptions</h2>
             <ul>
@@ -177,7 +171,6 @@
             </ul>
         </div>
 
-        <!-- Contact -->
         <div class="policy-section">
             <h2><span>5</span>Contact Us</h2>
             <div class="policy-contact">

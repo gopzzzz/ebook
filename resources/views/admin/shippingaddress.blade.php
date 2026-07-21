@@ -1,7 +1,6 @@
 @extends('layouts.mainlayout') @section('content') <h4 class="fw-bold py-3 mb-4">
   <span class="text-muted fw-light">Home /</span> {{$customers->name}}
 </h4>
-<!-- Bordered Table -->
 <div class="card">
   @if(session('success'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -73,7 +72,6 @@
       <thead>
         <tr>
           <th>SL No.</th>
-          <!--<th>Customer</th>-->
           <th>Address</th>
           <th>Pincode</th>
           <th>District</th>
@@ -85,7 +83,6 @@
 @foreach($shippingaddress as $address)
 <tr>
 <td>{{ $shippingaddress->firstItem() + $loop->index }}</td>
-<!--<td>{{ $address->name ?? '-' }}</td>-->
 <td>{{ $address->address }}</td>
 <td>{{ $address->pincode }}</td>
 <td>{{ $address->district }}</td>
@@ -207,4 +204,4 @@ document.addEventListener('DOMContentLoaded', function () {
   </div>
 </div>
 </div>
-<!--/ Bordered Table --> @endsection
+ @endsection

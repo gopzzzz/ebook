@@ -1,7 +1,6 @@
 @extends('layouts.mainlayout') @section('content') <h4 class="fw-bold py-3 mb-4">
   <span class="text-muted fw-light">Home /</span> Category
 </h4>
-<!-- Bordered Table -->
 <div class="card">
   
  @if(session('success'))
@@ -181,4 +180,4 @@ document.addEventListener('DOMContentLoaded', function () {
   </div>
 </div>
 </div>
-<!--/ Bordered Table --> @endsection
+ @endsection

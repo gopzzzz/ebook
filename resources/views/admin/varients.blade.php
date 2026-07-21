@@ -1,7 +1,6 @@
 @extends('layouts.mainlayout') @section('content') <h4 class="fw-bold py-3 mb-4">
   <span class="text-muted fw-light">Home /</span> Varients
 </h4>
-<!-- Bordered Table -->
 <div class="card">
   
  @if(session('success'))
@@ -35,7 +34,6 @@
         <button type="submit" class="btn btn-outline-primary">Search</button>
       </form>
 </div>
-    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter"> Add New Record </button> -->
     <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -167,4 +165,4 @@ document.addEventListener('DOMContentLoaded', function () {
   </div>
 </div>
 </div>
-<!--/ Bordered Table --> @endsection
+ @endsection

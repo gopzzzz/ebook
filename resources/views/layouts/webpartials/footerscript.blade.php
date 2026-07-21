@@ -407,3 +407,4 @@ document.getElementById('payBtn').onclick = function () {
 
 });
 </script>
+<script src="{{asset('public/app.js')}}"></script>

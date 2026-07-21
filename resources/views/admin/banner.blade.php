@@ -3,7 +3,6 @@
 </h4>
 
 
-<!-- Bordered Table -->
 <div class="card">
 
      @if(session('error'))
@@ -180,4 +179,4 @@ document.addEventListener('DOMContentLoaded', function () {
   </div>
 </div>
 </div>
-<!--/ Bordered Table --> @endsection
+ @endsection

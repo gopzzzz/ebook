@@ -376,9 +376,6 @@
                         @endif
 
                         @if($cusAddress->isNotEmpty())
-                        <!-- <button type="button" class="ns-pay-btn" id="payNow">
-                            Cash Free
-                        </button> -->
 
                          <button type="button" class="ns-pay-btn" id="payBtn">
     Proced to checkout
@@ -442,3 +439,4 @@
 </div>
 
 @endsection
+

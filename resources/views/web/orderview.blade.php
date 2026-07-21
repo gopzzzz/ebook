@@ -121,7 +121,6 @@ margin-bottom: 0.5rem;
 
 <div class="invoice-box" id="invoice-area" >
 
-    <!-- HEADER -->
     <div class="invoice-header">
         <div>
             <div class="invoice-title">INVOICE</div>
@@ -135,7 +134,6 @@ margin-bottom: 0.5rem;
         </div>
     </div>
 
-    <!-- CUSTOMER -->
     <div class="customer-details">
         <h4>Billing To:</h4>
         <p>{{ $order_master->name }}</p>
@@ -145,7 +143,6 @@ margin-bottom: 0.5rem;
         <p>Phone: {{ $order_master->phone_number }}</p>
     </div>
 
-    <!-- ITEMS TABLE -->
     <table class="table">
         <thead>
             <tr>
@@ -177,7 +174,6 @@ margin-bottom: 0.5rem;
         </tbody>
     </table>
 
-    <!-- TOTAL -->
     <div class="total-box">
         <p>Subtotal: ₹ {{ $order_master->total_mrp}}</p>
         <p>Discount: ₹ {{ $order_master->total_mrp - $order_master->total_sr }}</p>
@@ -187,10 +183,10 @@ margin-bottom: 0.5rem;
 
 </div>
 
-<!-- PRINT BUTTON -->
 <div style="text-align:center;">
  <button class="print-btn" onclick="window.print()">Print Invoice</button>
 </div>
 
 @endsection
+
 

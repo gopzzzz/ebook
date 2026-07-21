@@ -7,10 +7,8 @@
 
     <title>Admin  - Login</title>
 
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700&display=swap" rel="stylesheet">
 
-    <!-- Styles -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
     <style>
         body {
@@ -90,3 +88,4 @@
     </div>
 </body>
 </html>
+

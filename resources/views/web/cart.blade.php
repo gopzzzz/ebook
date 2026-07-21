@@ -353,9 +353,6 @@
                     <div class="nc-items-header">
                         <div class="nc-items-title">My Cart <span style="color:#878787;font-size:14px;">({{$cartCount}} items)</span></div>
                     </div>
-                    <!-- <div class="nc-free-delivery-banner">
-                        <i class="fa-solid fa-truck-fast"></i> Free delivery on this order
-                    </div> -->
 
                     @foreach($cartItems as $item)
                     <div class="nc-item" id="cart-item_{{$item->product_id}}">
@@ -392,12 +389,6 @@
                     </div>
                     @endforeach
                 </div>
-<!-- 
-                <div style="background:#fff;border:1px solid #ddd;border-top:none;border-radius:0 0 3px 3px;padding:16px 20px;text-align:right;">
-                    <a href="{{url('shipping_details')}}" style="display:inline-block;">
-                        <button type="button" class="checkout-btn" style="width:auto;padding:14px 56px;">Place Order</button>
-                    </a>
-                </div> -->
             </div>
 
             <div>

@@ -41,6 +41,15 @@ class IndexController extends Controller
 
         return view('web.index',compact('banner','dod','fastmovingProducts','catlimit'));
     }
+
+    public function gamingProducts(Request $request) {
+        return view('web.gaming-products');
+    }
+
+    public function gamingProductDetail($id) {
+        return view('web.gaming-product-detail');
+    }
+
     public function productlist($id){
           $category=DB::table('categories')
           ->leftJoin('items', 'categories.id', '=', 'items.cat_id')

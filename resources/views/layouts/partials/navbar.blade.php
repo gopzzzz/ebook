@@ -68,7 +68,6 @@
           <div class="menu-inner-shadow"></div>
 
           <ul class="menu-inner py-1">
-            <!-- Dashboard -->
             <li class="menu-item {{ request()->is('dashboard') ? 'active' : '' }}">
               <a href="{{url('dashboard')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
@@ -76,7 +75,6 @@
               </a>
             </li>
 
-            <!-- Layouts -->
          <li class="menu-item {{ request()->is('orders') ? 'active' : '' }}">
     <a href="{{ url('orders') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-layout"></i>
@@ -153,18 +151,7 @@
         </li>
 
       
-<!-- 
-        <li class="menu-item {{ request()->is('publishers*') ? 'active' : '' }}">
-            <a href="{{ url('publishers') }}" class="menu-link">
-                <div>Publisher</div>
-            </a>
-        </li> -->
 
-        <!-- <li class="menu-item {{ request()->is('shippingaddress*') ? 'active' : '' }}">
-            <a href="{{ url('shippingaddress') }}" class="menu-link">
-                <div>Shipping Address</div>
-            </a>
-        </li> -->
 
     </ul>
 
@@ -181,11 +168,6 @@
       
 
         
-        <!-- <li class="menu-item {{ request()->is('ads*') ? 'active' : '' }}">
-            <a href="{{ url('ads') }}" class="menu-link">
-                <div>Ad Creation</div>
-            </a>
-        </li> -->
 
            <li class="menu-item {{ request()->is('banner*') ? 'active' : '' }}">
             <a href="{{ url('banner') }}" class="menu-link">
@@ -209,11 +191,10 @@
     </ul>
 
 </li>
-            <!-- Components -->
           
           
           
            
           </ul>
         </aside>
-        <!-- / Menu -->
+

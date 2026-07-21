@@ -113,13 +113,11 @@
 
 <div class="tc-wrapper">
 
-    <!-- Hero -->
     <div class="tc-hero">
         <h1>Terms & Conditions</h1>
         <p>Brandson Clothings – Effective from June 1, 2026</p>
     </div>
 
-    <!-- Content -->
     <div class="tc-container">
 
         <p>

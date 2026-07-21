@@ -292,7 +292,6 @@
                             @endif
                             @endif
                         </div>
-                        <!-- <div class="pd-emi-txt">EMI from ₹99/month · <a href="#">View Plans</a></div> -->
                     </div>
 
                     @php
@@ -315,7 +314,6 @@
         <div class="pd-sel-section">
             <div class="pd-sel-label">
                 {{ ucfirst($varients->varient_name) }}
-                <!-- <span id="pdColorVal"></span> -->
             </div>
 
             <div class="pd-colors" id="pdColors">
@@ -417,38 +415,12 @@
 
                     <div class="pd-trust-row">
                         <div class="pd-trust-item"><i class="fa-solid fa-arrow-rotate-left" style="color:#2874f0;"></i> 7 Days Return</div>
-                        <!-- <div class="pd-trust-item"><i class="fa-solid fa-shield-halved" style="color:#388e3c;"></i> 1 Year Warranty</div> -->
-                        <!-- <div class="pd-trust-item"><i class="fa-solid fa-truck-fast" style="color:#f57c00;"></i>  Free Delivery</div> -->
                     </div>
                 </div>
 
                 {{-- Offers --}}
-                <!-- <div class="pd-offers-panel">
-                    <div class="pd-offers-title">Available Offers</div>
-                    <div class="pd-offer-item">
-                        <div class="pd-offer-ic"><i class="fa-solid fa-tag"></i></div>
-                        <div><span class="pd-offer-type">Bank Offer</span> 10% off on HDFC Bank Credit Card transactions</div>
-                    </div>
-                    <div class="pd-offer-item">
-                        <div class="pd-offer-ic"><i class="fa-solid fa-percent"></i></div>
-                        <div><span class="pd-offer-type">Special Price</span> Get extra 5% off (price inclusive of cashback/coupon)</div>
-                    </div>
-                    <div class="pd-offer-item">
-                        <div class="pd-offer-ic"><i class="fa-solid fa-truck"></i></div>
-                        <div><span class="pd-offer-type">Free Delivery</span> On orders above ₹499</div>
-                    </div>
-                </div> -->
 
                 {{-- Delivery --}}
-                <!-- <div class="pd-del-panel">
-                    <div class="pd-del-title">Delivery</div>
-                    <div class="pd-pin-row">
-                        <input type="text" class="pd-pin-input" placeholder="Enter delivery pincode" maxlength="6" id="pdPinInput">
-                        <button class="pd-pin-btn" type="button" onclick="pdCheckPin()">Check</button>
-                    </div>
-                    <div class="pd-del-info"><i class="fa-solid fa-truck-fast"></i> Free delivery within 2–3 business days</div>
-                    <div class="pd-del-info"><i class="fa-solid fa-rotate-left"></i> 7 days easy return &amp; exchange</div>
-                </div> -->
 
 
             </div>

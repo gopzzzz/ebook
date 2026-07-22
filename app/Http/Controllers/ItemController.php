@@ -195,7 +195,7 @@ return view('admin.edititems',compact('authors',
             'cat_id'       => 'required|exists:categories,id',
             'mrp'          => 'required|numeric',
             'sr'           => 'required|numeric',
-             'stock'           => 'required|numeric',
+            'stock'           => 'required|numeric',
             'image'        => 'nullable|image|mimes:png,jpg,jpeg',
             'description'  => 'nullable|string',
         ]);

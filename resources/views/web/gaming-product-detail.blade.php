@@ -252,13 +252,10 @@
             <div class="g-corner gc-tr" style="position:absolute;top:0;right:0;width:20px;height:20px;border-top:2px solid var(--g-cyan);border-right:2px solid var(--g-cyan);"></div>
             <div class="g-corner gc-bl" style="position:absolute;bottom:0;left:0;width:20px;height:20px;border-bottom:2px solid var(--g-cyan);border-left:2px solid var(--g-cyan);"></div>
             <div class="g-corner gc-br" style="position:absolute;bottom:0;right:0;width:20px;height:20px;border-bottom:2px solid var(--g-cyan);border-right:2px solid var(--g-cyan);"></div>
-            <img src="{{asset('public/assets/keyboard.png')}}" alt="Product" id="gMainImg" />
+            <img src="{{ asset('public/uploads/'.$product->image) }}" alt="{{ $product->name }}" id="gMainImg" />
           </div>
           <div class="g-thumb-row">
-            <button class="g-thumb-btn active"><img src="{{asset('public/assets/keyboard.png')}}" alt="View 1" /></button>
-            <button class="g-thumb-btn"><img src="{{asset('public/assets/mouse.png')}}" alt="View 2" /></button>
-            <button class="g-thumb-btn"><img src="{{asset('public/assets/headset.png')}}" alt="View 3" /></button>
-            <button class="g-thumb-btn"><img src="{{asset('public/assets/mousepad.png')}}" alt="View 4" /></button>
+            <button class="g-thumb-btn active"><img src="{{ asset('public/uploads/'.$product->image) }}" alt="View 1" /></button>
           </div>
         </div>
 
@@ -269,8 +266,8 @@
             <span class="g-badge-pill g-badge-new">// NEW 2026</span>
           </div>
 
-          <div class="g-detail-eyebrow" id="gDetailBrand">HYPERX</div>
-          <h1 class="g-detail-title" id="gDetailTitle">HyperX Alloy Origins RGB Mechanical Keyboard</h1>
+          <div class="g-detail-eyebrow" id="gDetailBrand">{{ strtoupper($product->brand ?? 'POUCH GALLERY') }}</div>
+          <h1 class="g-detail-title" id="gDetailTitle">{{ $product->name }}</h1>
 
           <div class="g-detail-rating">
             <span class="g-stars" id="gDetailStars">★★★★★</span>
@@ -279,12 +276,12 @@
           </div>
 
           <div class="g-price-box">
-            <span class="g-price-main" id="gDetailPrice">₹3,499</span>
+            <span class="g-price-main" id="gDetailPrice">₹{{ number_format($product->sr) }}</span>
             <div class="g-price-row" style="margin-bottom:0.5rem;">
-              <span class="g-price-orig" id="gDetailOriginal">₹5,999</span>
-              <span class="g-price-save-tag" id="gDetailSave">SAVE 42%</span>
+              <span class="g-price-orig" id="gDetailOriginal">₹{{ number_format($product->mrp) }}</span>
+              <span class="g-price-save-tag" id="gDetailSave">SAVE {{ round((($product->mrp - $product->sr) / max(1, $product->mrp)) * 100) }}%</span>
             </div>
-            <div class="g-emi">EMI from <strong>₹583/month</strong> · 0% interest · <a href="#" style="color:var(--g-cyan);font-family:var(--g-font);font-size:0.65rem;">SEE OFFERS</a></div>
+            <div class="g-emi">EMI from <strong>₹{{ round($product->sr / 6) }}/month</strong> · 0% interest · <a href="#" style="color:var(--g-cyan);font-family:var(--g-font);font-size:0.65rem;">SEE OFFERS</a></div>
           </div>
 
           <div class="g-stock">
@@ -566,7 +563,7 @@
     function createGCard(p){
       const save=disc(p.price,p.original);
       const badge={discount:`<span class="g-badge-pill g-badge-discount">-${save}%</span>`,new:`<span class="g-badge-pill g-badge-new">// NEW</span>`,hot:`<span class="g-badge-pill g-badge-hot">🔥 HOT</span>`,bestseller:`<span class="g-badge-pill g-badge-best">★ BEST</span>`}[p.badge]||'';
-      return `<article class="g-product-card" data-id="${p.id}" style="cursor:pointer;" onclick="window.location='gaming-product-detail.html?id=${p.id}'">
+      return `<article class="g-product-card" data-id="${p.id}" style="cursor:pointer;" onclick="window.location='{{url('/gaming-product')}}/${p.id}'">
         <div class="g-card-line"></div>
         <div class="g-card-img-wrap">
           <div class="g-card-badges">${badge}</div>
@@ -585,20 +582,27 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      const params = new URLSearchParams(window.location.search);
-      const id = +params.get('id') || 1;
-      const p = PRODUCTS.find(x=>x.id===id) || PRODUCTS[0];
+      window.PRODUCTS = [
+        @foreach($relatedProducts as $p)
+        {
+          id: {{ $p->id }},
+          name: "{{ addslashes($p->name) }}",
+          brand: "{{ addslashes($p->brand ?? 'Pouch Gallery') }}",
+          category: "{{ strtolower($p->category_name ?? 'misc') }}",
+          price: {{ $p->sr }},
+          original: {{ $p->mrp }},
+          image: "{{ asset('public/uploads/'.$p->image) }}",
+          rating: 4.8,
+          reviews: 1243,
+          badge: {{ $p->sr < $p->mrp ? "'discount'" : "'new'" }}
+        },
+        @endforeach
+      ];
+      const PRODUCTS = window.PRODUCTS;
+      const p = { id: {{ $product->id }} };
 
-      // Populate product info
-      document.getElementById('gMainImg').src = p.image;
-      document.getElementById('gDetailBrand').textContent = p.brand.toUpperCase();
-      document.getElementById('gDetailTitle').textContent = p.name;
-      document.getElementById('gDetailPrice').textContent = fmt(p.price);
-      document.getElementById('gDetailOriginal').textContent = fmt(p.original);
-      document.getElementById('gDetailSave').textContent = `SAVE ${disc(p.price,p.original)}%`;
-      document.getElementById('gDetailStars').textContent = stars(p.rating);
-      document.getElementById('gDetailReviews').textContent = `${p.rating} · ${p.reviews.toLocaleString()} reviews`;
-      document.getElementById('gBreadcrumb').textContent = p.name.toUpperCase().slice(0,30)+'…';
+      // Set Breadcrumb dynamically
+      document.getElementById('gBreadcrumb').textContent = "{{ addslashes($product->name) }}".toUpperCase().slice(0,30)+'…';
 
       // Badges
       document.getElementById('gCartCount').textContent = gCart.reduce((a,i)=>a+i.qty,0);

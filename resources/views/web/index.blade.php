@@ -728,4 +728,26 @@
     })();
   </script>
 
+  <script>
+    window.PRODUCTS = [
+      @foreach($fastmovingProducts as $p)
+      {
+        id: {{ $p->id }},
+        name: "{{ addslashes($p->name) }}",
+        brand: "{{ addslashes($p->author_name ?? 'Pouch Gallery') }}",
+        category: "general",
+        price: {{ $p->sr }},
+        original: {{ $p->mrp }},
+        image: "{{ asset('public/uploads/'.$p->image) }}",
+        rating: 4.8,
+        reviews: 124,
+        badge: {{ $p->sr < $p->mrp ? "'discount'" : "'new'" }},
+        isNew: true,
+        isBestSeller: true,
+        isFeatured: true
+      },
+      @endforeach
+    ];
+  </script>
+
 @endsection

@@ -43,11 +43,36 @@ class IndexController extends Controller
     }
 
     public function gamingProducts(Request $request) {
-        return view('web.gaming-products');
+        $products = DB::table('items')
+         ->leftJoin('authors', 'items.author_id', '=', 'authors.id')
+         ->leftJoin('categories', 'items.cat_id', '=', 'categories.id')
+         ->select('items.*', 'authors.author_name as brand', 'categories.cat_name as category_name')
+         ->where('items.status', 0)
+         ->orderBy('items.id', 'desc')
+         ->limit(24)
+         ->get();
+
+        return view('web.gaming-products', compact('products'));
     }
 
     public function gamingProductDetail($id) {
-        return view('web.gaming-product-detail');
+        $product = DB::table('items')
+         ->leftJoin('authors', 'items.author_id', '=', 'authors.id')
+         ->leftJoin('categories', 'items.cat_id', '=', 'categories.id')
+         ->select('items.*', 'authors.author_name as brand', 'categories.cat_name as category_name')
+         ->where('items.id', $id)
+         ->first();
+
+        $relatedProducts = DB::table('items')
+         ->leftJoin('authors', 'items.author_id', '=', 'authors.id')
+         ->leftJoin('categories', 'items.cat_id', '=', 'categories.id')
+         ->select('items.*', 'authors.author_name as brand', 'categories.cat_name as category_name')
+         ->where('items.status', 0)
+         ->where('items.id', '!=', $id)
+         ->limit(4)
+         ->get();
+
+        return view('web.gaming-product-detail', compact('product', 'relatedProducts'));
     }
 
     public function productlist($id){

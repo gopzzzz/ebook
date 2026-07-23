@@ -333,16 +333,26 @@
 
   <script>
     // ─── PRODUCTS DATA ───
-    const PRODUCTS = [
-      { id:1, name:'HyperX Alloy Origins RGB Mechanical Keyboard', brand:'HyperX', category:'keyboards', price:3499, original:5999, image:'{{asset('public/assets/keyboard.png')}}', rating:4.8, reviews:1243, badge:'discount' },
-      { id:2, name:'Logitech G502 Hero High Performance Gaming Mouse', brand:'Logitech', category:'mice', price:2799, original:4999, image:'{{asset('public/assets/mouse.png')}}', rating:4.9, reviews:2890, badge:'bestseller' },
-      { id:3, name:'HyperX Cloud II Gaming Headset 7.1 Surround Sound', brand:'HyperX', category:'headsets', price:4999, original:7499, image:'{{asset('public/assets/headset.png')}}', rating:4.7, reviews:1876, badge:'hot' },
-      { id:4, name:'Green Soul Ergonomic Gaming Chair Alpha Series', brand:'Green Soul', category:'chairs', price:12999, original:18999, image:'{{asset('public/assets/chair.png')}}', rating:4.6, reviews:543, badge:'discount' },
-      { id:5, name:'27" Curved Gaming Monitor 165Hz 1ms FreeSync Premium', brand:'LG', category:'monitors', price:18999, original:27999, image:'{{asset('public/assets/monitor.png')}}', rating:4.8, reviews:723, badge:'new' },
-      { id:6, name:'Xbox Wireless Controller Carbon Black Edition', brand:'Microsoft', category:'controllers', price:5499, original:7999, image:'{{asset('public/assets/controller.png')}}', rating:4.9, reviews:3210, badge:'discount' },
-      { id:7, name:'Corsair MM350 Pro Extended Gaming Mousepad XL', brand:'Corsair', category:'mousepads', price:1499, original:2499, image:'{{asset('public/assets/mousepad.png')}}', rating:4.7, reviews:912, badge:'new' },
-      { id:8, name:'Razer DeathAdder V3 Ultra-Lightweight Gaming Mouse', brand:'Razer', category:'mice', price:5999, original:8999, image:'{{asset('public/assets/mouse.png')}}', rating:4.9, reviews:1432, badge:'hot' },
+    window.PRODUCTS = [
+      @foreach($products as $p)
+      {
+        id: {{ $p->id }},
+        name: "{{ addslashes($p->name) }}",
+        brand: "{{ addslashes($p->brand ?? 'Pouch Gallery') }}",
+        category: "{{ strtolower($p->category_name ?? 'misc') }}",
+        price: {{ $p->sr }},
+        original: {{ $p->mrp }},
+        image: "{{ asset('public/uploads/'.$p->image) }}",
+        rating: 4.8,
+        reviews: 1243,
+        badge: {{ $p->sr < $p->mrp ? "'discount'" : "'new'" }},
+        isNew: true,
+        isBestSeller: false,
+        isFeatured: true
+      },
+      @endforeach
     ];
+    const PRODUCTS = window.PRODUCTS;
 
     let gCart = JSON.parse(localStorage.getItem('pg_cart') || '[]');
     let gWishlist = JSON.parse(localStorage.getItem('pg_wishlist') || '[]');
@@ -397,7 +407,7 @@
       }[p.badge] || '';
 
       return `
-        <article class="g-product-card" data-id="${p.id}">
+        <article class="g-product-card" data-id="${p.id}" onclick="window.location='{{url('/gaming-product')}}/${p.id}'" style="cursor:pointer;">
           <div class="g-card-line"></div>
           <div class="g-card-img-wrap">
             <div class="g-card-badges">${badgeHTML}</div>

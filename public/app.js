@@ -6,45 +6,17 @@
 
 'use strict';
 
-/* ── CUSTOM CURSOR ── */
-document.addEventListener('DOMContentLoaded', () => {
-  if (window.innerWidth > 768) {
-    const cursor = document.createElement('div');
-    cursor.classList.add('pg-custom-cursor');
-    document.body.appendChild(cursor);
-
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-    let cursorX = mouseX;
-    let cursorY = mouseY;
-    let isHovering = false;
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    });
-
-    const hoverElements = document.querySelectorAll('a, button, input, .g-product-card, .g-thumb-btn, .g-var-btn, .g-search-btn');
-    hoverElements.forEach(el => {
-      el.addEventListener('mouseenter', () => { isHovering = true; cursor.classList.add('hover'); });
-      el.addEventListener('mouseleave', () => { isHovering = false; cursor.classList.remove('hover'); });
-    });
-
-    // Smooth follow animation
-    function animateCursor() {
-      // interpolation for smooth lag effect
-      cursorX += (mouseX - cursorX) * 0.15;
-      cursorY += (mouseY - cursorY) * 0.15;
-      
-      cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
-      requestAnimationFrame(animateCursor);
-    }
-    requestAnimationFrame(animateCursor);
-  }
-});
-
 // ─── PRODUCTS DATA ────────────────────────────────────────────
-const PRODUCTS = window.PRODUCTS || [];
+const PRODUCTS = [
+  { id:1, name:'HyperX Alloy Origins RGB Mechanical Keyboard', brand:'HyperX',    category:'keyboards',   price:3499,  original:5999,  image:'/ebook/public/assets/keyboard.png',  rating:4.8, reviews:1243, badge:'discount',   isNew:false, isBestSeller:true,  isFeatured:true  },
+  { id:2, name:'Logitech G502 Hero High Performance Gaming Mouse', brand:'Logitech', category:'mice',      price:2799,  original:4999,  image:'/ebook/public/assets/mouse.png',     rating:4.9, reviews:2890, badge:'bestseller', isNew:false, isBestSeller:true,  isFeatured:true  },
+  { id:3, name:'HyperX Cloud II Gaming Headset 7.1 Surround',   brand:'HyperX',    category:'headsets',    price:4999,  original:7499,  image:'/ebook/public/assets/headset.png',   rating:4.7, reviews:1876, badge:'hot',        isNew:false, isBestSeller:true,  isFeatured:true  },
+  { id:4, name:'Green Soul Ergonomic Gaming Chair – Alpha Series', brand:'Green Soul', category:'chairs',  price:12999, original:18999, image:'/ebook/public/assets/chair.png',     rating:4.6, reviews:543,  badge:'discount',   isNew:false, isBestSeller:false, isFeatured:true  },
+  { id:5, name:'27" Curved Gaming Monitor 165Hz 1ms FreeSync',   brand:'LG',        category:'monitors',   price:18999, original:27999, image:'/ebook/public/assets/monitor.png',   rating:4.8, reviews:723,  badge:'new',        isNew:true,  isBestSeller:false, isFeatured:false },
+  { id:6, name:'Xbox Wireless Controller – Carbon Black',        brand:'Microsoft', category:'controllers', price:5499,  original:7999,  image:'/ebook/public/assets/controller.png',rating:4.9, reviews:3210, badge:'discount',   isNew:false, isBestSeller:true,  isFeatured:false },
+  { id:7, name:'Corsair MM350 Pro Extended Gaming Mousepad',     brand:'Corsair',   category:'mousepads',   price:1499,  original:2499,  image:'/ebook/public/assets/mousepad.png',  rating:4.7, reviews:912,  badge:'new',        isNew:true,  isBestSeller:false, isFeatured:false },
+  { id:8, name:'Razer DeathAdder V3 Ultra-Lightweight Gaming Mouse', brand:'Razer', category:'mice',       price:5999,  original:8999,  image:'/ebook/public/assets/mouse.png',     rating:4.9, reviews:1432, badge:'hot',        isNew:true,  isBestSeller:false, isFeatured:true  },
+];
 
 // ─── STATE ───────────────────────────────────────────────────
 let cart     = JSON.parse(localStorage.getItem('pg_cart')     || '[]');

@@ -1,21 +1,19 @@
-@extends('layouts.weblayout')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
   <section class="hero-section">
     <div class="hero-slider" id="heroSlider">
 
-      @foreach($banner as $key => $b)
-      <div class="hero-slide {{ $key == 0 ? 'active' : '' }}">
+      <?php $__currentLoopData = $banner; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $b): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+      <div class="hero-slide <?php echo e($key == 0 ? 'active' : ''); ?>">
         <div class="hero-bg" style="background: #f7f7f7;">
           <div class="hero-particles"></div>
         </div>
         <div class="hero-content-wrap">
           <div class="hero-text">
             <div class="hero-tag">🔥 Special Offer</div>
-            <h1 class="hero-title">{{ $b->banner_title ?? 'Level Up Your' }}<br /><span class="gradient-text">Gaming Setup</span></h1>
+            <h1 class="hero-title"><?php echo e($b->banner_title ?? 'Level Up Your'); ?><br /><span class="gradient-text">Gaming Setup</span></h1>
             <p class="hero-desc">Premium gear crafted for champions. Experience the difference with Pouch Gallery®</p>
             <div class="hero-cta-group">
-              <a href="{{url('/gaming-products')}}" class="btn btn-primary">Shop Gaming <i class="ri-arrow-right-line"></i></a>
+              <a href="<?php echo e(url('/gaming-products')); ?>" class="btn btn-primary">Shop Gaming <i class="ri-arrow-right-line"></i></a>
               <a href="#featured" class="btn btn-ghost">View Deals</a>
             </div>
             <div class="hero-stats">
@@ -28,16 +26,16 @@
           </div>
           <div class="hero-image-wrap">
             <div class="hero-glow"></div>
-            <img src="{{asset('public/uploads/banner/'.$b->banner)}}" alt="Banner image" class="hero-img" style="border-radius: 10px;" />
+            <img src="<?php echo e(asset('public/uploads/banner/'.$b->banner)); ?>" alt="Banner image" class="hero-img" style="border-radius: 10px;" />
           </div>
         </div>
       </div>
-      @endforeach
+      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
       <div class="hero-controls">
-        @foreach($banner as $key => $b)
-        <button class="hero-dot {{ $key == 0 ? 'active' : '' }}" data-slide="{{ $key }}" aria-label="Slide {{ $key+1 }}"></button>
-        @endforeach
+        <?php $__currentLoopData = $banner; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $b): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <button class="hero-dot <?php echo e($key == 0 ? 'active' : ''); ?>" data-slide="<?php echo e($key); ?>" aria-label="Slide <?php echo e($key+1); ?>"></button>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
       </div>
       <button class="hero-arrow prev" id="heroPrev" aria-label="Previous slide"><i class="ri-arrow-left-s-line"></i></button>
       <button class="hero-arrow next" id="heroNext" aria-label="Next slide"><i class="ri-arrow-right-s-line"></i></button>
@@ -89,17 +87,17 @@
         <a href="#" class="view-all-link">View All <i class="ri-arrow-right-line"></i></a>
       </div>
       <div class="category-grid">
-        @foreach($catlimit as $cat)
-        <a href="{{url('productlist/'.$cat->id)}}" class="cat-card cat-gaming reveal">
+        <?php $__currentLoopData = $catlimit; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <a href="<?php echo e(url('productlist/'.$cat->id)); ?>" class="cat-card cat-gaming reveal">
           <div class="cat-bg-glow"></div>
           <div class="cat-icon-wrap"><i class="ri-shopping-bag-3-line"></i></div>
           <div class="cat-info">
-            <h3>{{$cat->category_name}}</h3>
+            <h3><?php echo e($cat->category_name); ?></h3>
             <span>Explore</span>
           </div>
           <div class="cat-hover-arrow"><i class="ri-arrow-right-line"></i></div>
         </a>
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
       </div>
     </div>
   </section>
@@ -111,37 +109,37 @@
           <p class="section-sub">🔥 Hand-picked for you</p>
           <h2 class="section-title">Featured Products</h2>
         </div>
-        <a href="{{url('/gaming-products')}}" class="view-all-link">View All <i class="ri-arrow-right-line"></i></a>
+        <a href="<?php echo e(url('/gaming-products')); ?>" class="view-all-link">View All <i class="ri-arrow-right-line"></i></a>
       </div>
       <div class="product-grid" id="featuredGrid">
-        @foreach($fastmovingProducts as $p)
-        <article class="product-card" data-id="{{$p->id}}" role="button" tabindex="0" aria-label="{{$p->name}}">
+        <?php $__currentLoopData = $fastmovingProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <article class="product-card" data-id="<?php echo e($p->id); ?>" role="button" tabindex="0" aria-label="<?php echo e($p->name); ?>">
           <div class="product-img-wrap">
-            <button class="wishlist-btn" data-id="{{$p->id}}" aria-label="Toggle wishlist">
+            <button class="wishlist-btn" data-id="<?php echo e($p->id); ?>" aria-label="Toggle wishlist">
               <i class="ri-heart-line"></i>
             </button>
-            <img src="{{asset('public/assets/img/items/'.$p->image)}}" alt="{{$p->name}}" loading="lazy" />
+            <img src="<?php echo e(asset('public/assets/img/items/'.$p->image)); ?>" alt="<?php echo e($p->name); ?>" loading="lazy" />
             <div class="product-overlay" aria-hidden="true">
-              <button class="overlay-btn overlay-cart" data-id="{{$p->id}}"><i class="ri-shopping-cart-2-line"></i> Add</button>
-              <button class="overlay-btn overlay-view" onclick="window.location='{{url('product/'.$p->slug)}}'"><i class="ri-eye-line"></i> View</button>
+              <button class="overlay-btn overlay-cart" data-id="<?php echo e($p->id); ?>"><i class="ri-shopping-cart-2-line"></i> Add</button>
+              <button class="overlay-btn overlay-view" onclick="window.location='<?php echo e(url('product/'.$p->slug)); ?>'"><i class="ri-eye-line"></i> View</button>
             </div>
           </div>
           <div class="product-info">
-            <div class="product-brand">{{$p->author_name ?? 'Brandson'}}</div>
-            <h3 class="product-name" title="{{$p->name}}">{{$p->name}}</h3>
+            <div class="product-brand"><?php echo e($p->author_name ?? 'Brandson'); ?></div>
+            <h3 class="product-name" title="<?php echo e($p->name); ?>"><?php echo e($p->name); ?></h3>
             <div class="product-rating">
               <span class="stars">★★★★½</span>
               <span class="review-count">(123)</span>
             </div>
             <div class="product-price">
-              <span class="price-current">₹{{number_format($p->sr, 2)}}</span>
-              @if($p->mrp > $p->sr)
-              <span class="price-original">₹{{number_format($p->mrp, 2)}}</span>
-              @endif
+              <span class="price-current">₹<?php echo e(number_format($p->sr, 2)); ?></span>
+              <?php if($p->mrp > $p->sr): ?>
+              <span class="price-original">₹<?php echo e(number_format($p->mrp, 2)); ?></span>
+              <?php endif; ?>
             </div>
           </div>
         </article>
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
       </div>
     </div>
   </section>
@@ -158,10 +156,10 @@
             <div class="cd-box"><span id="cd-m">45</span><small>Mins</small></div>
             <div class="cd-box"><span id="cd-s">30</span><small>Secs</small></div>
           </div>
-          <a href="{{url('/gaming-products')}}" class="btn btn-accent">Shop the Sale <i class="ri-arrow-right-line"></i></a>
+          <a href="<?php echo e(url('/gaming-products')); ?>" class="btn btn-accent">Shop the Sale <i class="ri-arrow-right-line"></i></a>
         </div>
         <div class="promo-img-wrap">
-          <img src="{{asset('public/assets/gaming_hero.png')}}" alt="Gaming sale" class="promo-img" />
+          <img src="<?php echo e(asset('public/assets/gaming_hero.png')); ?>" alt="Gaming sale" class="promo-img" />
         </div>
       </div>
     </div>
@@ -174,37 +172,37 @@
           <p class="section-sub">🆕 Just Dropped</p>
           <h2 class="section-title">New Arrivals</h2>
         </div>
-        <a href="{{url('/gaming-products')}}" class="view-all-link">View All <i class="ri-arrow-right-line"></i></a>
+        <a href="<?php echo e(url('/gaming-products')); ?>" class="view-all-link">View All <i class="ri-arrow-right-line"></i></a>
       </div>
       <div class="product-grid" id="newArrivalsGrid">
-        @foreach($fastmovingProducts as $p)
-        <article class="product-card" data-id="{{$p->id}}" role="button" tabindex="0" aria-label="{{$p->name}}">
+        <?php $__currentLoopData = $fastmovingProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <article class="product-card" data-id="<?php echo e($p->id); ?>" role="button" tabindex="0" aria-label="<?php echo e($p->name); ?>">
           <div class="product-img-wrap">
-            <button class="wishlist-btn" data-id="{{$p->id}}" aria-label="Toggle wishlist">
+            <button class="wishlist-btn" data-id="<?php echo e($p->id); ?>" aria-label="Toggle wishlist">
               <i class="ri-heart-line"></i>
             </button>
-            <img src="{{asset('public/assets/img/items/'.$p->image)}}" alt="{{$p->name}}" loading="lazy" />
+            <img src="<?php echo e(asset('public/assets/img/items/'.$p->image)); ?>" alt="<?php echo e($p->name); ?>" loading="lazy" />
             <div class="product-overlay" aria-hidden="true">
-              <button class="overlay-btn overlay-cart" data-id="{{$p->id}}"><i class="ri-shopping-cart-2-line"></i> Add</button>
-              <button class="overlay-btn overlay-view" onclick="window.location='{{url('product/'.$p->slug)}}'"><i class="ri-eye-line"></i> View</button>
+              <button class="overlay-btn overlay-cart" data-id="<?php echo e($p->id); ?>"><i class="ri-shopping-cart-2-line"></i> Add</button>
+              <button class="overlay-btn overlay-view" onclick="window.location='<?php echo e(url('product/'.$p->slug)); ?>'"><i class="ri-eye-line"></i> View</button>
             </div>
           </div>
           <div class="product-info">
-            <div class="product-brand">{{$p->author_name ?? 'Brandson'}}</div>
-            <h3 class="product-name" title="{{$p->name}}">{{$p->name}}</h3>
+            <div class="product-brand"><?php echo e($p->author_name ?? 'Brandson'); ?></div>
+            <h3 class="product-name" title="<?php echo e($p->name); ?>"><?php echo e($p->name); ?></h3>
             <div class="product-rating">
               <span class="stars">★★★★½</span>
               <span class="review-count">(123)</span>
             </div>
             <div class="product-price">
-              <span class="price-current">₹{{number_format($p->sr, 2)}}</span>
-              @if($p->mrp > $p->sr)
-              <span class="price-original">₹{{number_format($p->mrp, 2)}}</span>
-              @endif
+              <span class="price-current">₹<?php echo e(number_format($p->sr, 2)); ?></span>
+              <?php if($p->mrp > $p->sr): ?>
+              <span class="price-original">₹<?php echo e(number_format($p->mrp, 2)); ?></span>
+              <?php endif; ?>
             </div>
           </div>
         </article>
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
       </div>
     </div>
   </section>
@@ -216,37 +214,37 @@
           <p class="section-sub">⭐ Customer Favourites</p>
           <h2 class="section-title">Best Sellers</h2>
         </div>
-        <a href="{{url('/gaming-products')}}" class="view-all-link">View All <i class="ri-arrow-right-line"></i></a>
+        <a href="<?php echo e(url('/gaming-products')); ?>" class="view-all-link">View All <i class="ri-arrow-right-line"></i></a>
       </div>
       <div class="product-grid" id="bestSellersGrid">
-        @foreach($fastmovingProducts as $p)
-        <article class="product-card" data-id="{{$p->id}}" role="button" tabindex="0" aria-label="{{$p->name}}">
+        <?php $__currentLoopData = $fastmovingProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <article class="product-card" data-id="<?php echo e($p->id); ?>" role="button" tabindex="0" aria-label="<?php echo e($p->name); ?>">
           <div class="product-img-wrap">
-            <button class="wishlist-btn" data-id="{{$p->id}}" aria-label="Toggle wishlist">
+            <button class="wishlist-btn" data-id="<?php echo e($p->id); ?>" aria-label="Toggle wishlist">
               <i class="ri-heart-line"></i>
             </button>
-            <img src="{{asset('public/assets/img/items/'.$p->image)}}" alt="{{$p->name}}" loading="lazy" />
+            <img src="<?php echo e(asset('public/assets/img/items/'.$p->image)); ?>" alt="<?php echo e($p->name); ?>" loading="lazy" />
             <div class="product-overlay" aria-hidden="true">
-              <button class="overlay-btn overlay-cart" data-id="{{$p->id}}"><i class="ri-shopping-cart-2-line"></i> Add</button>
-              <button class="overlay-btn overlay-view" onclick="window.location='{{url('product/'.$p->slug)}}'"><i class="ri-eye-line"></i> View</button>
+              <button class="overlay-btn overlay-cart" data-id="<?php echo e($p->id); ?>"><i class="ri-shopping-cart-2-line"></i> Add</button>
+              <button class="overlay-btn overlay-view" onclick="window.location='<?php echo e(url('product/'.$p->slug)); ?>'"><i class="ri-eye-line"></i> View</button>
             </div>
           </div>
           <div class="product-info">
-            <div class="product-brand">{{$p->author_name ?? 'Brandson'}}</div>
-            <h3 class="product-name" title="{{$p->name}}">{{$p->name}}</h3>
+            <div class="product-brand"><?php echo e($p->author_name ?? 'Brandson'); ?></div>
+            <h3 class="product-name" title="<?php echo e($p->name); ?>"><?php echo e($p->name); ?></h3>
             <div class="product-rating">
               <span class="stars">★★★★½</span>
               <span class="review-count">(123)</span>
             </div>
             <div class="product-price">
-              <span class="price-current">₹{{number_format($p->sr, 2)}}</span>
-              @if($p->mrp > $p->sr)
-              <span class="price-original">₹{{number_format($p->mrp, 2)}}</span>
-              @endif
+              <span class="price-current">₹<?php echo e(number_format($p->sr, 2)); ?></span>
+              <?php if($p->mrp > $p->sr): ?>
+              <span class="price-original">₹<?php echo e(number_format($p->mrp, 2)); ?></span>
+              <?php endif; ?>
             </div>
           </div>
         </article>
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
       </div>
     </div>
   </section>
@@ -447,7 +445,7 @@
     <div class="gt-orb gt-orb-b"></div>
     <div class="gt-content">
       <div class="gt-logo-row">
-        <img src="{{asset('public/assets/logo.png')}}" alt="" class="gt-logo" />
+        <img src="<?php echo e(asset('public/assets/logo.png')); ?>" alt="" class="gt-logo" />
         <span class="gt-logo-text">POUCH GALLERY<sup>®</sup></span>
       </div>
       <div class="gt-title" id="gtTitle">ENTERING GAMING ZONE</div>
@@ -752,4 +750,6 @@
     })();
   </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.weblayout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\ebook\resources\views/web/index.blade.php ENDPATH**/ ?>

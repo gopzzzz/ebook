@@ -237,7 +237,7 @@
         <i class="ri-arrow-right-s-line"></i>
         <a href="{{url('/gaming-products')}}">GAMING</a>
         <i class="ri-arrow-right-s-line"></i>
-        <span id="gBreadcrumb">PRODUCT</span>
+        <span id="gBreadcrumb">{{ Str::limit(strtoupper($product->name), 40) }}</span>
       </nav>
     </div>
   </div>
@@ -252,42 +252,65 @@
             <div class="g-corner gc-tr" style="position:absolute;top:0;right:0;width:20px;height:20px;border-top:2px solid var(--g-cyan);border-right:2px solid var(--g-cyan);"></div>
             <div class="g-corner gc-bl" style="position:absolute;bottom:0;left:0;width:20px;height:20px;border-bottom:2px solid var(--g-cyan);border-left:2px solid var(--g-cyan);"></div>
             <div class="g-corner gc-br" style="position:absolute;bottom:0;right:0;width:20px;height:20px;border-bottom:2px solid var(--g-cyan);border-right:2px solid var(--g-cyan);"></div>
-            <img src="{{ asset('public/uploads/'.$product->image) }}" alt="{{ $product->name }}" id="gMainImg" />
+            <img src="{{ asset('public/assets/img/items/'.$product->image) }}" alt="{{$product->name}}" id="gMainImg" />
           </div>
           <div class="g-thumb-row">
-            <button class="g-thumb-btn active"><img src="{{ asset('public/uploads/'.$product->image) }}" alt="View 1" /></button>
+            <button class="g-thumb-btn active"><img src="{{asset('public/assets/keyboard.png')}}" alt="View 1" /></button>
+            <button class="g-thumb-btn"><img src="{{asset('public/assets/mouse.png')}}" alt="View 2" /></button>
+            <button class="g-thumb-btn"><img src="{{asset('public/assets/headset.png')}}" alt="View 3" /></button>
+            <button class="g-thumb-btn"><img src="{{asset('public/assets/mousepad.png')}}" alt="View 4" /></button>
           </div>
         </div>
 
         <div class="g-detail-info">
 
+          @php
+            $discPct = ($product->mrp > 0 && $product->mrp > $product->sr) ? round((($product->mrp - $product->sr) / $product->mrp) * 100) : 0;
+            $reviewsCount = rand(100, 3000);
+          @endphp
+
           <div style="display:flex;gap:0.5rem;margin-bottom:0.875rem;flex-wrap:wrap;">
-            <span class="g-badge-pill g-badge-hot">🔥 BEST SELLER</span>
+            @if($discPct > 20)
+            <span class="g-badge-pill g-badge-hot">🔥 HOT DEAL</span>
+            @elseif($discPct > 0)
+            <span class="g-badge-pill g-badge-discount">🔥 BEST SELLER</span>
+            @else
             <span class="g-badge-pill g-badge-new">// NEW 2026</span>
+            @endif
           </div>
 
-          <div class="g-detail-eyebrow" id="gDetailBrand">{{ strtoupper($product->brand ?? 'POUCH GALLERY') }}</div>
+          <div class="g-detail-eyebrow" id="gDetailBrand">{{ strtoupper($product->author_name ?? 'Brandson') }}</div>
           <h1 class="g-detail-title" id="gDetailTitle">{{ $product->name }}</h1>
 
           <div class="g-detail-rating">
-            <span class="g-stars" id="gDetailStars">★★★★★</span>
-            <span id="gDetailReviews">4.8 · 1,243 reviews</span>
+            <span class="g-stars" id="gDetailStars">★★★★½</span>
+            <span id="gDetailReviews">4.5 · {{ number_format($reviewsCount) }} reviews</span>
             <span style="font-family:var(--g-font);font-size:0.6rem;color:var(--g-green);letter-spacing:0.08em;">✓ VERIFIED SELLER</span>
           </div>
 
           <div class="g-price-box">
-            <span class="g-price-main" id="gDetailPrice">₹{{ number_format($product->sr) }}</span>
+            <span class="g-price-main" id="gDetailPrice">₹{{ number_format($product->sr, 2) }}</span>
+            @if($product->mrp > $product->sr)
             <div class="g-price-row" style="margin-bottom:0.5rem;">
-              <span class="g-price-orig" id="gDetailOriginal">₹{{ number_format($product->mrp) }}</span>
-              <span class="g-price-save-tag" id="gDetailSave">SAVE {{ round((($product->mrp - $product->sr) / max(1, $product->mrp)) * 100) }}%</span>
+              <span class="g-price-orig" id="gDetailOriginal">₹{{ number_format($product->mrp, 2) }}</span>
+              <span class="g-price-save-tag" id="gDetailSave">SAVE {{ $discPct }}%</span>
             </div>
+            @endif
             <div class="g-emi">EMI from <strong>₹{{ round($product->sr / 6) }}/month</strong> · 0% interest · <a href="#" style="color:var(--g-cyan);font-family:var(--g-font);font-size:0.65rem;">SEE OFFERS</a></div>
           </div>
 
           <div class="g-stock">
-            <div class="g-stock-dot"></div>
-            <span class="g-stock-text">IN STOCK</span>
-            <span class="g-stock-low">— ONLY 7 UNITS LEFT</span>
+            @if($product->stock == 0)
+              <div class="g-stock-dot" style="background:var(--g-red);box-shadow:0 0 10px var(--g-red);"></div>
+              <span class="g-stock-text" style="color:var(--g-red);">OUT OF STOCK</span>
+            @elseif($product->stock < 5)
+              <div class="g-stock-dot" style="background:var(--g-yellow);box-shadow:0 0 10px var(--g-yellow);"></div>
+              <span class="g-stock-text" style="color:var(--g-yellow);">LOW STOCK</span>
+              <span class="g-stock-low">— ONLY {{ $product->stock }} UNITS LEFT</span>
+            @else
+              <div class="g-stock-dot"></div>
+              <span class="g-stock-text">IN STOCK</span>
+            @endif
           </div>
 
           <div class="g-coupon">
@@ -329,12 +352,12 @@
           </div>
 
           <div class="g-detail-cta">
-            <button class="g-btn g-btn-primary" id="gAddCart" style="flex:1;justify-content:center;">
+            <button class="g-btn g-btn-primary add-to-cart" data-id="{{ $product->id }}" style="flex:1;justify-content:center;">
               <i class="ri-shopping-cart-line"></i> ADD TO CART
             </button>
-            <button class="g-btn g-btn-hot" style="flex:1;justify-content:center;">
+            <a href="{{ url('cart') }}" class="g-btn g-btn-hot" style="flex:1;justify-content:center;text-decoration:none;">
               <i class="ri-flashlight-fill"></i> BUY NOW
-            </button>
+            </a>
             <button class="g-btn g-btn-ghost" id="gWishBtn" style="padding:0.875rem 1rem;">
               <i class="ri-heart-line"></i>
             </button>
@@ -386,13 +409,10 @@
         <div class="g-tab-panel active" id="g-tab-description">
           <div style="max-width:780px;">
             <div class="g-section-eyebrow" style="margin-bottom:0.75rem;">PRODUCT OVERVIEW</div>
-            <h3 style="font-family:var(--g-font);font-size:1rem;font-weight:700;text-transform:uppercase;color:#e0e8ff;margin-bottom:1rem;letter-spacing:0.04em;">About the HyperX Alloy Origins RGB</h3>
-            <p style="color:#667788;line-height:1.8;margin-bottom:1rem;font-family:var(--g-font-body);">
-              The HyperX Alloy Origins is a compact gaming keyboard with a full-size layout and a solid aircraft-grade aluminum body. This powerful performer is ready to take your game to the next level with ultra-reliable HyperX mechanical switches, dynamic dual-function keys, and HyperX NGENUITY software.
-            </p>
-            <p style="color:#667788;line-height:1.8;margin-bottom:2rem;font-family:var(--g-font-body);">
-              Experience per-key RGB lighting with stunning visual effects, 100% anti-ghosting with full N-key rollover for superior accuracy in even the most demanding game sessions.
-            </p>
+            <h3 style="font-family:var(--g-font);font-size:1rem;font-weight:700;text-transform:uppercase;color:#e0e8ff;margin-bottom:1rem;letter-spacing:0.04em;">About {{ $product->name }}</h3>
+            <div style="color:#667788;line-height:1.8;margin-bottom:2rem;font-family:var(--g-font-body);">
+              {!! $product->description ?? 'Experience premium gaming with this incredible new product. Designed for precision and built for durability, it helps you reach peak performance in any match.' !!}
+            </div>
             <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;">
               <div style="background:var(--g-dark-3);border:1px solid var(--g-border);padding:1.25rem;clip-path:polygon(0 0,calc(100%-8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100%-8px));position:relative;">
                 <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--g-cyan),transparent);"></div>
@@ -534,16 +554,25 @@
   <button class="g-back-top" id="gBackTop"><i class="ri-arrow-up-line"></i></button>
 
   <script>
-    const PRODUCTS = [
-      { id:1, name:'HyperX Alloy Origins RGB Mechanical Keyboard', brand:'HyperX', category:'keyboards', price:3499, original:5999, image:'{{asset('public/assets/keyboard.png')}}', rating:4.8, reviews:1243, badge:'discount' },
-      { id:2, name:'Logitech G502 Hero Gaming Mouse', brand:'Logitech', category:'mice', price:2799, original:4999, image:'{{asset('public/assets/mouse.png')}}', rating:4.9, reviews:2890, badge:'bestseller' },
-      { id:3, name:'HyperX Cloud II Gaming Headset 7.1', brand:'HyperX', category:'headsets', price:4999, original:7499, image:'{{asset('public/assets/headset.png')}}', rating:4.7, reviews:1876, badge:'hot' },
-      { id:4, name:'Green Soul Gaming Chair Alpha Series', brand:'Green Soul', category:'chairs', price:12999, original:18999, image:'{{asset('public/assets/chair.png')}}', rating:4.6, reviews:543, badge:'discount' },
-      { id:5, name:'27" Curved Gaming Monitor 165Hz', brand:'LG', category:'monitors', price:18999, original:27999, image:'{{asset('public/assets/monitor.png')}}', rating:4.8, reviews:723, badge:'new' },
-      { id:6, name:'Xbox Wireless Controller Carbon Black', brand:'Microsoft', category:'controllers', price:5499, original:7999, image:'{{asset('public/assets/controller.png')}}', rating:4.9, reviews:3210, badge:'discount' },
-      { id:7, name:'Corsair MM350 Pro Extended Mousepad', brand:'Corsair', category:'mousepads', price:1499, original:2499, image:'{{asset('public/assets/mousepad.png')}}', rating:4.7, reviews:912, badge:'new' },
-      { id:8, name:'Razer DeathAdder V3 Gaming Mouse', brand:'Razer', category:'mice', price:5999, original:8999, image:'{{asset('public/assets/mouse.png')}}', rating:4.9, reviews:1432, badge:'hot' },
-    ];
+    @php
+      $jsProducts = $fastmovingProducts->map(function($p) {
+        $save = ($p->mrp > 0 && $p->mrp > $p->sr) ? round((($p->mrp - $p->sr) / $p->mrp) * 100) : 0;
+        return [
+          'id' => $p->id,
+          'name' => $p->name,
+          'brand' => !empty($p->author_name) ? $p->author_name : 'Brandson',
+          'category' => 'all',
+          'price' => (float)$p->sr,
+          'original' => (float)$p->mrp,
+          'image' => asset('public/assets/img/items/'.$p->image),
+          'rating' => 4.5,
+          'reviews' => rand(100, 3000),
+          'badge' => $save > 20 ? 'hot' : ($save > 0 ? 'discount' : 'new'),
+          'slug' => $p->slug
+        ];
+      });
+    @endphp
+    const PRODUCTS = {!! json_encode($jsProducts) !!};
     let gCart = JSON.parse(localStorage.getItem('pg_cart') || '[]');
     let gWishlist = JSON.parse(localStorage.getItem('pg_wishlist') || '[]');
     const fmt = n => '₹' + n.toLocaleString('en-IN');
@@ -563,7 +592,7 @@
     function createGCard(p){
       const save=disc(p.price,p.original);
       const badge={discount:`<span class="g-badge-pill g-badge-discount">-${save}%</span>`,new:`<span class="g-badge-pill g-badge-new">// NEW</span>`,hot:`<span class="g-badge-pill g-badge-hot">🔥 HOT</span>`,bestseller:`<span class="g-badge-pill g-badge-best">★ BEST</span>`}[p.badge]||'';
-      return `<article class="g-product-card" data-id="${p.id}" style="cursor:pointer;" onclick="window.location='{{url('/gaming-product')}}/${p.id}'">
+      return `<article class="g-product-card" data-id="${p.id}" style="cursor:pointer;" onclick="window.location='{{url('gaming-product')}}/${p.slug}'">
         <div class="g-card-line"></div>
         <div class="g-card-img-wrap">
           <div class="g-card-badges">${badge}</div>
@@ -582,27 +611,15 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      window.PRODUCTS = [
-        @foreach($relatedProducts as $p)
-        {
-          id: {{ $p->id }},
-          name: "{{ addslashes($p->name) }}",
-          brand: "{{ addslashes($p->brand ?? 'Pouch Gallery') }}",
-          category: "{{ strtolower($p->category_name ?? 'misc') }}",
-          price: {{ $p->sr }},
-          original: {{ $p->mrp }},
-          image: "{{ asset('public/uploads/'.$p->image) }}",
-          rating: 4.8,
-          reviews: 1243,
-          badge: {{ $p->sr < $p->mrp ? "'discount'" : "'new'" }}
-        },
-        @endforeach
-      ];
-      const PRODUCTS = window.PRODUCTS;
-      const p = { id: {{ $product->id }} };
+      // Related products rendering
+      const relatedGrid = document.getElementById('gRelatedGrid');
+      if(relatedGrid) {
+        // Just show first 4 items as related
+        relatedGrid.innerHTML = PRODUCTS.slice(0,4).map(createGCard).join('');
+      }
 
-      // Set Breadcrumb dynamically
-      document.getElementById('gBreadcrumb').textContent = "{{ addslashes($product->name) }}".toUpperCase().slice(0,30)+'…';
+      // Current product ID from Blade
+      const currentProductId = {{ $product->id }};
 
       // Badges
       document.getElementById('gCartCount').textContent = gCart.reduce((a,i)=>a+i.qty,0);
@@ -613,19 +630,22 @@
       document.getElementById('gQtyMinus').addEventListener('click',()=>{if(qty>1){qty--;document.getElementById('gQtyVal').textContent=qty;}});
       document.getElementById('gQtyPlus').addEventListener('click',()=>{qty++;document.getElementById('gQtyVal').textContent=qty;});
 
-      // Add to cart
-      document.getElementById('gAddCart').addEventListener('click',()=>{gAddCart(p.id,qty);gShowToast(`// ${qty} ITEM(S) ADDED TO CART`);});
+      document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', () => {
+          gAddCart(currentProductId, qty);
+          gShowToast(`// ${qty} ITEM(S) ADDED TO CART`);
+        });
+      });
 
-      // Wishlist
-      const wb=document.getElementById('gWishBtn');
-      wb.addEventListener('click',()=>{
-        const idx=gWishlist.indexOf(p.id);
-        if(idx===-1){gWishlist.push(p.id);wb.innerHTML='<i class="ri-heart-fill"></i>';wb.style.color='var(--g-red)';gShowToast('// ADDED TO WISHLIST');}
-        else{gWishlist.splice(idx,1);wb.innerHTML='<i class="ri-heart-line"></i>';wb.style.color='';gShowToast('// REMOVED FROM WISHLIST');}
+      const wishBtn = document.getElementById('gWishBtn');
+      if(gWishlist.includes(currentProductId)){ wishBtn.classList.add('active'); wishBtn.innerHTML='<i class="ri-heart-fill"></i>'; }
+      wishBtn.addEventListener('click',()=>{
+        const idx=gWishlist.indexOf(currentProductId);
+        if(idx===-1){ gWishlist.push(currentProductId); wishBtn.classList.add('active'); wishBtn.innerHTML='<i class="ri-heart-fill"></i>'; gShowToast('// ADDED TO WISHLIST'); }
+        else{ gWishlist.splice(idx,1); wishBtn.classList.remove('active'); wishBtn.innerHTML='<i class="ri-heart-line"></i>'; gShowToast('// REMOVED FROM WISHLIST'); }
         gSaveWishlist();
       });
 
-      // Thumbnails
       document.querySelectorAll('.g-thumb-btn').forEach(btn=>{
         btn.addEventListener('click',()=>{
           document.querySelectorAll('.g-thumb-btn').forEach(b=>b.classList.remove('active'));
@@ -709,6 +729,27 @@
       }
       setTimeout(() => requestAnimationFrame(animateSweep), 80);
     })();
+  </script>
+
+  <!-- Custom Box Pointer Cursor -->
+  <div class="g-cursor" id="gCursor"></div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if(window.innerWidth < 768) return; // Disable on mobile
+      const cursor = document.getElementById('gCursor');
+      document.addEventListener('mousemove', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+      });
+      // Add hover effect dynamically including for future elements
+      document.body.addEventListener('mouseover', e => {
+        if(e.target.closest('a, button, input, select, .g-product-card, .g-thumb-btn')) {
+          cursor.classList.add('hover');
+        } else {
+          cursor.classList.remove('hover');
+        }
+      });
+    });
   </script>
 </body>
 </html>

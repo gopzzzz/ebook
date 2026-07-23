@@ -1607,29 +1607,40 @@ input[type="range"].g-range::-webkit-slider-thumb {
   .g-product-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
 }
 /* Custom Cursor */
-.pg-custom-cursor {
+.g-cursor {
   position: fixed;
   top: 0;
   left: 0;
-  width: 12px;
-  height: 12px;
-  background: var(--g-cyan, #00f5ff);
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: 2px solid var(--g-cyan, #00f5ff);
+  border-radius: 0;
   pointer-events: none;
   z-index: 999999;
-  transform: translate3d(-50%, -50%, 0);
-  transition: width 0.3s, height 0.3s, background 0.3s, border-radius 0.3s;
-  mix-blend-mode: difference;
-  margin-left: -6px;
-  margin-top: -6px;
+  transform: translate(-50%, -50%);
+  transition: width 0.15s ease-out, height 0.15s ease-out, background 0.15s ease-out;
 }
-.pg-custom-cursor.hover {
-  width: 32px;
-  height: 32px;
-  background: transparent;
-  border: 1px solid var(--g-cyan, #00f5ff);
-  margin-left: -16px;
-  margin-top: -16px;
+.g-cursor::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  background: var(--g-cyan, #00f5ff);
+  transform: translate(-50%, -50%);
+}
+.g-cursor.hover {
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 245, 255, 0.1);
+  border-color: #00ff88;
 }
 @media (min-width: 768px) {
-  body, a, button, input { cursor: none !important; }
+  body.gaming-page, 
+  body.gaming-page a, 
+  body.gaming-page button, 
+  body.gaming-page input, 
+  body.gaming-page select { cursor: none !important; }
 }

@@ -254,7 +254,7 @@
                     <h1 class="pd-name">{{ $product->name }}</h1>
 
                     @if($publisher)
-                    <div class="pd-publisher">Brandson Clothings</div>
+                    <div class="pd-publisher">{{ $publisher }}</div>
                     @endif
 
                     <div class="pd-rating-row">

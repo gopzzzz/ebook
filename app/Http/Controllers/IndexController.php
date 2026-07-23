@@ -43,36 +43,31 @@ class IndexController extends Controller
     }
 
     public function gamingProducts(Request $request) {
-        $products = DB::table('items')
+        $gamingItems=DB::table('items')
          ->leftJoin('authors', 'items.author_id', '=', 'authors.id')
          ->leftJoin('categories', 'items.cat_id', '=', 'categories.id')
-         ->select('items.*', 'authors.author_name as brand', 'categories.cat_name as category_name')
-         ->where('items.status', 0)
+         ->select('items.*','authors.author_name','categories.category_name')
+         ->where('items.status',0)
          ->orderBy('items.id', 'desc')
-         ->limit(24)
          ->get();
-
-        return view('web.gaming-products', compact('products'));
+        return view('web.gaming-products', compact('gamingItems'));
     }
 
     public function gamingProductDetail($id) {
-        $product = DB::table('items')
+        $product=DB::table('items')
+          ->leftJoin('authors', 'items.author_id', '=', 'authors.id')
+          ->leftJoin('publishers', 'items.publisher_id', '=', 'publishers.id')
+          ->where('items.id',$id)
+          ->select('items.*','authors.author_name','publishers.publisher_name')
+          ->first();
+          
+        $fastmovingProducts=DB::table('items')
          ->leftJoin('authors', 'items.author_id', '=', 'authors.id')
-         ->leftJoin('categories', 'items.cat_id', '=', 'categories.id')
-         ->select('items.*', 'authors.author_name as brand', 'categories.cat_name as category_name')
-         ->where('items.id', $id)
-         ->first();
-
-        $relatedProducts = DB::table('items')
-         ->leftJoin('authors', 'items.author_id', '=', 'authors.id')
-         ->leftJoin('categories', 'items.cat_id', '=', 'categories.id')
-         ->select('items.*', 'authors.author_name as brand', 'categories.cat_name as category_name')
-         ->where('items.status', 0)
-         ->where('items.id', '!=', $id)
+         ->select('items.*','authors.author_name')
          ->limit(4)
          ->get();
 
-        return view('web.gaming-product-detail', compact('product', 'relatedProducts'));
+        return view('web.gaming-product-detail', compact('product', 'fastmovingProducts'));
     }
 
     public function productlist($id){

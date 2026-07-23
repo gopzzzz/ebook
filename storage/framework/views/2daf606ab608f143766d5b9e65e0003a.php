@@ -9,11 +9,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
-  <link rel="icon" type="image/png" href="{{asset('public/assets/logo.png')}}" />
-  <link rel="apple-touch-icon" href="{{asset('public/assets/logo.png')}}" />
+  <link rel="icon" type="image/png" href="<?php echo e(asset('public/assets/logo.png')); ?>" />
+  <link rel="apple-touch-icon" href="<?php echo e(asset('public/assets/logo.png')); ?>" />
 
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
-  <link rel="stylesheet" href="{{asset('public/gaming.css')}}" />
+  <link rel="stylesheet" href="<?php echo e(asset('public/gaming.css')); ?>" />
   <style>
     /* ── Page Entrance Wipe ── */
     #gEntranceWipe {
@@ -104,8 +104,8 @@
 
   <header class="g-header" id="gHeader">
     <div class="g-header-inner g-container">
-      <a href="{{url('/')}}" class="g-logo">
-        <img src="{{asset('public/assets/logo.png')}}" alt="Pouch Gallery" class="g-logo-img" />
+      <a href="<?php echo e(url('/')); ?>" class="g-logo">
+        <img src="<?php echo e(asset('public/assets/logo.png')); ?>" alt="Pouch Gallery" class="g-logo-img" />
         <span class="g-logo-text">POUCH GALLERY<sup>®</sup></span>
       </a>
       <div class="g-search">
@@ -114,7 +114,7 @@
         <button class="g-search-btn">SCAN</button>
       </div>
       <div class="g-actions">
-        <a href="{{url('/')}}" class="g-action-btn" title="Back to Store"><i class="ri-store-line"></i></a>
+        <a href="<?php echo e(url('/')); ?>" class="g-action-btn" title="Back to Store"><i class="ri-store-line"></i></a>
         <a href="#" class="g-action-btn" id="gWishlistBtn"><i class="ri-heart-line"></i><span class="g-badge" id="gWishlistCount">0</span></a>
         <a href="#" class="g-action-btn"><i class="ri-user-line"></i></a>
         <a href="#" class="g-action-btn"><i class="ri-shopping-cart-line"></i><span class="g-badge" id="gCartCount">0</span></a>
@@ -124,8 +124,8 @@
 
     <nav class="g-nav" id="gNav">
       <div class="g-nav-inner g-container">
-        <a href="{{url('/')}}" class="g-nav-link home-link"><i class="ri-arrow-left-line"></i> Main Store</a>
-        <a href="{{url('/gaming-products')}}" class="g-nav-link active"><i class="ri-gamepad-line"></i> All Gaming</a>
+        <a href="<?php echo e(url('/')); ?>" class="g-nav-link home-link"><i class="ri-arrow-left-line"></i> Main Store</a>
+        <a href="<?php echo e(url('/gaming-products')); ?>" class="g-nav-link active"><i class="ri-gamepad-line"></i> All Gaming</a>
         <a href="gaming-products.html?cat=keyboards" class="g-nav-link" data-cat="keyboards">⌨ Keyboards</a>
         <a href="gaming-products.html?cat=mice" class="g-nav-link" data-cat="mice">🖱 Mice</a>
         <a href="gaming-products.html?cat=headsets" class="g-nav-link" data-cat="headsets">🎧 Headsets</a>
@@ -140,7 +140,7 @@
 
   <section class="g-hero" style="min-height:55vh;">
     <div class="g-hero-grid"></div>
-    <img src="{{asset('public/assets/gaming_bg.png')}}" alt="" class="g-hero-bg-img" aria-hidden="true" />
+    <img src="<?php echo e(asset('public/assets/gaming_bg.png')); ?>" alt="" class="g-hero-bg-img" aria-hidden="true" />
     <div class="g-hero-vignette"></div>
     <div class="g-orb g-orb-1"></div>
     <div class="g-orb g-orb-2"></div>
@@ -168,7 +168,7 @@
       <div class="g-hero-visual" style="display:flex;align-items:center;justify-content:center;">
         <div class="g-hero-img-container" style="max-width:460px;">
           <div class="g-hero-glow-ring"></div>
-          <img src="{{asset('public/assets/gaming_neon.png')}}" alt="Gaming Gear" class="g-hero-img" />
+          <img src="<?php echo e(asset('public/assets/gaming_neon.png')); ?>" alt="Gaming Gear" class="g-hero-img" />
           <div class="g-corner g-corner-tl"></div>
           <div class="g-corner g-corner-tr"></div>
           <div class="g-corner g-corner-bl"></div>
@@ -317,7 +317,7 @@
         <a href="#products" class="g-btn g-btn-hot"><i class="ri-flashlight-fill"></i> GRAB THE DEAL</a>
       </div>
       <div class="g-promo-img">
-        <img src="{{asset('public/assets/gaming_hero.png')}}" alt="Gaming Deal" />
+        <img src="<?php echo e(asset('public/assets/gaming_hero.png')); ?>" alt="Gaming Deal" />
       </div>
     </div>
   </div>
@@ -332,7 +332,7 @@
   <button class="g-back-top" id="gBackTop"><i class="ri-arrow-up-line"></i></button>
 
   <script>
-    @php
+    <?php
       $jsProducts = $gamingItems->map(function($p) {
         $save = ($p->mrp > 0 && $p->mrp > $p->sr) ? round((($p->mrp - $p->sr) / $p->mrp) * 100) : 0;
         return [
@@ -349,8 +349,8 @@
           'slug' => $p->slug
         ];
       });
-    @endphp
-    const PRODUCTS = {!! json_encode($jsProducts) !!};
+    ?>
+    const PRODUCTS = <?php echo json_encode($jsProducts); ?>;
 
     let gCart = JSON.parse(localStorage.getItem('pg_cart') || '[]');
     let gWishlist = JSON.parse(localStorage.getItem('pg_wishlist') || '[]');
@@ -447,7 +447,7 @@
       grid.querySelectorAll('.g-wishlist-btn').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();gToggleWishlist(+b.dataset.id,b);}));
       grid.querySelectorAll('.g-overlay-view').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();openModal(+b.dataset.id);}));
       grid.querySelectorAll('.g-product-card').forEach(c=>{
-        c.addEventListener('click',()=>{ window.location.href='{{url("gaming-product")}}/'+c.dataset.id; });
+        c.addEventListener('click',()=>{ window.location.href='<?php echo e(url("gaming-product")); ?>/'+c.dataset.id; });
       });
     }
 
@@ -651,3 +651,4 @@
 
 
 
+<?php /**PATH C:\xampp\htdocs\ebook\resources\views/web/gaming-products.blade.php ENDPATH**/ ?>

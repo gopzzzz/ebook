@@ -8,10 +8,10 @@
           </a>
           <p>Your one-stop shop for premium gaming peripherals, bags, and tech accessories. Trusted by 50,000+ customers across India.</p>
           <div class="social-links">
-            <a href="#" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
-            <a href="#" aria-label="Facebook"><i class="ri-facebook-line"></i></a>
-            <a href="#" aria-label="YouTube"><i class="ri-youtube-line"></i></a>
-            <a href="#" aria-label="Twitter"><i class="ri-twitter-x-line"></i></a>
+            <a href="<?php echo e($app_profile->insta_link); ?>" target="_blank" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
+            <a href="<?php echo e($app_profile->facebook_link); ?>" target="_blank" aria-label="Facebook"><i class="ri-facebook-line"></i></a>
+            <a href="<?php echo e($app_profile->youtube_link); ?>" target="_blank" aria-label="YouTube"><i class="ri-youtube-line"></i></a>
+            <a href="<?php echo e($app_profile->twitter_link); ?>" aria-label="Twitter"><i class="ri-twitter-x-line"></i></a>
           </div>
         </div>
         <div class="footer-col">
@@ -24,39 +24,40 @@
         <div class="footer-col">
           <h4>Gaming</h4>
         
-          <a href="#">Track Order</a>
-          <a href="#">Returns & Exchange</a>
-          <a href="#">Shipping Policy</a>
-          <a href="#">Warranty Info</a>
-          <a href="#">FAQ</a>
-          <a href="#">Contact Support</a>
+          <a href="<?php echo e(url('')); ?>">Track Order</a>
+           <a href="<?php echo e(url('aboutus')); ?>">About Us</a>
+          <a href="<?php echo e(url('privacy')); ?>">Privacy Policy</a>
+          <a href="<?php echo e(url('term-conditions')); ?>">Terms & Conditions</a>
+          <a href="<?php echo e(url('refund')); ?>">Refund Policy</a>
+          <a href="<?php echo e(url('cancellation')); ?>">Cancellation Policy</a>
+         
+          <a href="<?php echo e(url('contactus')); ?>">Contact Support</a>
         </div>
         <div class="footer-col">
           <h4>Contact Us</h4>
           <div class="footer-contact">
             <i class="ri-map-pin-line"></i>
-            <span>123, Tech Hub, MG Road, Kerala – 680001</span>
+            <span><?php echo e($app_profile->address); ?></span>
           </div>
           <div class="footer-contact">
             <i class="ri-phone-line"></i>
-            <span>+91 98765 43210</span>
+            <span><?php echo e($app_profile->phone_number); ?></span>
           </div>
           <div class="footer-contact">
             <i class="ri-mail-line"></i>
-            <span>support@pouchgallery.in</span>
+            <span><?php echo e($app_profile->email); ?></span>
           </div>
-          <div class="footer-contact">
+          <!-- <div class="footer-contact">
             <i class="ri-time-line"></i>
             <span>Mon–Sat: 9 AM – 7 PM</span>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="footer-bottom">
         <p>© 2026 Pouch Gallery®. All rights reserved.</p>
         <div class="footer-links">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-          <a href="#">Sitemap</a>
+          <a href="https://routeqinnovations.com/" target="_blank">Designed & Developed By Routeq Innovations Pvt Ltd</a>
+         
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 <?php $__env->startSection('content'); ?>
 
-<section class="g-hero" style="min-height:55vh;">
+  <section class="g-hero" style="min-height:55vh;">
     <div class="g-hero-grid"></div>
     <img src="<?php echo e(asset('public/assets/gaming_bg.png')); ?>" alt="" class="g-hero-bg-img" aria-hidden="true" />
     <div class="g-hero-vignette"></div>
@@ -52,13 +52,9 @@
     <div class="g-container">
       <div class="g-cat-tabs" id="catTabs">
         <button class="g-cat-tab active" data-cat="all"><i class="ri-apps-line"></i> All</button>
-        <button class="g-cat-tab" data-cat="keyboards"><i class="ri-keyboard-line"></i> Keyboards</button>
-        <button class="g-cat-tab" data-cat="mice"><i class="ri-mouse-line"></i> Mice</button>
-        <button class="g-cat-tab" data-cat="headsets"><i class="ri-headphone-line"></i> Headsets</button>
-        <button class="g-cat-tab" data-cat="chairs"><i class="ri-armchair-line"></i> Chairs</button>
-        <button class="g-cat-tab" data-cat="monitors"><i class="ri-computer-line"></i> Monitors</button>
-        <button class="g-cat-tab" data-cat="controllers"><i class="ri-gamepad-line"></i> Controllers</button>
-        <button class="g-cat-tab" data-cat="mousepads"><i class="ri-layout-grid-line"></i> Mousepads</button>
+        <?php $__currentLoopData = $gamecategorieslist; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $glist): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+       <a href="<?php echo e(url('gaming-products/'.$glist->id)); ?>"> <button class="g-cat-tab" data-cat="keyboards"><i class="ri-keyboard-line"></i> <?php echo e($glist->category_name); ?></button></a>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
       </div>
     </div>
   </div>
@@ -70,17 +66,7 @@
         <aside class="g-sidebar">
 
           <div class="g-sidebar-card">
-            <div class="g-sidebar-title">// Categories</div>
-            <div class="g-check-list">
-              <label class="g-check"><input type="checkbox" checked /><span>Keyboards</span><span class="cnt">2</span></label>
-              <label class="g-check"><input type="checkbox" checked /><span>Gaming Mice</span><span class="cnt">2</span></label>
-              <label class="g-check"><input type="checkbox" checked /><span>Headsets</span><span class="cnt">1</span></label>
-              <label class="g-check"><input type="checkbox" checked /><span>Chairs</span><span class="cnt">1</span></label>
-              <label class="g-check"><input type="checkbox" checked /><span>Monitors</span><span class="cnt">1</span></label>
-              <label class="g-check"><input type="checkbox" checked /><span>Controllers</span><span class="cnt">1</span></label>
-              <label class="g-check"><input type="checkbox" checked /><span>Mousepads</span><span class="cnt">1</span></label>
-            </div>
-          </div>
+           
 
           <div class="g-sidebar-card">
             <div class="g-sidebar-title">// Price Range</div>
@@ -102,12 +88,7 @@
             </div>
           </div>
 
-          <div class="g-sidebar-card">
-            <div class="g-sidebar-title">// Rating</div>
-            <button class="g-rating-btn active"><span class="g-stars">★★★★★</span> 4.5+</button>
-            <button class="g-rating-btn"><span class="g-stars">★★★★☆</span> 4.0+</button>
-            <button class="g-rating-btn"><span class="g-stars">★★★☆☆</span> 3.0+</button>
-          </div>
+        
 
           <div class="g-sidebar-card">
             <div class="g-sidebar-title">// Stock Status</div>
@@ -120,21 +101,11 @@
         </aside>
 
         <div>
-          <div class="g-active-filters">
-            <span class="g-active-tag">GAMING <button>×</button></span>
-            <span class="g-active-tag">IN STOCK <button>×</button></span>
-          </div>
+          
 
           <div class="g-filter-bar">
-            <span class="g-filter-label">// Filter:</span>
-            <div style="display:flex;gap:0.4rem;flex-wrap:wrap;" id="filterBtnGroup">
-              <button class="g-cat-tab active" data-cat="all" style="padding:0.35rem 0.75rem;font-size:0.6rem;">ALL</button>
-              <button class="g-cat-tab" data-cat="keyboards" style="padding:0.35rem 0.75rem;font-size:0.6rem;">KEYBOARDS</button>
-              <button class="g-cat-tab" data-cat="mice" style="padding:0.35rem 0.75rem;font-size:0.6rem;">MICE</button>
-              <button class="g-cat-tab" data-cat="headsets" style="padding:0.35rem 0.75rem;font-size:0.6rem;">HEADSETS</button>
-              <button class="g-cat-tab" data-cat="chairs" style="padding:0.35rem 0.75rem;font-size:0.6rem;">CHAIRS</button>
-              <button class="g-cat-tab" data-cat="monitors" style="padding:0.35rem 0.75rem;font-size:0.6rem;">MONITORS</button>
-            </div>
+          
+           
             <span class="g-filter-sep"></span>
             <span class="g-results-count" id="gResults">8 UNITS FOUND</span>
             <select class="g-sort" id="gSort">
@@ -149,16 +120,45 @@
             </div>
           </div>
 
-          <div class="g-product-grid" id="gProductGrid">
+          <div class="g-product-grid" >
+
+            <?php $__empty_1 = true; $__currentLoopData = $gamingItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+
+          <article class="g-product-card" data-id="<?php echo e($p->id); ?>">
+          <div class="g-card-line"></div>
+          <div class="g-card-img-wrap">
+           
+           
+            <img src="<?php echo e(asset('public/assets/img/items/'.$p->image)); ?>" alt="<?php echo e($p->name); ?>" class="g-card-img" loading="lazy" />
+         
+            <div class="g-card-overlay">
+              
+             <a href="<?php echo e(url('gaming-product-detail/'.$p->slug)); ?>"> <button class="g-overlay-view" data-id="<?php echo e($p->id); ?>">Quick View </button> </a>
+            </div>
+          </div>
+          <div class="g-card-info">
+            <div class="g-card-brand"><?php echo e($p->author_name); ?></div>
+            <div class="g-card-name"><?php echo e($p->name); ?></div>
+          
+            <div class="g-card-price-row">
+              <div>
+                <span class="g-price-main"><?php echo e($p->sr); ?></span>
+                <span class="g-price-original"><?php echo e($p->mrp); ?></span>
+              </div>
+              <span class="g-price-save">-${save}%</span>
+            </div>
+          </div>
+        </article>
+           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+            <div class="pl-empty">
+                <div style="font-size:48px;opacity:.2;margin-bottom:12px;">📦</div>
+                <div style="font-size:16px;color:#878787;">No products found</div>
+            </div>
+            <?php endif; ?>
+
           </div>
 
-          <div class="g-pagination">
-            <button class="g-page-btn" disabled><i class="ri-arrow-left-s-line"></i></button>
-            <button class="g-page-btn active">01</button>
-            <button class="g-page-btn">02</button>
-            <button class="g-page-btn">03</button>
-            <button class="g-page-btn"><i class="ri-arrow-right-s-line"></i></button>
-          </div>
+         
         </div>
 
       </div>
@@ -192,6 +192,8 @@
     </div>
   </div>
   <button class="g-back-top" id="gBackTop"><i class="ri-arrow-up-line"></i></button>
-
 <?php $__env->stopSection(); ?>
+
+
+
 <?php echo $__env->make('layouts.gaminglayout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\ebook\resources\views/web/gaming-products.blade.php ENDPATH**/ ?>

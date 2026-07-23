@@ -98,7 +98,7 @@
              ?>
             <div class="dropdown">
               <?php $__currentLoopData = $subcat; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-              <a href="<?php echo e(url('gaming-products')); ?>"><?php echo e($item->category_name); ?></a>
+              <a href="<?php echo e(url('gaming-products/'.$item->id)); ?>"><?php echo e($item->category_name); ?></a>
               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
           </li>

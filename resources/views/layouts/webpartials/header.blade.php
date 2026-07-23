@@ -98,7 +98,7 @@
              @endphp
             <div class="dropdown">
               @foreach($subcat as $item)
-              <a href="{{url('gaming-products')}}">{{$item->category_name}}</a>
+              <a href="{{url('gaming-products/'.$item->id)}}">{{$item->category_name}}</a>
               @endforeach
             </div>
           </li>

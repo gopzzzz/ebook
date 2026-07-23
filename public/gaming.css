@@ -43,7 +43,9 @@
   --g-ease:       cubic-bezier(0.4, 0, 0.2, 1);
   --g-ease-hard:  cubic-bezier(0.19, 1, 0.22, 1);
 }
-
+a{
+  text-decoration: none;
+}
 /* ─── GAMING BODY ─── */
 .gaming-page {
   background: var(--g-dark);
@@ -163,8 +165,8 @@
   flex-shrink: 0;
 }
 .g-logo-img {
-  height: 38px;
-  width: 38px;
+  height: auto;
+  width: 115px;
   object-fit: contain;
   filter: invert(1) drop-shadow(0 0 8px rgba(0,245,255,0.6));
 }

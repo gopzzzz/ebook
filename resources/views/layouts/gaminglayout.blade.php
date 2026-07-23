@@ -11,6 +11,8 @@
 
    @include('layouts.gamingpartials.footer')
 
+    @include('layouts.webpartials.footerscript')
+
 </body>
 </html>
 

@@ -1,16 +1,14 @@
-@extends('layouts.gaminglayout')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 
   <div class="g-breadcrumb">
     <div class="g-container">
       <nav class="g-breadcrumb-inner">
-        <a href="{{url('/index')}}">HOME</a>
+        <a href="<?php echo e(url('/index')); ?>">HOME</a>
         <i class="ri-arrow-right-s-line"></i>
-        <a href="{{url('/gaming-products')}}">GAMING</a>
+        <a href="<?php echo e(url('/gaming-products')); ?>">GAMING</a>
         <i class="ri-arrow-right-s-line"></i>
-        <span id="gBreadcrumb">{{ Str::limit(strtoupper($product->name), 40) }}</span>
+        <span id="gBreadcrumb"><?php echo e(Str::limit(strtoupper($product->name), 40)); ?></span>
       </nav>
     </div>
   </div>
@@ -25,65 +23,65 @@
             <div class="g-corner gc-tr" style="position:absolute;top:0;right:0;width:20px;height:20px;border-top:2px solid var(--g-cyan);border-right:2px solid var(--g-cyan);"></div>
             <div class="g-corner gc-bl" style="position:absolute;bottom:0;left:0;width:20px;height:20px;border-bottom:2px solid var(--g-cyan);border-left:2px solid var(--g-cyan);"></div>
             <div class="g-corner gc-br" style="position:absolute;bottom:0;right:0;width:20px;height:20px;border-bottom:2px solid var(--g-cyan);border-right:2px solid var(--g-cyan);"></div>
-            <img src="{{ asset('public/assets/img/items/'.$product->image) }}" alt="{{$product->name}}" id="gMainImg" />
+            <img src="<?php echo e(asset('public/assets/img/items/'.$product->image)); ?>" alt="<?php echo e($product->name); ?>" id="gMainImg" />
           </div>
           <div class="g-thumb-row">
-            <button class="g-thumb-btn active"><img src="{{asset('public/assets/keyboard.png')}}" alt="View 1" /></button>
-            <button class="g-thumb-btn"><img src="{{asset('public/assets/mouse.png')}}" alt="View 2" /></button>
-            <button class="g-thumb-btn"><img src="{{asset('public/assets/headset.png')}}" alt="View 3" /></button>
-            <button class="g-thumb-btn"><img src="{{asset('public/assets/mousepad.png')}}" alt="View 4" /></button>
+            <button class="g-thumb-btn active"><img src="<?php echo e(asset('public/assets/keyboard.png')); ?>" alt="View 1" /></button>
+            <button class="g-thumb-btn"><img src="<?php echo e(asset('public/assets/mouse.png')); ?>" alt="View 2" /></button>
+            <button class="g-thumb-btn"><img src="<?php echo e(asset('public/assets/headset.png')); ?>" alt="View 3" /></button>
+            <button class="g-thumb-btn"><img src="<?php echo e(asset('public/assets/mousepad.png')); ?>" alt="View 4" /></button>
           </div>
         </div>
 
         <div class="g-detail-info">
 
-          @php
+          <?php
             $discPct = ($product->mrp > 0 && $product->mrp > $product->sr) ? round((($product->mrp - $product->sr) / $product->mrp) * 100) : 0;
             $reviewsCount = rand(100, 3000);
-          @endphp
+          ?>
 
           <div style="display:flex;gap:0.5rem;margin-bottom:0.875rem;flex-wrap:wrap;">
-            @if($discPct > 20)
+            <?php if($discPct > 20): ?>
             <span class="g-badge-pill g-badge-hot">🔥 HOT DEAL</span>
-            @elseif($discPct > 0)
+            <?php elseif($discPct > 0): ?>
             <span class="g-badge-pill g-badge-discount">🔥 BEST SELLER</span>
-            @else
+            <?php else: ?>
             <span class="g-badge-pill g-badge-new">// NEW 2026</span>
-            @endif
+            <?php endif; ?>
           </div>
 
-          <div class="g-detail-eyebrow" id="gDetailBrand">{{ strtoupper($product->author_name ?? 'Brandson') }}</div>
-          <h1 class="g-detail-title" id="gDetailTitle">{{ $product->name }}</h1>
+          <div class="g-detail-eyebrow" id="gDetailBrand"><?php echo e(strtoupper($product->author_name ?? 'Brandson')); ?></div>
+          <h1 class="g-detail-title" id="gDetailTitle"><?php echo e($product->name); ?></h1>
 
           <div class="g-detail-rating">
             <span class="g-stars" id="gDetailStars">★★★★½</span>
-            <span id="gDetailReviews">4.5 · {{ number_format($reviewsCount) }} reviews</span>
+            <span id="gDetailReviews">4.5 · <?php echo e(number_format($reviewsCount)); ?> reviews</span>
             <span style="font-family:var(--g-font);font-size:0.6rem;color:var(--g-green);letter-spacing:0.08em;">✓ VERIFIED SELLER</span>
           </div>
 
           <div class="g-price-box">
-            <span class="g-price-main" id="gDetailPrice">₹{{ number_format($product->sr, 2) }}</span>
-            @if($product->mrp > $product->sr)
+            <span class="g-price-main" id="gDetailPrice">₹<?php echo e(number_format($product->sr, 2)); ?></span>
+            <?php if($product->mrp > $product->sr): ?>
             <div class="g-price-row" style="margin-bottom:0.5rem;">
-              <span class="g-price-orig" id="gDetailOriginal">₹{{ number_format($product->mrp, 2) }}</span>
-              <span class="g-price-save-tag" id="gDetailSave">SAVE {{ $discPct }}%</span>
+              <span class="g-price-orig" id="gDetailOriginal">₹<?php echo e(number_format($product->mrp, 2)); ?></span>
+              <span class="g-price-save-tag" id="gDetailSave">SAVE <?php echo e($discPct); ?>%</span>
             </div>
-            @endif
-            <div class="g-emi">EMI from <strong>₹{{ round($product->sr / 6) }}/month</strong> · 0% interest · <a href="#" style="color:var(--g-cyan);font-family:var(--g-font);font-size:0.65rem;">SEE OFFERS</a></div>
+            <?php endif; ?>
+            <div class="g-emi">EMI from <strong>₹<?php echo e(round($product->sr / 6)); ?>/month</strong> · 0% interest · <a href="#" style="color:var(--g-cyan);font-family:var(--g-font);font-size:0.65rem;">SEE OFFERS</a></div>
           </div>
 
           <div class="g-stock">
-            @if($product->stock == 0)
+            <?php if($product->stock == 0): ?>
               <div class="g-stock-dot" style="background:var(--g-red);box-shadow:0 0 10px var(--g-red);"></div>
               <span class="g-stock-text" style="color:var(--g-red);">OUT OF STOCK</span>
-            @elseif($product->stock < 5)
+            <?php elseif($product->stock < 5): ?>
               <div class="g-stock-dot" style="background:var(--g-yellow);box-shadow:0 0 10px var(--g-yellow);"></div>
               <span class="g-stock-text" style="color:var(--g-yellow);">LOW STOCK</span>
-              <span class="g-stock-low">— ONLY {{ $product->stock }} UNITS LEFT</span>
-            @else
+              <span class="g-stock-low">— ONLY <?php echo e($product->stock); ?> UNITS LEFT</span>
+            <?php else: ?>
               <div class="g-stock-dot"></div>
               <span class="g-stock-text">IN STOCK</span>
-            @endif
+            <?php endif; ?>
           </div>
 
           <div class="g-coupon">
@@ -125,10 +123,10 @@
           </div>
 
           <div class="g-detail-cta">
-            <button class="g-btn g-btn-primary add-to-cart" data-id="{{ $product->id }}" style="flex:1;justify-content:center;">
+            <button class="g-btn g-btn-primary add-to-cart" data-id="<?php echo e($product->id); ?>" style="flex:1;justify-content:center;">
               <i class="ri-shopping-cart-line"></i> ADD TO CART
             </button>
-            <!-- <a href="{{ url('cart') }}" class="g-btn g-btn-hot" style="flex:1;justify-content:center;text-decoration:none;">
+            <!-- <a href="<?php echo e(url('cart')); ?>" class="g-btn g-btn-hot" style="flex:1;justify-content:center;text-decoration:none;">
               <i class="ri-flashlight-fill"></i> BUY NOW
             </a> -->
             <!-- <button class="g-btn g-btn-ghost" id="gWishBtn" style="padding:0.875rem 1rem;">
@@ -182,9 +180,10 @@
         <div class="g-tab-panel active" id="g-tab-description">
           <div style="max-width:780px;">
             <div class="g-section-eyebrow" style="margin-bottom:0.75rem;">PRODUCT OVERVIEW</div>
-            <h3 style="font-family:var(--g-font);font-size:1rem;font-weight:700;text-transform:uppercase;color:#e0e8ff;margin-bottom:1rem;letter-spacing:0.04em;">About {{ $product->name }}</h3>
+            <h3 style="font-family:var(--g-font);font-size:1rem;font-weight:700;text-transform:uppercase;color:#e0e8ff;margin-bottom:1rem;letter-spacing:0.04em;">About <?php echo e($product->name); ?></h3>
             <div style="color:#667788;line-height:1.8;margin-bottom:2rem;font-family:var(--g-font-body);">
-              {!! $product->description ?? 'Experience premium gaming with this incredible new product. Designed for precision and built for durability, it helps you reach peak performance in any match.' !!}
+              <?php echo $product->description ?? 'Experience premium gaming with this incredible new product. Designed for precision and built for durability, it helps you reach peak performance in any match.'; ?>
+
             </div>
             <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;">
               <div style="background:var(--g-dark-3);border:1px solid var(--g-border);padding:1.25rem;clip-path:polygon(0 0,calc(100%-8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100%-8px));position:relative;">
@@ -317,7 +316,7 @@
           <div class="g-section-eyebrow">RECOMMENDED FOR YOU</div>
           <h2 class="g-section-title">RELATED <span>PRODUCTS</span></h2>
         </div>
-        <a href="{{url('/gaming-products')}}" class="g-view-all">VIEW ALL GAMING <i class="ri-arrow-right-line"></i></a>
+        <a href="<?php echo e(url('/gaming-products')); ?>" class="g-view-all">VIEW ALL GAMING <i class="ri-arrow-right-line"></i></a>
       </div>
       <div class="g-product-grid" id="gRelatedGrid" style="grid-template-columns:repeat(4,1fr);"></div>
     </div>
@@ -326,4 +325,5 @@
   <div class="g-toast" id="gToast"><i class="ri-terminal-box-line"></i><span id="gToastMsg">// ITEM ADDED</span></div>
   <button class="g-back-top" id="gBackTop"><i class="ri-arrow-up-line"></i></button>
 
-  @endsection
+  <?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.gaminglayout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\ebook\resources\views/web/gaming-product-detail.blade.php ENDPATH**/ ?>

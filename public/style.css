@@ -109,7 +109,7 @@ input, select, textarea { font-family: inherit; }
 
 /* Logo */
 .logo-link { display: flex; align-items: center; gap: .65rem; flex-shrink: 0; }
-.logo-img { height: 36px; width: 36px; object-fit: contain; }
+.logo-img { height: auto; width: 110px; object-fit: contain; }
 .logo-text {
   font-size: 1rem; font-weight: 800;
   letter-spacing: .05em; color: var(--black); white-space: nowrap;

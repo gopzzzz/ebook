@@ -765,7 +765,7 @@ input, select, textarea { font-family: inherit; }
 .page-hero { background: var(--bg-2); border-bottom: 1px solid var(--border-gray); padding: 3rem 0 2rem; }
 
 /* ─── REVEAL ─── */
-.reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+.reveal { opacity: 1; transform: translateY(20px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
 /* ─── RESPONSIVE ─── */

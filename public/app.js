@@ -6,17 +6,6 @@
 
 'use strict';
 
-// ─── PRODUCTS DATA ────────────────────────────────────────────
-const PRODUCTS = [
-  { id:1, name:'HyperX Alloy Origins RGB Mechanical Keyboard', brand:'HyperX',    category:'keyboards',   price:3499,  original:5999,  image:'/ebook/public/assets/keyboard.png',  rating:4.8, reviews:1243, badge:'discount',   isNew:false, isBestSeller:true,  isFeatured:true  },
-  { id:2, name:'Logitech G502 Hero High Performance Gaming Mouse', brand:'Logitech', category:'mice',      price:2799,  original:4999,  image:'/ebook/public/assets/mouse.png',     rating:4.9, reviews:2890, badge:'bestseller', isNew:false, isBestSeller:true,  isFeatured:true  },
-  { id:3, name:'HyperX Cloud II Gaming Headset 7.1 Surround',   brand:'HyperX',    category:'headsets',    price:4999,  original:7499,  image:'/ebook/public/assets/headset.png',   rating:4.7, reviews:1876, badge:'hot',        isNew:false, isBestSeller:true,  isFeatured:true  },
-  { id:4, name:'Green Soul Ergonomic Gaming Chair – Alpha Series', brand:'Green Soul', category:'chairs',  price:12999, original:18999, image:'/ebook/public/assets/chair.png',     rating:4.6, reviews:543,  badge:'discount',   isNew:false, isBestSeller:false, isFeatured:true  },
-  { id:5, name:'27" Curved Gaming Monitor 165Hz 1ms FreeSync',   brand:'LG',        category:'monitors',   price:18999, original:27999, image:'/ebook/public/assets/monitor.png',   rating:4.8, reviews:723,  badge:'new',        isNew:true,  isBestSeller:false, isFeatured:false },
-  { id:6, name:'Xbox Wireless Controller – Carbon Black',        brand:'Microsoft', category:'controllers', price:5499,  original:7999,  image:'/ebook/public/assets/controller.png',rating:4.9, reviews:3210, badge:'discount',   isNew:false, isBestSeller:true,  isFeatured:false },
-  { id:7, name:'Corsair MM350 Pro Extended Gaming Mousepad',     brand:'Corsair',   category:'mousepads',   price:1499,  original:2499,  image:'/ebook/public/assets/mousepad.png',  rating:4.7, reviews:912,  badge:'new',        isNew:true,  isBestSeller:false, isFeatured:false },
-  { id:8, name:'Razer DeathAdder V3 Ultra-Lightweight Gaming Mouse', brand:'Razer', category:'mice',       price:5999,  original:8999,  image:'/ebook/public/assets/mouse.png',     rating:4.9, reviews:1432, badge:'hot',        isNew:true,  isBestSeller:false, isFeatured:true  },
-];
 
 // ─── STATE ───────────────────────────────────────────────────
 let cart     = JSON.parse(localStorage.getItem('pg_cart')     || '[]');
@@ -124,12 +113,7 @@ function createProductCard(p) {
 }
 
 // ─── RENDER GRIDS ─────────────────────────────────────────────
-function renderGrid(containerId, filterFn) {
-  const el = $(`#${containerId}`);
-  if (!el) return;
-  el.innerHTML = PRODUCTS.filter(filterFn).map(createProductCard).join('');
-  attachCardEvents(el);
-}
+
 
 function renderHomepageGrids() {
   renderGrid('featuredGrid',    p => p.isFeatured);
@@ -153,41 +137,7 @@ function attachCardEvents(container) {
   });
 }
 
-// ─── QUICK VIEW ───────────────────────────────────────────────
-function openQuickView(id) {
-  const p = PRODUCTS.find(x => x.id === id);
-  if (!p) return;
-  const modal = $('#quickViewModal'), inner = $('#modalInner');
-  if (!modal || !inner) return;
-  const save = discPct(p.price, p.original);
-  inner.innerHTML = `
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start;">
-      <div style="background:var(--dark-2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;display:flex;align-items:center;justify-content:center;aspect-ratio:1;">
-        <img src="${p.image}" alt="${p.name}" style="width:85%;object-fit:contain;filter:drop-shadow(0 10px 30px rgba(124,58,237,.3));" />
-      </div>
-      <div>
-        <div class="product-brand" style="margin-bottom:.4rem;">${p.brand}</div>
-        <h3 style="font-size:1.15rem;font-weight:800;margin-bottom:.75rem;line-height:1.3;">${p.name}</h3>
-        <div class="product-rating" style="margin-bottom:1rem;">
-          <span class="stars-display">${starsHTML(p.rating)}</span>
-          <span class="rating-count">${p.rating} (${p.reviews.toLocaleString()} reviews)</span>
-        </div>
-        <div style="margin-bottom:1.25rem;">
-          <span class="price-main" style="font-size:1.75rem;font-weight:900;">${fmt(p.price)}</span>
-          <span class="price-original" style="font-size:1rem;margin-left:.5rem;">${fmt(p.original)}</span>
-          <span class="badge-pill badge-discount" style="margin-left:.5rem;">-${save}%</span>
-        </div>
-        <div style="display:flex;gap:.75rem;flex-wrap:wrap;">
-          <button class="btn btn-primary" onclick="addToCart(${p.id});showToast('Added to cart! 🛒');" style="flex:1;justify-content:center;">
-            <i class="ri-shopping-cart-line"></i> Add to Cart
-          </button>
-          <a href="gaming-product-detail.html?id=${p.id}" class="btn btn-ghost">View Details</a>
-        </div>
-      </div>
-    </div>`;
-  modal.classList.add('open');
-}
-window.openQuickView = openQuickView;
+
 
 // ─── HERO SLIDER ──────────────────────────────────────────────
 function initHeroSlider() {
@@ -300,83 +250,6 @@ function initSearch() {
   });
 }
 
-// ─── PRODUCT DETAIL PAGE ──────────────────────────────────────
-function initProductDetail() {
-  const params = new URLSearchParams(window.location.search);
-  const p = PRODUCTS.find(x => x.id === +params.get('id')) || PRODUCTS[0];
-
-  // Populate fields
-  const set = (id, val) => { const el = $(id); if (el) el.textContent = val; };
-  const mainImg = $('#mainProductImg');
-  if (mainImg) mainImg.src = p.image;
-  set('#detailTitle',    p.name);
-  set('#detailBrand',    p.brand);
-  set('#detailPrice',    fmt(p.price));
-  set('#detailOriginal', fmt(p.original));
-  set('#detailSave',     `Save ${discPct(p.price, p.original)}%`);
-  set('#detailRating',   starsHTML(p.rating));
-  set('#detailReviews',  `${p.rating} · ${p.reviews.toLocaleString()} Reviews`);
-  const bc = $('#breadcrumbName'); if (bc) bc.textContent = p.name;
-
-  // Quantity control
-  let qty = 1;
-  const qtyEl = $('#qtyValue');
-  $('#qtyMinus')?.addEventListener('click', () => { if (qty > 1) { qty--; if (qtyEl) qtyEl.textContent = qty; } });
-  $('#qtyPlus')?.addEventListener('click',  () => { qty++; if (qtyEl) qtyEl.textContent = qty; });
-
-  // Add to cart
-  $('#detailAddCart')?.addEventListener('click', () => { addToCart(p.id, qty); showToast(`${qty} item(s) added to cart! 🛒`); });
-
-  // Wishlist
-  const wishBtn = $('#detailWishlist');
-  wishBtn?.addEventListener('click', () => {
-    const idx = wishlist.indexOf(p.id);
-    if (idx === -1) {
-      wishlist.push(p.id);
-      wishBtn.innerHTML = '<i class="ri-heart-fill"></i> Wishlisted';
-      wishBtn.style.cssText = 'background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.4);color:#ef4444;';
-      showToast('Added to wishlist! ♥');
-    } else {
-      wishlist.splice(idx, 1);
-      wishBtn.innerHTML = '<i class="ri-heart-line"></i> Wishlist';
-      wishBtn.style.cssText = '';
-      showToast('Removed from wishlist');
-    }
-    saveWishlist();
-  });
-
-  // Thumbnail swap
-  $$('.thumb-btn').forEach(btn => btn.addEventListener('click', () => {
-    $$('.thumb-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const img = btn.querySelector('img');
-    if (mainImg && img) mainImg.src = img.src;
-  }));
-
-  // Tabs
-  $$('.tab-btn').forEach(btn => btn.addEventListener('click', () => {
-    $$('.tab-btn').forEach(b => b.classList.remove('active'));
-    $$('.tab-panel').forEach(panel => panel.classList.remove('active'));
-    btn.classList.add('active');
-    $(`#tab-${btn.dataset.tab}`)?.classList.add('active');
-  }));
-
-  // Variants
-  $$('.variant-btn').forEach(btn => btn.addEventListener('click', () => {
-    btn.closest('.variant-row')?.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }));
-
-  // Related products
-  const relGrid = $('#relatedGrid');
-  if (relGrid) {
-    const related = PRODUCTS.filter(x => x.id !== p.id && x.category === p.category)
-      .concat(PRODUCTS.filter(x => x.id !== p.id && x.category !== p.category))
-      .slice(0, 4);
-    relGrid.innerHTML = related.map(createProductCard).join('');
-    attachCardEvents(relGrid);
-  }
-}
 
 // ─── INIT ─────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {

@@ -63,7 +63,9 @@ class IndexController extends Controller
          ->limit(4)
          ->get();
 
-        return view('web.gaming-product-detail', compact('product', 'fastmovingProducts'));
+         $gamecategories=DB::table('categories')->where('main_id',1)->get();
+
+        return view('web.gaming-product-detail', compact('product', 'fastmovingProducts','gamecategories'));
     }
 
     public function productlist($id){

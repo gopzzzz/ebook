@@ -1,4 +1,4 @@
-  <div class="announcement-bar" id="announcementBar">
+  <!-- <div class="announcement-bar" id="announcementBar">
     <div class="announcement-inner">
       <span>🎮 Free Shipping on Orders above ₹999</span>
       <span class="sep">|</span>
@@ -7,14 +7,14 @@
       <span>🏆 Official Dealer – 100% Authentic Products</span>
     </div>
     <button class="ann-close" id="annClose" aria-label="Close announcement"><i class="ri-close-line"></i></button>
-  </div>
+  </div> -->
 
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
 
       <a href="{{url('/')}}" class="logo-link" aria-label="Pouch Gallery Home">
-        <img src="{{asset('public/assets/logo.png')}}" alt="Pouch Gallery Logo" class="logo-img" />
-        <span class="logo-text">POUCH GALLERY<sup>®</sup></span>
+        <img src="{{asset('public/uploads/profile/'.$app_profile->logo)}}" alt="Pouch Gallery Logo" class="logo-img" />
+       
       </a>
 
       <div class="header-search" id="headerSearch">
@@ -47,7 +47,7 @@
           <li class="nav-item">
             <a href="{{url('/')}}" class="nav-link active">Home</a>
           </li>
-          <li class="nav-item has-dropdown">
+          <!-- <li class="nav-item has-dropdown">
             <a href="{{url('/gaming-products')}}" class="nav-link">
               🎮 Gaming <i class="ri-arrow-down-s-line"></i>
             </a>
@@ -80,8 +80,8 @@
                 </div>
               </div>
             </div>
-          </li>
-          <li class="nav-item has-dropdown">
+          </li> -->
+          <!-- <li class="nav-item has-dropdown">
             <a href="#" class="nav-link">Bags & Cases <i class="ri-arrow-down-s-line"></i></a>
             <div class="dropdown">
               <a href="#">Laptop Bags</a>
@@ -89,19 +89,13 @@
               <a href="#">Backpacks</a>
               <a href="#">Sling Bags</a>
             </div>
-          </li>
+          </li> -->
+          @foreach($catlimit as $cat)
           <li class="nav-item">
-            <a href="#" class="nav-link">Accessories</a>
+            <a href="{{url('productlist/'.$cat->id)}}" class="nav-link">{{$cat->category_name}}</a>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">Deals <span class="nav-badge">HOT</span></a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">About</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">Contact</a>
-          </li>
+          @endforeach
+        
         </ul>
       </div>
     </nav>

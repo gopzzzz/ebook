@@ -93,10 +93,17 @@ $cartItems = Item::whereIn('id', $productIds)
        
       
         $app_profile=DB::table('profiles')->first();
-        $categorylist=DB::table('categories')->where('status',0)->get();
+        $categorylist=DB::table('categories')->where('main_id',0)->where('status',0)->get();
+        $type=DB::table('types')->get();
         $cartProductIds = collect($cartItems)->pluck('product_id')->toArray();
+          $catlimit = DB::table('categories')
+    // ->skip(5)
+    // ->take(8)
+    ->where('status',0)
+    ->where('main_id',0)
+    ->get();
 
-        $view->with(compact('cartItems','cartCount','cusAddress','profile','app_profile','cartProductIds','categorylist','orderPending'));
+        $view->with(compact('type','cartItems','cartCount','cusAddress','profile','app_profile','cartProductIds','categorylist','orderPending','catlimit'));
     });
 }
 }

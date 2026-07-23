@@ -149,7 +149,7 @@ Route::get('/', [IndexController::class, 'home'])->name('index');
 Route::redirect('/index', '/');
 Route::get('/gaming-products', [IndexController::class, 'gamingProducts'])->name('gaming.products');
 Route::get('/gaming-product/{id}', [IndexController::class, 'gamingProductDetail'])->name('gaming.product');
-Route::get('/product-list/{id}', [IndexController::class, 'productlist'])->name('product-list');
+Route::get('/productlist/{id}', [IndexController::class, 'productlist'])->name('product-list');
 Route::get('/product/{slug}', [IndexController::class, 'product'])->name('product');
 Route::get('/aboutus', [PageController::class, 'aboutus'])->name('aboutus');
 Route::get('/team', [PageController::class, 'team'])->name('team');

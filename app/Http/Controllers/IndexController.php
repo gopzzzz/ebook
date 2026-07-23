@@ -28,18 +28,14 @@ class IndexController extends Controller
          ->limit(4)
          ->get();
 
-        $catlimit = DB::table('categories')
-    // ->skip(5)
-    // ->take(8)
-    ->where('status',0)
-    ->get();
+      
          
     // echo "<pre>";print_r( $catlimit);exit;
           
          
          
 
-        return view('web.index',compact('banner','dod','fastmovingProducts','catlimit'));
+        return view('web.index',compact('banner','dod','fastmovingProducts'));
     }
 
     public function gamingProducts(Request $request) {
@@ -73,6 +69,7 @@ class IndexController extends Controller
     public function productlist($id){
           $category=DB::table('categories')
           ->leftJoin('items', 'categories.id', '=', 'items.cat_id')
+          ->where('main_id',0)
           ->where('items.item_type',$id)
           ->where('categories.status',0)
           ->where('items.status',0)

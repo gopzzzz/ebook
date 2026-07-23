@@ -443,9 +443,8 @@ input, select, textarea { font-family: inherit; }
   overflow: hidden;
 }
 .product-img-wrap img {
-  width: 75%; height: 75%; object-fit: contain;
+  width: 100%; height: 100%; object-fit: cover;
   transition: transform .5s var(--ease);
-  filter: drop-shadow(0 8px 20px rgba(0,0,0,.12));
 }
 .product-card:hover .product-img-wrap img { transform: scale(1.07); }
 
@@ -490,6 +489,11 @@ input, select, textarea { font-family: inherit; }
 .overlay-cart:hover { background: #333; }
 .overlay-view { background: rgba(255,255,255,.97); color: var(--mid-gray); border-top: 1px solid var(--border-gray); }
 .overlay-view:hover { color: var(--black); background: #fff; }
+/* On mobile show quick view always */
+@media (max-width: 768px) {
+  .product-overlay { transform: translateY(0); }
+  .wishlist-btn { opacity: 1; }
+}
 
 /* Card info */
 .product-info { padding: 1rem; flex: 1; display: flex; flex-direction: column; border-top: 1px solid var(--border-gray); }
@@ -780,7 +784,7 @@ input, select, textarea { font-family: inherit; }
   .hero-cta-group { justify-content: center; }
   .detail-grid { grid-template-columns: 1fr; gap: 2rem; }
   .detail-gallery { position: static; }
-  .category-grid { grid-template-columns: repeat(2,1fr); }
+  .category-grid { grid-template-columns: repeat(3,1fr); }
   .testimonials-grid { grid-template-columns: repeat(2,1fr); }
   .shipping-grid { grid-template-columns: 1fr; }
 }
@@ -792,6 +796,7 @@ input, select, textarea { font-family: inherit; }
   .newsletter-card { flex-direction: column; padding: 2.5rem 2rem; }
   .nl-visual { display: none; }
   .product-grid { grid-template-columns: repeat(2,1fr); }
+  .category-grid { grid-template-columns: repeat(2,1fr); }
 }
 @media (max-width: 768px) {
   .mobile-menu-btn { display: flex; }
@@ -808,16 +813,323 @@ input, select, textarea { font-family: inherit; }
   .header-search { display: none; }
   .footer-grid { grid-template-columns: 1fr; }
   .section-header { flex-direction: column; align-items: flex-start; }
+  .header-inner { padding: .75rem 1rem; gap: .75rem; }
+  .logo-img { width: 90px; }
+  .hero-content-wrap { padding: 3rem 1rem; min-height: 60vh; }
+  .hero-title { font-size: 2.2rem; }
+  .hero-stats { gap: 1.25rem; }
+  .hero-cta-group { gap: .5rem; }
+  .hero-cta-group .btn { padding: .65rem 1.1rem; font-size: .82rem; }
+  .products-section { padding: 3rem 0; }
+  .categories-section { padding: 3rem 0; }
+  .category-grid { grid-template-columns: repeat(2,1fr); gap: .75rem; }
+  .cat-card { padding: 1.1rem 1rem; gap: .75rem; }
+  .trust-grid { grid-template-columns: repeat(2,1fr); }
+  .why-grid { grid-template-columns: 1fr; }
+  .why-section { padding: 3rem 0; }
+  .footer-grid { gap: 1.5rem; }
+  .modal-box { max-width: 100%; border-radius: var(--radius-lg); margin: .5rem; }
+  .modal-inner { padding: 1.25rem; }
+  .detail-cta { flex-direction: column; }
+  .tab-nav { overflow-x: auto; }
 }
 @media (max-width: 480px) {
-  .product-grid { grid-template-columns: repeat(2,1fr); gap: .75rem; }
+  .product-grid { grid-template-columns: repeat(2,1fr); gap: .6rem; }
   .trust-grid { grid-template-columns: 1fr; }
   .why-grid { grid-template-columns: 1fr; }
   .testimonials-grid { grid-template-columns: 1fr; }
-  .category-grid { grid-template-columns: repeat(2,1fr); gap: .75rem; }
-  .hero-title { font-size: 2rem; }
+  .category-grid { grid-template-columns: repeat(2,1fr); gap: .6rem; }
+  .hero-title { font-size: 1.75rem; }
   .detail-cta { flex-direction: column; }
   .countdown { gap: .5rem; }
   .cd-box { min-width: 60px; }
   .cd-box span { font-size: 1.5rem; }
+  .product-info { padding: .75rem; }
+  .product-name { font-size: .8rem; }
+  .price-main { font-size: .95rem; }
+  .overlay-btn { padding: .55rem; font-size: .75rem; }
+  .hero-cta-group { flex-direction: column; align-items: center; }
+  .hero-stats { flex-wrap: wrap; gap: .75rem; justify-content: center; }
+  .container { padding: 0 .75rem; }
+  .section-title { font-size: 1.4rem; }
+  .promo-banner { padding: 2rem 1.25rem; }
+  .promo-title { font-size: 1.6rem; }
+  .newsletter-card { padding: 1.75rem 1.25rem; }
+}
+
+/* ─── AUTH PAGES (Login & Register) ─── */
+
+/* Full page centering wrapper — the blade uses min-vh-100 flex */
+.login-card,
+.register-card {
+  background: #fff;
+  border: 1px solid var(--border-gray) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-xl) !important;
+  width: 100%;
+  max-width: 460px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Black top accent bar */
+.login-card .card,
+.register-card .card {
+  border: none !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: none !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-card .card::before,
+.register-card .card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--black);
+  z-index: 1;
+}
+
+/* Card body padding */
+.login-card .card-body,
+.register-card .card-body {
+  padding: 2.5rem 2.25rem 2rem !important;
+}
+
+/* Title h5 */
+.login-card h5,
+.register-card h5 {
+  font-size: 1.5rem !important;
+  font-weight: 800 !important;
+  color: var(--black) !important;
+  letter-spacing: -.02em;
+}
+
+/* Subtitle paragraph */
+.login-card .text-muted,
+.register-card .text-muted {
+  color: var(--light-gray) !important;
+  font-size: .875rem;
+}
+
+/* Labels */
+.login-card label,
+.register-card label {
+  font-size: .75rem !important;
+  font-weight: 700 !important;
+  color: var(--dark-gray) !important;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: .35rem !important;
+}
+
+/* Inputs */
+.login-card .form-control,
+.register-card .form-control {
+  border: 1.5px solid var(--border-gray) !important;
+  border-radius: var(--radius-md) !important;
+  padding: .75rem 1rem !important;
+  font-size: .875rem !important;
+  color: var(--black) !important;
+  background: var(--bg-2) !important;
+  box-shadow: none !important;
+  transition: border-color .25s, background .25s, box-shadow .25s !important;
+}
+
+.login-card .form-control:focus,
+.register-card .form-control:focus {
+  border-color: var(--black) !important;
+  background: #fff !important;
+  box-shadow: 0 0 0 3px rgba(0,0,0,.06) !important;
+}
+
+/* Submit button */
+.login-card .btn-primary,
+.register-card .btn-primary {
+  background: var(--black) !important;
+  border: none !important;
+  border-radius: var(--radius-md) !important;
+  padding: .85rem 1rem !important;
+  font-size: .9rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .04em;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2) !important;
+  transition: background .2s, transform .2s !important;
+}
+
+.login-card .btn-primary:hover,
+.register-card .btn-primary:hover {
+  background: #333 !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Checkbox label */
+.login-card .form-check-label,
+.register-card .form-check-label {
+  font-size: .82rem !important;
+  color: var(--mid-gray) !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-weight: 400 !important;
+}
+
+/* Small links (Forgot, Register, Login) */
+.login-card .small-text,
+.register-card .small-text {
+  font-size: .82rem;
+  color: var(--mid-gray);
+}
+
+.login-card a.small-text,
+.register-card a.small-text {
+  color: var(--black) !important;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Alert messages */
+.login-card .alert,
+.register-card .alert {
+  border-radius: var(--radius-md) !important;
+  font-size: .82rem !important;
+  border: none !important;
+}
+
+@media (max-width: 480px) {
+  .login-card .card-body,
+  .register-card .card-body { padding: 1.75rem 1.25rem 1.5rem !important; }
+  .login-card h5,
+  .register-card h5 { font-size: 1.25rem !important; }
+}
+
+/* ─── ABOUT US PAGE ─── */
+.about-section {
+  padding: 5rem 0 6rem;
+  background: #fff;
+}
+
+/* Override inline orange color with brand black */
+.about-section .section-title {
+  color: var(--black) !important;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -.03em;
+  margin-bottom: .5rem;
+}
+
+.about-section .highlight {
+  color: var(--black) !important;
+  font-weight: 800;
+  border-bottom: 2px solid var(--black);
+}
+
+.about-section .lead {
+  font-size: 1.1rem;
+  color: var(--mid-gray);
+  font-weight: 400;
+}
+
+/* About intro text */
+.about-section .row.mb-5 p {
+  font-size: 1rem;
+  color: var(--mid-gray) !important;
+  line-height: 1.85;
+  margin-bottom: 1.1rem;
+}
+
+.about-section .row.mb-5 strong {
+  color: var(--black);
+  font-weight: 700;
+}
+
+/* Intro block style */
+.about-section .col-lg-10 {
+  background: var(--bg-2);
+  border: 1px solid var(--border-gray);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem 3rem !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-section .col-lg-10::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--black);
+}
+
+/* Cards */
+.about-section .card-custom {
+  border: 1px solid var(--border-gray) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-md) !important;
+  transition: all .3s var(--ease) !important;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-section .card-custom::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--black);
+  transform: scaleX(0);
+  transition: transform .3s var(--ease);
+  transform-origin: left;
+}
+
+.about-section .card-custom:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: var(--shadow-xl) !important;
+  border-color: #bbb !important;
+}
+
+.about-section .card-custom:hover::before {
+  transform: scaleX(1);
+}
+
+.about-section .card-custom .section-title {
+  font-size: 1.1rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -.01em !important;
+  margin-bottom: .875rem !important;
+}
+
+.about-section .card-custom p {
+  font-size: .875rem !important;
+  color: var(--mid-gray) !important;
+  line-height: 1.75 !important;
+  margin: 0 !important;
+}
+
+/* Card icons (optional visual accent) */
+.about-section .card-custom .p-4 {
+  padding: 2rem !important;
+}
+
+/* Section divider above cards */
+.about-section .row.text-center {
+  border-top: 1px solid var(--border-gray);
+  padding-top: 3rem;
+  margin-top: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about-section { padding: 3rem 0 4rem; }
+  .about-section .col-lg-10 { padding: 1.75rem 1.5rem !important; }
+  .about-section .card-custom .p-4 { padding: 1.5rem !important; }
+  .about-section .row.text-center { padding-top: 2rem; }
+}
+
+@media (max-width: 480px) {
+  .about-section .section-title { font-size: 1.6rem; }
+  .about-section .col-lg-10 { padding: 1.25rem 1rem !important; border-radius: var(--radius-lg) !important; }
 }

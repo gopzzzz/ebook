@@ -1,6 +1,4 @@
-@extends('layouts.weblayout')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
 .pd-page { background: #f1f3f6; padding: 0 0 48px; }
@@ -194,17 +192,17 @@
 
 <div class="pd-breadcrumb">
     <div class="pd-breadcrumb-inner">
-        <a href="{{ url('index') }}">Home</a>
+        <a href="<?php echo e(url('index')); ?>">Home</a>
         <span>›</span>
-        <a href="{{ url('product-list') }}">Products</a>
+        <a href="<?php echo e(url('product-list')); ?>">Products</a>
         <span>›</span>
-        <span style="color:#212121;font-weight:500;">{{ Str::limit($product->name, 40) }}</span>
+        <span style="color:#212121;font-weight:500;"><?php echo e(Str::limit($product->name, 40)); ?></span>
     </div>
 </div>
 
 <div class="pd-page">
     <div class="pd-wrap">
-        @php
+        <?php
             $inCart    = in_array($product->id, $cartProductIds);
             $getCart = collect($cartItems) ->where('product_id', $product->id) ->first();
             $brand     = !empty($product->author_name) ? $product->author_name : 'Brandson';
@@ -214,48 +212,48 @@
             $size= $getCart?->size ?? '';
           
            
-        @endphp
+        ?>
 
         <div class="pd-main">
 
-            {{-- LEFT: Image --}}
+            
             <div class="pd-img-panel">
                 <div class="pd-img-main-wrap">
-                    <img src="{{ asset('public/assets/img/items/'.$product->image) }}"
-                         alt="{{ $product->name }}" class="pd-img-main">
+                    <img src="<?php echo e(asset('public/assets/img/items/'.$product->image)); ?>"
+                         alt="<?php echo e($product->name); ?>" class="pd-img-main">
                 </div>
                 <div class="pd-img-btn-row">
-                     @if($inCart)
-                        @if($product->stock != 0)
-                     <button type="button" class="pd-bn-btn pd-buynow-btn" data-id="{{ $product->id }}">
-                       <a href="{{ url('cart') }}"> <span class="pd-bn-text"><i class="fa-solid fa-bolt"></i>GO TO CART</span></a>
+                     <?php if($inCart): ?>
+                        <?php if($product->stock != 0): ?>
+                     <button type="button" class="pd-bn-btn pd-buynow-btn" data-id="<?php echo e($product->id); ?>">
+                       <a href="<?php echo e(url('cart')); ?>"> <span class="pd-bn-text"><i class="fa-solid fa-bolt"></i>GO TO CART</span></a>
                        
                     </button>
                       
-                        @endif
-                      @else
+                        <?php endif; ?>
+                      <?php else: ?>
 
-                       @if($product->stock != 0)
+                       <?php if($product->stock != 0): ?>
                   
-                     <button type="button" class="pd-atc-btn add-to-cart" data-id="{{ $product->id }}" data-action="cart">
+                     <button type="button" class="pd-atc-btn add-to-cart" data-id="<?php echo e($product->id); ?>" data-action="cart">
                         <span class="btn-text"><i class="fa-solid fa-cart-plus"></i> ADD TO CART</span>
                         <!-- <span class="btn-loader d-none"><i class="fa fa-spinner fa-spin"></i> Loading...</span> -->
                     </button>
-                     @endif
-                    @endif
+                     <?php endif; ?>
+                    <?php endif; ?>
                 </div>
             </div>
 
-            {{-- RIGHT: Info --}}
+            
             <div class="pd-info-panel">
                 <div class="pd-info-main">
 
-                    <span class="pd-brand">{{ $brand }}</span>
-                    <h1 class="pd-name">{{ $product->name }}</h1>
+                    <span class="pd-brand"><?php echo e($brand); ?></span>
+                    <h1 class="pd-name"><?php echo e($product->name); ?></h1>
 
-                    @if($publisher)
-                    <div class="pd-publisher">{{ $publisher }}</div>
-                    @endif
+                    <?php if($publisher): ?>
+                    <div class="pd-publisher"><?php echo e($publisher); ?></div>
+                    <?php endif; ?>
 
                     <div class="pd-rating-row">
                         <div class="pd-rating-chip">4.1 <i class="fa-solid fa-star"></i></div>
@@ -264,97 +262,100 @@
                         <span class="pd-verified-tag">256 Reviews</span>
                     </div>
 
-                    @if($product->stock == 0)
+                    <?php if($product->stock == 0): ?>
     <div class="pd-stock-badge text-danger">
         <i class="fa-solid fa-circle-xmark"></i> Out of Stock
     </div>
-@elseif($product->stock < 5)
+<?php elseif($product->stock < 5): ?>
     <div class="pd-stock-badge text-warning">
         <i class="fa-solid fa-triangle-exclamation"></i>
-        Low Stock (Only {{ $product->stock }} left)
+        Low Stock (Only <?php echo e($product->stock); ?> left)
     </div>
-@else
+<?php else: ?>
     <div class="pd-stock-badge text-success">
         <i class="fa-solid fa-circle-check"></i>
         In Stock 
     </div>
-@endif
+<?php endif; ?>
 
                     <div class="pd-price-section">
                         <div class="pd-price-lbl">Special Price</div>
                         <div class="pd-price-row">
                            
-                            <span class="pd-sp">₹{{ number_format($product->sr, 2) }}</span>
-                            @if($product->mrp > $product->sr)
-                            <span class="pd-mrp">₹{{ number_format($product->mrp, 2) }}</span>
-                            @if($discPct > 0)
-                            <span class="pd-off">{{ $discPct }}% off</span>
-                            @endif
-                            @endif
+                            <span class="pd-sp">₹<?php echo e(number_format($product->sr, 2)); ?></span>
+                            <?php if($product->mrp > $product->sr): ?>
+                            <span class="pd-mrp">₹<?php echo e(number_format($product->mrp, 2)); ?></span>
+                            <?php if($discPct > 0): ?>
+                            <span class="pd-off"><?php echo e($discPct); ?>% off</span>
+                            <?php endif; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
 
-                    @php
+                    <?php
     $hasSize = $varient_types->contains(function($item){
         return stripos($item->varient_name, 'size') !== false;
     });
-@endphp
-                    <input type="hidden" id="has_size" value="{{ $hasSize ? 1 : 0 }}">
-                    <input type="hidden" id="sizeselection" value="{{ $size ?? 0 }}"> 
-                    <input type="hidden" id="color" value="{{ $size ?? 0 }}">
+?>
+                    <input type="hidden" id="has_size" value="<?php echo e($hasSize ? 1 : 0); ?>">
+                    <input type="hidden" id="sizeselection" value="<?php echo e($size ?? 0); ?>"> 
+                    <input type="hidden" id="color" value="<?php echo e($size ?? 0); ?>">
 
-                    @foreach($varient_types as $varients)
+                    <?php $__currentLoopData = $varient_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $varients): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-    @php
+    <?php
         $attributeIds = explode(',', $varients->attribute_id);
-    @endphp
+    ?>
 
-    @if(stripos($varients->varient_name, 'color') !== false)
+    <?php if(stripos($varients->varient_name, 'color') !== false): ?>
 
         <div class="pd-sel-section">
             <div class="pd-sel-label">
-                {{ ucfirst($varients->varient_name) }}
+                <?php echo e(ucfirst($varients->varient_name)); ?>
+
             </div>
 
             <div class="pd-colors" id="pdColors">
 
-                @foreach($attributeIds as $i => $attributeId)
+                <?php $__currentLoopData = $attributeIds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $attributeId): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                    @php
+                    <?php
                         $attr = DB::table('product_attributes')
                             ->where('id', $attributeId)
                             ->first();
-                    @endphp
+                    ?>
 
-                    @if($attr)
+                    <?php if($attr): ?>
 
                     
-                        <div class="pd-color-item {{ $i == 0 ? 'selected' : '' }}"
-                             onclick="pdSelectColor(this,'{{ $attr->name }}')">
+                        <div class="pd-color-item <?php echo e($i == 0 ? 'selected' : ''); ?>"
+                             onclick="pdSelectColor(this,'<?php echo e($attr->name); ?>')">
 
                             <div class="pd-color-circle"
-                                 style="background:{{ $attr->value }};">
+                                 style="background:<?php echo e($attr->value); ?>;">
                             </div>
 
                             <div class="pd-color-name">
-                                {{ $attr->name }}
+                                <?php echo e($attr->name); ?>
+
                             </div>
 
                         </div>
-                    @endif
+                    <?php endif; ?>
 
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
             </div>
         </div>
 
-    @else
+    <?php else: ?>
 
         <div class="pd-sel-section">
 
             <div class="pd-sel-label">
-                {{ ucfirst($varients->varient_name) }}
-                <span id="pdVariant{{ $varients->id }}">:</span>
+                <?php echo e(ucfirst($varients->varient_name)); ?>
+
+                <span id="pdVariant<?php echo e($varients->id); ?>">:</span>
             </div>
 
             
@@ -364,51 +365,53 @@
            
            
 
-            @php
+            <?php
     $allattributes = DB::table('product_attributes')
         ->where('varient_id', 2)
         ->get();
 
     $availableIds = collect($attributeIds)->map(fn($id) => (int) $id)->toArray();
-@endphp
+?>
 
 <div class="pd-sizes">
     
 
-    @foreach($allattributes as $attr)
+    <?php $__currentLoopData = $allattributes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $attr): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-        @php
+        <?php
             $isAvailable = in_array($attr->id, $availableIds);
-        @endphp
+        ?>
 
        <button
-    class="pd-size-btn {{ $isAvailable ? '' : 'disabled-size' }} {{ (isset($size) && $size == $attr->value) ? 'selected' : '' }}"
+    class="pd-size-btn <?php echo e($isAvailable ? '' : 'disabled-size'); ?> <?php echo e((isset($size) && $size == $attr->value) ? 'selected' : ''); ?>"
     type="button"
-    data-id="{{ $attr->value }}"
-    {{ $isAvailable ? "onclick=pdSelectSize(this,'{$attr->value}')" : 'disabled' }}
+    data-id="<?php echo e($attr->value); ?>"
+    <?php echo e($isAvailable ? "onclick=pdSelectSize(this,'{$attr->value}')" : 'disabled'); ?>
+
 >
-    {{ $attr->value }}
+    <?php echo e($attr->value); ?>
+
 </button>
 
-    @endforeach
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </div>
 
         </div>
 
-    @endif
+    <?php endif; ?>
 
-@endforeach
-                    {{-- Color Selection --}}
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    
                     
 
-                    {{-- Size Selection --}}
+                    
                     
 
-                    {{-- Seller --}}
+                    
                     <div class="pd-seller-row">
                         <div class="pd-seller-lbl">Sold by</div>
                         <div>
-                            <span class="pd-seller-name">{{ $brand }}</span>
+                            <span class="pd-seller-name"><?php echo e($brand); ?></span>
                             <span class="pd-seller-tag">✓ Trusted</span>
                         </div>
                     </div>
@@ -418,46 +421,46 @@
                     </div>
                 </div>
 
-                {{-- Offers --}}
+                
 
-                {{-- Delivery --}}
+                
 
 
             </div>
         </div>
 
-        {{-- Description --}}
+        
         <div class="pd-desc-panel">
             <div class="pd-desc-head">
                 <div class="pd-desc-head-title">Product Description</div>
             </div>
-            <div class="pd-desc-body">{{ $product->description }}</div>
+            <div class="pd-desc-body"><?php echo e($product->description); ?></div>
         </div>
 
-        {{-- Related Products --}}
-        @if(isset($fastmovingProducts) && count($fastmovingProducts))
+        
+        <?php if(isset($fastmovingProducts) && count($fastmovingProducts)): ?>
         <div class="pd-related-panel">
             <div class="pd-related-head">
                 <div class="pd-related-title">You May Also Like</div>
             </div>
              <div class="product-grid" >
-        @foreach($fastmovingProducts as $p)
+        <?php $__currentLoopData = $fastmovingProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-<article class="product-card" data-id="{{ $p->id }}" role="button" tabindex="0" aria-label="{{ $p->name }}">
+<article class="product-card" data-id="<?php echo e($p->id); ?>" role="button" tabindex="0" aria-label="<?php echo e($p->name); ?>">
    
     <div class="product-img-wrap">
 
        
 
         
-      <img src="{{ asset('public/assets/img/items/'.$p->image) }}" alt="{{ $p->name }}" loading="lazy"> 
+      <img src="<?php echo e(asset('public/assets/img/items/'.$p->image)); ?>" alt="<?php echo e($p->name); ?>" loading="lazy"> 
 
         <div class="product-overlay" aria-hidden="true">
-            <!-- <button class="overlay-btn add-to-cart overlay-cart" data-id="{{ $p->id }}">
+            <!-- <button class="overlay-btn add-to-cart overlay-cart" data-id="<?php echo e($p->id); ?>">
                 <i class="ri-shopping-cart-line"></i> Add to Cart
             </button> -->
 
-             <a href="{{url('product/'.$p->slug)}}"><button class="overlay-btn overlay-view" data-id="{{ $p->id }}">
+             <a href="<?php echo e(url('product/'.$p->slug)); ?>"><button class="overlay-btn overlay-view" data-id="<?php echo e($p->id); ?>">
                 <i class="ri-eye-line"></i> Quick View
             </button></a>
         </div>
@@ -466,22 +469,24 @@
     <div class="product-info">
 
         <div class="product-brand">
-            {{ $p->author_name }}
+            <?php echo e($p->author_name); ?>
+
         </div>
 
         <div class="product-name">
-            {{ $p->name }}
+            <?php echo e($p->name); ?>
+
         </div>
 
         <div class="product-rating">
             <span class="stars-display">
-                @for($i = 1; $i <= 5; $i++)
-                    @if($i <= floor(5))
+                <?php for($i = 1; $i <= 5; $i++): ?>
+                    <?php if($i <= floor(5)): ?>
                         <i class="ri-star-fill"></i>
-                    @else
+                    <?php else: ?>
                         <i class="ri-star-line"></i>
-                    @endif
-                @endfor
+                    <?php endif; ?>
+                <?php endfor; ?>
             </span>
 
             <span class="rating-count">
@@ -492,26 +497,29 @@
         <div class="product-price-row">
             <div>
                 <span class="price-main">
-                    ₹{{ number_format($p->sr, 2) }}
+                    ₹<?php echo e(number_format($p->sr, 2)); ?>
+
                 </span>
 
                 <span class="price-original">
-                    ₹{{ number_format($p->mrp, 2) }}
+                    ₹<?php echo e(number_format($p->mrp, 2)); ?>
+
                 </span>
             </div>
 
             <span class="price-save">
-                Save ₹{{ number_format($p->mrp - $p->sr, 2) }}
+                Save ₹<?php echo e(number_format($p->mrp - $p->sr, 2)); ?>
+
             </span>
         </div>
 
     </div>
 </article>
 
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
       </div>
         </div>
-        @endif
+        <?php endif; ?>
 
     </div>
 </div>
@@ -549,14 +557,14 @@ $(document).ready(function(){
 
         $.ajax({
             type: 'POST',
-            url: '{{ route("add-to-cart") }}',
-            data: { _token: '{{ csrf_token() }}', id: id },
+            url: '<?php echo e(route("add-to-cart")); ?>',
+            data: { _token: '<?php echo e(csrf_token()); ?>', id: id },
             success: function(res){
                 if(res.status == 0){
                     $('#carts').text(res.count);
-                    window.location.href = '{{ url("shipping_details") }}';
+                    window.location.href = '<?php echo e(url("shipping_details")); ?>';
                 } else if(res.status == 1){
-                    window.location.href = '{{ url("userlogin") }}';
+                    window.location.href = '<?php echo e(url("userlogin")); ?>';
                 }
             },
             error: function(){
@@ -570,4 +578,6 @@ $(document).ready(function(){
 });
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.weblayout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\ebook\resources\views/web/product.blade.php ENDPATH**/ ?>

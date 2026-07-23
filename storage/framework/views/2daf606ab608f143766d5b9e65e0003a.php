@@ -68,12 +68,12 @@
           <div class="g-sidebar-card">
            
 
-          <div class="g-sidebar-card">
+          <!-- <div class="g-sidebar-card">
             <div class="g-sidebar-title">// Price Range</div>
             <div class="g-price-range-row"><span>₹0</span><span id="gPriceDisplay">₹25,000</span></div>
             <input type="range" min="0" max="30000" value="25000" step="500" id="gPriceRange" class="g-range" />
             <button class="g-btn g-btn-ghost" style="width:100%;justify-content:center;padding:0.5rem;font-size:0.65rem;" onclick="gShowToast('PRICE FILTER APPLIED')">APPLY FILTER</button>
-          </div>
+          </div> -->
 
           <div class="g-sidebar-card">
             <div class="g-sidebar-title">// Brands</div>

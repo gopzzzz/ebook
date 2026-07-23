@@ -1,5 +1,18 @@
 <?php $__env->startSection('content'); ?>
 
+   <?php
+            $inCart    = in_array($product->id, $cartProductIds);
+            $getCart = collect($cartItems) ->where('product_id', $product->id) ->first();
+            $brand     = !empty($product->author_name) ? $product->author_name : 'Brandson';
+            $publisher = !empty($product->publisher_name) ? $product->publisher_name : '';
+            $discPct   = ($product->mrp > 0 && $product->mrp > $product->sr)
+                         ? round((($product->mrp - $product->sr) / $product->mrp) * 100) : 0;
+            $size= $getCart?->size ?? '';
+          
+           
+        ?>
+
+
 
   <div class="g-breadcrumb">
     <div class="g-container">
@@ -84,73 +97,38 @@
             <?php endif; ?>
           </div>
 
-          <div class="g-coupon">
-            <i class="ri-coupon-3-line"></i>
-            <div>
-              <div style="color:#c0ccee;font-weight:600;font-size:0.875rem;">Exclusive Discount</div>
-              <div style="font-size:0.78rem;">Apply coupon for extra 10% off</div>
-            </div>
-            <div class="g-coupon-code" id="gCouponCode" onclick="copyCoupon(this)">
-              <i class="ri-file-copy-line"></i> POUCH10
-            </div>
+         
+          <div>
+            
+           
           </div>
 
           <div>
-            <div class="g-var-label">COLOR: <span id="gColorVal">BLACK</span></div>
-            <div class="g-var-row">
-              <button class="g-var-btn active" onclick="setGColor(this,'BLACK')">⬛ BLACK</button>
-              <button class="g-var-btn" onclick="setGColor(this,'WHITE')">⬜ WHITE</button>
-              <button class="g-var-btn" onclick="setGColor(this,'RED')">🔴 RED</button>
-            </div>
+           
+            
           </div>
 
-          <div>
-            <div class="g-var-label">SWITCH TYPE:</div>
-            <div class="g-var-row">
-              <button class="g-var-btn active">RED // LINEAR</button>
-              <button class="g-var-btn">AQUA // TACTILE</button>
-              <button class="g-var-btn">BLUE // CLICKY</button>
-            </div>
-          </div>
-
-          <div class="g-qty-row">
-            <span class="g-qty-label">QTY:</span>
-            <div class="g-qty-ctrl">
-              <button class="g-qty-btn" id="gQtyMinus"><i class="ri-subtract-line"></i></button>
-              <span class="g-qty-val" id="gQtyVal">1</span>
-              <button class="g-qty-btn" id="gQtyPlus"><i class="ri-add-line"></i></button>
-            </div>
-          </div>
+    
 
           <div class="g-detail-cta">
-            <button class="g-btn g-btn-primary add-to-cart" data-id="<?php echo e($product->id); ?>" style="flex:1;justify-content:center;">
+              <?php if($inCart): ?>
+                       <a href="<?php echo e(url('cart')); ?>" class="g-btn g-btn-hot" style="flex:1;justify-content:center;text-decoration:none;">
+              <i class="ri-flashlight-fill"></i> VIEW CART
+            </a>
+                        <?php else: ?>
+                         <button class="g-btn g-btn-primary add-to-cart" data-id="<?php echo e($product->id); ?>" style="flex:1;justify-content:center;">
               <i class="ri-shopping-cart-line"></i> ADD TO CART
             </button>
-            <!-- <a href="<?php echo e(url('cart')); ?>" class="g-btn g-btn-hot" style="flex:1;justify-content:center;text-decoration:none;">
-              <i class="ri-flashlight-fill"></i> BUY NOW
-            </a> -->
+                        <?php endif; ?>
+           
+           
             <!-- <button class="g-btn g-btn-ghost" id="gWishBtn" style="padding:0.875rem 1rem;">
               <i class="ri-heart-line"></i>
             </button> -->
           </div>
 
-          <div class="g-pincode">
-            <i class="ri-map-pin-line"></i>
-            <input type="text" placeholder="ENTER PINCODE TO CHECK DELIVERY..." maxlength="6" id="gPincodeInput" />
-            <button onclick="checkGPincode()">CHECK</button>
-          </div>
-
-          <div class="g-features" style="margin-bottom:1.5rem;">
-            <div class="g-var-label" style="margin-bottom:0.75rem;">// KEY FEATURES:</div>
-            <ul>
-              <li><i class="ri-check-double-line"></i> HyperX Red Mechanical Switches</li>
-              <li><i class="ri-check-double-line"></i> Per-key RGB — 16.8M color combinations</li>
-              <li><i class="ri-check-double-line"></i> 100% Anti-ghosting, full N-Key rollover</li>
-              <li><i class="ri-check-double-line"></i> Aircraft-grade aluminum body</li>
-              <li><i class="ri-check-double-line"></i> Detachable USB-C cable (1.8m)</li>
-              <li><i class="ri-check-double-line"></i> HyperX NGENUITY software support</li>
-            </ul>
-          </div>
+          
+         
 
           <div class="g-trust-mini">
             <div class="g-trust-badge cyan"><i class="ri-truck-line"></i> FREE DELIVERY</div>
@@ -159,22 +137,14 @@
             <div class="g-trust-badge purple"><i class="ri-secure-payment-line"></i> SECURE PAY</div>
           </div>
 
-          <div class="g-share">
-            <span class="g-share-label">SHARE:</span>
-            <button class="g-share-btn"><i class="ri-whatsapp-line"></i></button>
-            <button class="g-share-btn"><i class="ri-facebook-line"></i></button>
-            <button class="g-share-btn"><i class="ri-twitter-x-line"></i></button>
-            <button class="g-share-btn" onclick="navigator.clipboard.writeText(window.location.href).then(()=>gShowToast('// LINK COPIED'))"><i class="ri-link"></i></button>
-          </div>
+         
         </div>
       </div>
 
       <div class="g-tabs">
         <div class="g-tab-nav">
           <button class="g-tab-btn active" data-tab="description">// DESCRIPTION</button>
-          <button class="g-tab-btn" data-tab="specs">// SPECS</button>
-          <button class="g-tab-btn" data-tab="reviews">// REVIEWS (1,243)</button>
-          <button class="g-tab-btn" data-tab="warranty">// WARRANTY</button>
+       
         </div>
 
         <div class="g-tab-panel active" id="g-tab-description">
@@ -185,32 +155,7 @@
               <?php echo $product->description ?? 'Experience premium gaming with this incredible new product. Designed for precision and built for durability, it helps you reach peak performance in any match.'; ?>
 
             </div>
-            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;">
-              <div style="background:var(--g-dark-3);border:1px solid var(--g-border);padding:1.25rem;clip-path:polygon(0 0,calc(100%-8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100%-8px));position:relative;">
-                <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--g-cyan),transparent);"></div>
-                <div style="font-size:1.5rem;margin-bottom:0.5rem;">⚡</div>
-                <div style="font-family:var(--g-font);font-size:0.78rem;font-weight:700;color:#e0e8ff;margin-bottom:0.3rem;">ULTRA-FAST RESPONSE</div>
-                <p style="font-size:0.8rem;color:#556677;font-family:var(--g-font-body);">1ms polling rate for instant actuation and zero input lag</p>
-              </div>
-              <div style="background:var(--g-dark-3);border:1px solid var(--g-border);padding:1.25rem;clip-path:polygon(0 0,calc(100%-8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100%-8px));position:relative;">
-                <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--g-purple),transparent);"></div>
-                <div style="font-size:1.5rem;margin-bottom:0.5rem;">🎨</div>
-                <div style="font-family:var(--g-font);font-size:0.78rem;font-weight:700;color:#e0e8ff;margin-bottom:0.3rem;">PER-KEY RGB</div>
-                <p style="font-size:0.8rem;color:#556677;font-family:var(--g-font-body);">16.8M color combinations with reactive and dynamic effects</p>
-              </div>
-              <div style="background:var(--g-dark-3);border:1px solid var(--g-border);padding:1.25rem;clip-path:polygon(0 0,calc(100%-8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100%-8px));position:relative;">
-                <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--g-green),transparent);"></div>
-                <div style="font-size:1.5rem;margin-bottom:0.5rem;">🛡️</div>
-                <div style="font-family:var(--g-font);font-size:0.78rem;font-weight:700;color:#e0e8ff;margin-bottom:0.3rem;">BUILT TO LAST</div>
-                <p style="font-size:0.8rem;color:#556677;font-family:var(--g-font-body);">80 million keystroke lifespan on HyperX mechanical switches</p>
-              </div>
-              <div style="background:var(--g-dark-3);border:1px solid var(--g-border);padding:1.25rem;clip-path:polygon(0 0,calc(100%-8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100%-8px));position:relative;">
-                <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--g-orange),transparent);"></div>
-                <div style="font-size:1.5rem;margin-bottom:0.5rem;">💾</div>
-                <div style="font-family:var(--g-font);font-size:0.78rem;font-weight:700;color:#e0e8ff;margin-bottom:0.3rem;">ONBOARD MEMORY</div>
-                <p style="font-size:0.8rem;color:#556677;font-family:var(--g-font-body);">3 onboard profiles to store configurations anywhere</p>
-              </div>
-            </div>
+           
           </div>
         </div>
 
@@ -318,7 +263,37 @@
         </div>
         <a href="<?php echo e(url('/gaming-products')); ?>" class="g-view-all">VIEW ALL GAMING <i class="ri-arrow-right-line"></i></a>
       </div>
-      <div class="g-product-grid" id="gRelatedGrid" style="grid-template-columns:repeat(4,1fr);"></div>
+      <div class="g-product-grid"  style="grid-template-columns:repeat(4,1fr);">
+
+       <?php $__currentLoopData = $fastmovingProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+          <article class="g-product-card" data-id="<?php echo e($p->id); ?>">
+          <div class="g-card-line"></div>
+          <div class="g-card-img-wrap">
+           
+           
+            <img src="<?php echo e(asset('public/assets/img/items/'.$p->image)); ?>" alt="<?php echo e($p->name); ?>" class="g-card-img" loading="lazy" />
+         
+            <div class="g-card-overlay">
+              
+             <a href="<?php echo e(url('gaming-product-detail/'.$p->slug)); ?>"> <button class="g-overlay-view" data-id="<?php echo e($p->id); ?>">Quick View </button> </a>
+            </div>
+          </div>
+          <div class="g-card-info">
+            <div class="g-card-brand"><?php echo e($p->author_name); ?></div>
+            <div class="g-card-name"><?php echo e($p->name); ?></div>
+          
+            <div class="g-card-price-row">
+              <div>
+                <span class="g-price-main"><?php echo e($p->sr); ?></span>
+                <span class="g-price-original"><?php echo e($p->mrp); ?></span>
+              </div>
+              <span class="g-price-save">-${save}%</span>
+            </div>
+          </div>
+        </article>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+      </div>
     </div>
   </section>
 

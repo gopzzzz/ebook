@@ -64,6 +64,7 @@ class IndexController extends Controller
         $fastmovingProducts=DB::table('items')
          ->leftJoin('authors', 'items.author_id', '=', 'authors.id')
          ->select('items.*','authors.author_name')
+        
          ->limit(4)
          ->get();
 

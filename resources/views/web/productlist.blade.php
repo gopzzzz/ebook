@@ -170,7 +170,78 @@
             </div>
         </div>
 
-        <div class="pl-grid" id="plGrid">
+        <div class="product-grid" >
+        @foreach($items as $p)
+
+<article class="product-card" data-id="{{ $p->id }}" role="button" tabindex="0" aria-label="{{ $p->name }}">
+   
+    <div class="product-img-wrap">
+
+       
+
+        
+      <img src="{{ asset('public/assets/img/items/'.$p->image) }}" alt="{{ $p->name }}" loading="lazy"> 
+
+        <div class="product-overlay" aria-hidden="true">
+            <!-- <button class="overlay-btn add-to-cart overlay-cart" data-id="{{ $p->id }}">
+                <i class="ri-shopping-cart-line"></i> Add to Cart
+            </button> -->
+
+             <a href="{{url('product/'.$p->slug)}}"><button class="overlay-btn overlay-view" data-id="{{ $p->id }}">
+                <i class="ri-eye-line"></i> Quick View
+            </button></a>
+        </div>
+    </div>
+
+    <div class="product-info">
+
+        <div class="product-brand">
+            {{ $p->author_name }}
+        </div>
+
+        <div class="product-name">
+            {{ $p->name }}
+        </div>
+
+        <div class="product-rating">
+            <span class="stars-display">
+                @for($i = 1; $i <= 5; $i++)
+                    @if($i <= floor(5))
+                        <i class="ri-star-fill"></i>
+                    @else
+                        <i class="ri-star-line"></i>
+                    @endif
+                @endfor
+            </span>
+
+            <span class="rating-count">
+                5 
+            </span>
+        </div>
+
+        <div class="product-price-row">
+            <div>
+                <span class="price-main">
+                    ₹{{ number_format($p->sr, 2) }}
+                </span>
+
+                <span class="price-original">
+                    ₹{{ number_format($p->mrp, 2) }}
+                </span>
+            </div>
+
+            <span class="price-save">
+                Save ₹{{ number_format($p->mrp - $p->sr, 2) }}
+            </span>
+        </div>
+
+    </div>
+</article>
+
+        @endforeach
+      </div>
+
+        <!-- <div class="pl-grid" id="plGrid">
             @forelse($items as $p)
             @php
                 $inCart   = in_array($p->id, $cartProductIds);
@@ -231,7 +302,7 @@
                 <div style="font-size:16px;color:#878787;">No products found</div>
             </div>
             @endforelse
-        </div>
+        </div> -->
 
     </div>
 </div>

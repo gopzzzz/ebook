@@ -94,6 +94,7 @@ $cartItems = Item::whereIn('id', $productIds)
       
         $app_profile=DB::table('profiles')->first();
         $categorylist=DB::table('categories')->where('main_id',0)->where('status',0)->get();
+        
         $type=DB::table('types')->get();
         $cartProductIds = collect($cartItems)->pluck('product_id')->toArray();
           $catlimit = DB::table('categories')

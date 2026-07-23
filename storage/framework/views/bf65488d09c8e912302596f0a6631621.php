@@ -15,16 +15,15 @@
           </div>
         </div>
         <div class="footer-col">
-          <h4>Shop</h4>
-          <a href="<?php echo e(url('/gaming-products')); ?>">Gaming Gear</a>
-          <a href="#">Bags & Cases</a>
-          <a href="#">Audio</a>
-          <a href="#">Mobile Accessories</a>
-          <a href="#">New Arrivals</a>
-          <a href="#">Best Sellers</a>
+          <h4>All Categories</h4>
+          <?php $__currentLoopData = $catlimit; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fcat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+          <a href="<?php echo e(url('gaming-products/'.$fcat->id)); ?>"><?php echo e($fcat->category_name); ?></a>
+          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+          
         </div>
         <div class="footer-col">
-          <h4>Customer Care</h4>
+          <h4>Gaming</h4>
+        
           <a href="#">Track Order</a>
           <a href="#">Returns & Exchange</a>
           <a href="#">Shipping Policy</a>

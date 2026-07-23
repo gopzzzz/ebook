@@ -15,16 +15,15 @@
           </div>
         </div>
         <div class="footer-col">
-          <h4>Shop</h4>
-          <a href="{{url('/gaming-products')}}">Gaming Gear</a>
-          <a href="#">Bags & Cases</a>
-          <a href="#">Audio</a>
-          <a href="#">Mobile Accessories</a>
-          <a href="#">New Arrivals</a>
-          <a href="#">Best Sellers</a>
+          <h4>All Categories</h4>
+          @foreach($catlimit as $fcat)
+          <a href="{{url('gaming-products/'.$fcat->id)}}">{{$fcat->category_name}}</a>
+          @endforeach
+          
         </div>
         <div class="footer-col">
-          <h4>Customer Care</h4>
+          <h4>Gaming</h4>
+        
           <a href="#">Track Order</a>
           <a href="#">Returns & Exchange</a>
           <a href="#">Shipping Policy</a>

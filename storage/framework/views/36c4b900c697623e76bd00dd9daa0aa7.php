@@ -168,7 +168,83 @@
             </div>
         </div>
 
-        <div class="pl-grid" id="plGrid">
+        <div class="product-grid" >
+        <?php $__currentLoopData = $items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+<article class="product-card" data-id="<?php echo e($p->id); ?>" role="button" tabindex="0" aria-label="<?php echo e($p->name); ?>">
+   
+    <div class="product-img-wrap">
+
+       
+
+        
+      <img src="<?php echo e(asset('public/assets/img/items/'.$p->image)); ?>" alt="<?php echo e($p->name); ?>" loading="lazy"> 
+
+        <div class="product-overlay" aria-hidden="true">
+            <!-- <button class="overlay-btn add-to-cart overlay-cart" data-id="<?php echo e($p->id); ?>">
+                <i class="ri-shopping-cart-line"></i> Add to Cart
+            </button> -->
+
+             <a href="<?php echo e(url('product/'.$p->slug)); ?>"><button class="overlay-btn overlay-view" data-id="<?php echo e($p->id); ?>">
+                <i class="ri-eye-line"></i> Quick View
+            </button></a>
+        </div>
+    </div>
+
+    <div class="product-info">
+
+        <div class="product-brand">
+            <?php echo e($p->author_name); ?>
+
+        </div>
+
+        <div class="product-name">
+            <?php echo e($p->name); ?>
+
+        </div>
+
+        <div class="product-rating">
+            <span class="stars-display">
+                <?php for($i = 1; $i <= 5; $i++): ?>
+                    <?php if($i <= floor(5)): ?>
+                        <i class="ri-star-fill"></i>
+                    <?php else: ?>
+                        <i class="ri-star-line"></i>
+                    <?php endif; ?>
+                <?php endfor; ?>
+            </span>
+
+            <span class="rating-count">
+                5 
+            </span>
+        </div>
+
+        <div class="product-price-row">
+            <div>
+                <span class="price-main">
+                    ₹<?php echo e(number_format($p->sr, 2)); ?>
+
+                </span>
+
+                <span class="price-original">
+                    ₹<?php echo e(number_format($p->mrp, 2)); ?>
+
+                </span>
+            </div>
+
+            <span class="price-save">
+                Save ₹<?php echo e(number_format($p->mrp - $p->sr, 2)); ?>
+
+            </span>
+        </div>
+
+    </div>
+</article>
+
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+      </div>
+
+        <!-- <div class="pl-grid" id="plGrid">
             <?php $__empty_1 = true; $__currentLoopData = $items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
             <?php
                 $inCart   = in_array($p->id, $cartProductIds);
@@ -229,7 +305,7 @@
                 <div style="font-size:16px;color:#878787;">No products found</div>
             </div>
             <?php endif; ?>
-        </div>
+        </div> -->
 
     </div>
 </div>

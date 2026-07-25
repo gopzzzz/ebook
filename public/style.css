@@ -825,3 +825,353 @@ background-color: #0e7829;
   .cd-box { min-width: 60px; }
   .cd-box span { font-size: 1.5rem; }
 }
+
+/* ================================================================
+   LOGIN & REGISTER — targets exact blade structure:
+   .login-card > .card > .card-body
+   ================================================================ */
+
+.login-card {
+  max-width: 460px !important;
+  margin: auto !important;
+  width: 100% !important;
+}
+.register-card {
+  max-width: 480px !important;
+  margin: auto !important;
+  width: 100% !important;
+}
+.login-card .card,
+.register-card .card {
+  border: 1px solid #e0e0e0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,.1) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  background: #fff !important;
+}
+.login-card .card::before,
+.register-card .card::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: #111;
+  z-index: 10;
+}
+.login-card .card-body,
+.register-card .card-body {
+  padding: 2.75rem 2.5rem 2.25rem !important;
+}
+.login-card .card-body h5,
+.register-card .card-body h5 {
+  font-size: 1.6rem !important;
+  font-weight: 900 !important;
+  color: #111 !important;
+  letter-spacing: -.025em !important;
+}
+.login-card .card-body .text-muted,
+.register-card .card-body .text-muted {
+  color: #888 !important;
+  font-size: .875rem !important;
+}
+.login-card .card-body label,
+.register-card .card-body label {
+  font-size: .72rem !important;
+  font-weight: 700 !important;
+  color: #444 !important;
+  text-transform: uppercase !important;
+  letter-spacing: .07em !important;
+  margin-bottom: .3rem !important;
+  display: block !important;
+}
+.login-card .card-body .form-control,
+.register-card .card-body .form-control {
+  background: #f7f7f7 !important;
+  border: 1.5px solid #e0e0e0 !important;
+  border-radius: 10px !important;
+  padding: .75rem 1rem !important;
+  font-size: .875rem !important;
+  color: #111 !important;
+  box-shadow: none !important;
+  transition: border-color .2s, background .2s, box-shadow .2s !important;
+}
+.login-card .card-body .form-control:focus,
+.register-card .card-body .form-control:focus {
+  background: #fff !important;
+  border-color: #111 !important;
+  box-shadow: 0 0 0 3px rgba(0,0,0,.07) !important;
+  outline: none !important;
+}
+.login-card .card-body .form-control::placeholder,
+.register-card .card-body .form-control::placeholder { color: #bbb !important; }
+.login-card .card-body .btn-primary,
+.register-card .card-body .btn-primary {
+  background: #111 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: .875rem !important;
+  font-size: .9rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .04em !important;
+  color: #fff !important;
+  width: 100% !important;
+  box-shadow: 0 4px 14px rgba(0,0,0,.18) !important;
+  transition: background .2s, transform .2s !important;
+}
+.login-card .card-body .btn-primary:hover,
+.register-card .card-body .btn-primary:hover {
+  background: #333 !important;
+  transform: translateY(-2px) !important;
+}
+.login-card .card-body .form-check-label,
+.register-card .card-body .form-check-label {
+  font-size: .82rem !important;
+  color: #666 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-weight: 400 !important;
+}
+.login-card .card-body .small-text,
+.register-card .card-body .small-text {
+  font-size: .82rem !important;
+  color: #666 !important;
+}
+.login-card .card-body a.small-text,
+.register-card .card-body a.small-text {
+  color: #111 !important;
+  font-weight: 700 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px !important;
+}
+.login-card .card-body .alert,
+.register-card .card-body .alert {
+  border-radius: 10px !important;
+  font-size: .82rem !important;
+  border: none !important;
+}
+.register-card .card-body #pass_error {
+  font-size: .78rem !important;
+  color: #e53e3e !important;
+}
+@media (max-width: 480px) {
+  .login-card .card-body,
+  .register-card .card-body { padding: 2rem 1.25rem 1.75rem !important; }
+  .login-card .card-body h5,
+  .register-card .card-body h5 { font-size: 1.3rem !important; }
+}
+
+/* ================================================================
+   ABOUT US — body prefix beats inline <style> in blade
+   ================================================================ */
+
+body .about-section {
+  padding: 5rem 0 6rem !important;
+  background: #fff !important;
+}
+body .about-section .section-title {
+  color: #111 !important;
+  font-weight: 900 !important;
+  letter-spacing: -.025em !important;
+}
+body .about-section h1.section-title {
+  font-size: clamp(2rem, 4vw, 3rem) !important;
+  margin-bottom: .4rem !important;
+}
+body .about-section h4.section-title {
+  font-size: 1.1rem !important;
+  margin-bottom: .75rem !important;
+}
+body .about-section .lead {
+  color: #666 !important;
+  font-size: 1.05rem !important;
+}
+body .about-section .highlight {
+  color: #111 !important;
+  font-weight: 800 !important;
+  border-bottom: 2px solid #111 !important;
+  padding-bottom: 1px !important;
+}
+body .about-section .row.mb-5 p {
+  color: #555 !important;
+  font-size: 1rem !important;
+  line-height: 1.85 !important;
+}
+body .about-section .col-lg-10.mx-auto {
+  background: #f7f7f7 !important;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 16px !important;
+  padding: 2.5rem 3rem !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+body .about-section .col-lg-10.mx-auto::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: #111;
+}
+body .about-section .card.card-custom {
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,.07) !important;
+  transition: all .3s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+  background: #fff !important;
+}
+body .about-section .card.card-custom::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: #111;
+  transform: scaleX(0);
+  transition: transform .3s ease;
+  transform-origin: left;
+}
+body .about-section .card.card-custom:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: 0 20px 50px rgba(0,0,0,.12) !important;
+  border-color: #bbb !important;
+}
+body .about-section .card.card-custom:hover::before { transform: scaleX(1); }
+body .about-section .card.card-custom p {
+  color: #666 !important;
+  font-size: .875rem !important;
+  line-height: 1.75 !important;
+}
+body .about-section .row.text-center {
+  border-top: 1px solid #e5e5e5 !important;
+  padding-top: 3rem !important;
+  margin-top: 1rem !important;
+}
+@media (max-width: 768px) {
+  body .about-section { padding: 3rem 0 4rem !important; }
+  body .about-section .col-lg-10.mx-auto { padding: 1.75rem 1.5rem !important; }
+  body .about-section .row.text-center { padding-top: 2rem !important; }
+}
+@media (max-width: 480px) {
+  body .about-section h1.section-title { font-size: 1.75rem !important; }
+  body .about-section .col-lg-10.mx-auto { padding: 1.25rem 1rem !important; border-radius: 12px !important; }
+}
+
+/* ================================================================
+   GAMING TRANSITION OVERLAY — Mobile Centering Fix
+   #gamingTransition is in index.blade.php with inline <style>.
+   These rules beat it with higher specificity on mobile.
+   ================================================================ */
+
+/* Force the overlay to truly fill the viewport and center its content */
+#gamingTransition {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+}
+
+/* Content block — perfectly centred, no overflow on narrow screens */
+.gt-content {
+  position: relative !important;
+  z-index: 10 !important;
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 90% !important;
+  max-width: 520px !important;
+  margin: 0 auto !important;
+  /* Prevent content being pushed by orbs */
+  transform: none !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  top: auto !important;
+}
+
+@media (max-width: 768px) {
+  #gamingTransition {
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+  }
+
+  .gt-content {
+    width: 92% !important;
+    max-width: 100% !important;
+    padding: 0 1rem !important;
+  }
+
+  /* Shrink the big orbs so they don't displace content */
+  .gt-orb-a {
+    width: 200px !important;
+    height: 200px !important;
+    top: -40px !important;
+    left: -40px !important;
+  }
+  .gt-orb-b {
+    width: 180px !important;
+    height: 180px !important;
+    bottom: -30px !important;
+    right: -30px !important;
+  }
+
+  /* Logo row */
+  .gt-logo-row {
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+    margin-bottom: 1.5rem !important;
+    justify-content: center !important;
+  }
+  .gt-logo { height: 32px !important; width: 32px !important; }
+  .gt-logo-text { font-size: 0.85rem !important; }
+
+  /* Title */
+  .gt-title {
+    font-size: clamp(1rem, 5vw, 1.6rem) !important;
+    letter-spacing: .08em !important;
+  }
+
+  /* Sub text */
+  .gt-sub {
+    font-size: .78rem !important;
+    letter-spacing: .12em !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  /* Steps — wrap instead of overflow */
+  .gt-steps {
+    flex-wrap: wrap !important;
+    gap: 0.5rem 1rem !important;
+    justify-content: center !important;
+  }
+  .gt-step { font-size: .52rem !important; }
+
+  /* Percentage counter */
+  .gt-pct { font-size: 2rem !important; }
+
+  /* Corner brackets — keep them inside content */
+  .gt-content::before { top: -10px !important; left: -10px !important; }
+  .gt-content::after  { bottom: -10px !important; right: -10px !important; }
+}
+
+@media (max-width: 380px) {
+  .gt-title { font-size: 1rem !important; letter-spacing: .05em !important; }
+  .gt-logo-text { font-size: 0.72rem !important; }
+  .gt-pct { font-size: 1.6rem !important; }
+  .gt-steps { gap: 0.35rem 0.6rem !important; }
+  .gt-step { font-size: .48rem !important; }
+}

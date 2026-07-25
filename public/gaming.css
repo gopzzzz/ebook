@@ -163,8 +163,8 @@
   flex-shrink: 0;
 }
 .g-logo-img {
-  height: 38px;
-  width: 38px;
+  height: auto;
+  width: 110px;
   object-fit: contain;
   filter: invert(1) drop-shadow(0 0 8px rgba(0,245,255,0.6));
 }

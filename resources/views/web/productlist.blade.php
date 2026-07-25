@@ -180,7 +180,7 @@
        
 
         
-      <img src="{{ asset('public/assets/img/items/'.$p->image) }}" alt="{{ $p->name }}" loading="lazy"> 
+     <a href="{{url('product/'.$p->slug)}}"> <img src="{{ asset('public/assets/img/items/'.$p->image) }}" alt="{{ $p->name }}" loading="lazy"> </a>
 
         <div class="product-overlay" aria-hidden="true">
             <!-- <button class="overlay-btn add-to-cart overlay-cart" data-id="{{ $p->id }}">

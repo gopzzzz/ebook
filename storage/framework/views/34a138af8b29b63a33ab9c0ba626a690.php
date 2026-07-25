@@ -13,8 +13,8 @@
             <h1 class="hero-title"><?php echo e($b->banner_title ?? 'Level Up Your'); ?><br /><span class="gradient-text">Gaming Setup</span></h1>
             <p class="hero-desc">Premium gear crafted for champions. Experience the difference with Pouch Gallery®</p>
             <div class="hero-cta-group">
-              <a href="<?php echo e(url('/gaming-products')); ?>" class="btn btn-primary">Shop Gaming <i class="ri-arrow-right-line"></i></a>
-              <a href="#featured" class="btn btn-ghost">View Deals</a>
+              <a href="<?php echo e(url('gaming-products/21')); ?>" target="_blank" class="btn btn-primary">Shop Gaming <i class="ri-arrow-right-line"></i></a>
+              <a href="<?php echo e(url('gaming-products/21')); ?>" target="_blank" class="btn btn-ghost">View Deals</a>
             </div>
             <div class="hero-stats">
               <div class="stat"><strong>50K+</strong><span>Happy Customers</span></div>
@@ -102,6 +102,201 @@
     </div>
   </section>
 
+   <section class="products-section" >
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="section-sub">🆕 Just Dropped</p>
+          <h2 class="section-title">New Arrivals</h2>
+        </div>
+        <a href="<?php echo e(url('/newarrivals')); ?>" class="view-all-link">View All <i class="ri-arrow-right-line"></i></a>
+      </div>
+      <div class="product-grid" id="newArrivalsGrid">
+        <?php $__currentLoopData = $newarrivals; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <article class="product-card" data-id="<?php echo e($p->id); ?>" role="button" tabindex="0" aria-label="<?php echo e($p->name); ?>">
+   
+    <div class="product-img-wrap">
+
+       
+
+        
+      <img src="<?php echo e(asset('public/assets/img/items/'.$p->image)); ?>" alt="<?php echo e($p->name); ?>" loading="lazy"> 
+
+        <div class="product-overlay" aria-hidden="true">
+            <!-- <button class="overlay-btn add-to-cart overlay-cart" data-id="<?php echo e($p->id); ?>">
+                <i class="ri-shopping-cart-line"></i> Add to Cart
+            </button> -->
+
+             <a href="<?php echo e(url('product/'.$p->slug)); ?>"><button class="overlay-btn overlay-view" data-id="<?php echo e($p->id); ?>">
+                <i class="ri-eye-line"></i> Quick View
+            </button></a>
+        </div>
+    </div>
+
+    <div class="product-info">
+
+        <div class="product-brand">
+            <?php echo e($p->author_name); ?>
+
+        </div>
+
+        <div class="product-name">
+            <?php echo e($p->name); ?>
+
+        </div>
+
+        <div class="product-rating">
+            <span class="stars-display">
+                <?php for($i = 1; $i <= 5; $i++): ?>
+                    <?php if($i <= floor(5)): ?>
+                        <i class="ri-star-fill"></i>
+                    <?php else: ?>
+                        <i class="ri-star-line"></i>
+                    <?php endif; ?>
+                <?php endfor; ?>
+            </span>
+
+            <span class="rating-count">
+                5 
+            </span>
+        </div>
+
+        <div class="product-price-row">
+            <div>
+                <span class="price-main">
+                    ₹<?php echo e(number_format($p->sr, 2)); ?>
+
+                </span>
+
+                <span class="price-original">
+                    ₹<?php echo e(number_format($p->mrp, 2)); ?>
+
+                </span>
+            </div>
+
+            <span class="price-save">
+                Save ₹<?php echo e(number_format($p->mrp - $p->sr, 2)); ?>
+
+            </span>
+        </div>
+
+    </div>
+</article>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+      </div>
+    </div>
+  </section>
+
+  <section class="promo-section">
+    <div class="container">
+      <div class="promo-banner reveal">
+        <div class="promo-content">
+          <span class="promo-tag">Limited Time Offer</span>
+          <h2 class="promo-title">Get up to <span class="promo-accent">40% OFF</span><br />on Gaming Gear</h2>
+          <p class="promo-text">Premium keyboards, mice, headsets and more. Sale ends in:</p>
+          <div class="countdown" id="countdown">
+            <div class="cd-box"><span id="cd-h">12</span><small>Hours</small></div>
+            <div class="cd-box"><span id="cd-m">45</span><small>Mins</small></div>
+            <div class="cd-box"><span id="cd-s">30</span><small>Secs</small></div>
+          </div>
+          <a href="<?php echo e(url('/gaming-products')); ?>" class="btn btn-accent">Shop the Sale <i class="ri-arrow-right-line"></i></a>
+        </div>
+        <div class="promo-img-wrap">
+          <img src="<?php echo e(asset('public/assets/gaming_hero.png')); ?>" alt="Gaming sale" class="promo-img" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+ 
+
+
+  <section class="products-section bg-alt" >
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="section-sub">⭐ Customer Favourites</p>
+          <h2 class="section-title">Best Sellers</h2>
+        </div>
+        <a href="<?php echo e(url('/bestsellors')); ?>" class="view-all-link">View All <i class="ri-arrow-right-line"></i></a>
+      </div>
+      <div class="product-grid" id="bestSellersGrid">
+        <?php $__currentLoopData = $bestSellers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+       <article class="product-card" data-id="<?php echo e($p->id); ?>" role="button" tabindex="0" aria-label="<?php echo e($p->name); ?>">
+   
+    <div class="product-img-wrap">
+
+       
+
+        
+      <img src="<?php echo e(asset('public/assets/img/items/'.$p->image)); ?>" alt="<?php echo e($p->name); ?>" loading="lazy"> 
+
+        <div class="product-overlay" aria-hidden="true">
+            <!-- <button class="overlay-btn add-to-cart overlay-cart" data-id="<?php echo e($p->id); ?>">
+                <i class="ri-shopping-cart-line"></i> Add to Cart
+            </button> -->
+
+             <a href="<?php echo e(url('product/'.$p->slug)); ?>"><button class="overlay-btn overlay-view" data-id="<?php echo e($p->id); ?>">
+                <i class="ri-eye-line"></i> Quick View
+            </button></a>
+        </div>
+    </div>
+
+    <div class="product-info">
+
+        <div class="product-brand">
+            <?php echo e($p->author_name); ?>
+
+        </div>
+
+        <div class="product-name">
+            <?php echo e($p->name); ?>
+
+        </div>
+
+        <div class="product-rating">
+            <span class="stars-display">
+                <?php for($i = 1; $i <= 5; $i++): ?>
+                    <?php if($i <= floor(5)): ?>
+                        <i class="ri-star-fill"></i>
+                    <?php else: ?>
+                        <i class="ri-star-line"></i>
+                    <?php endif; ?>
+                <?php endfor; ?>
+            </span>
+
+            <span class="rating-count">
+                5 
+            </span>
+        </div>
+
+        <div class="product-price-row">
+            <div>
+                <span class="price-main">
+                    ₹<?php echo e(number_format($p->sr, 2)); ?>
+
+                </span>
+
+                <span class="price-original">
+                    ₹<?php echo e(number_format($p->mrp, 2)); ?>
+
+                </span>
+            </div>
+
+            <span class="price-save">
+                Save ₹<?php echo e(number_format($p->mrp - $p->sr, 2)); ?>
+
+            </span>
+        </div>
+
+    </div>
+</article>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+      </div>
+    </div>
+  </section>
+
+  
   <section class="products-section" >
     <div class="container">
       <div class="section-header">
@@ -184,197 +379,6 @@
     </div>
 </article>
 
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-      </div>
-    </div>
-  </section>
-
-  <section class="promo-section">
-    <div class="container">
-      <div class="promo-banner reveal">
-        <div class="promo-content">
-          <span class="promo-tag">Limited Time Offer</span>
-          <h2 class="promo-title">Get up to <span class="promo-accent">40% OFF</span><br />on Gaming Gear</h2>
-          <p class="promo-text">Premium keyboards, mice, headsets and more. Sale ends in:</p>
-          <div class="countdown" id="countdown">
-            <div class="cd-box"><span id="cd-h">12</span><small>Hours</small></div>
-            <div class="cd-box"><span id="cd-m">45</span><small>Mins</small></div>
-            <div class="cd-box"><span id="cd-s">30</span><small>Secs</small></div>
-          </div>
-          <a href="<?php echo e(url('/gaming-products')); ?>" class="btn btn-accent">Shop the Sale <i class="ri-arrow-right-line"></i></a>
-        </div>
-        <div class="promo-img-wrap">
-          <img src="<?php echo e(asset('public/assets/gaming_hero.png')); ?>" alt="Gaming sale" class="promo-img" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="products-section" >
-    <div class="container">
-      <div class="section-header">
-        <div>
-          <p class="section-sub">🆕 Just Dropped</p>
-          <h2 class="section-title">New Arrivals</h2>
-        </div>
-        <a href="<?php echo e(url('/gaming-products')); ?>" class="view-all-link">View All <i class="ri-arrow-right-line"></i></a>
-      </div>
-      <div class="product-grid" id="newArrivalsGrid">
-        <?php $__currentLoopData = $fastmovingProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        <article class="product-card" data-id="<?php echo e($p->id); ?>" role="button" tabindex="0" aria-label="<?php echo e($p->name); ?>">
-   
-    <div class="product-img-wrap">
-
-       
-
-        
-      <img src="<?php echo e(asset('public/assets/img/items/'.$p->image)); ?>" alt="<?php echo e($p->name); ?>" loading="lazy"> 
-
-        <div class="product-overlay" aria-hidden="true">
-            <!-- <button class="overlay-btn add-to-cart overlay-cart" data-id="<?php echo e($p->id); ?>">
-                <i class="ri-shopping-cart-line"></i> Add to Cart
-            </button> -->
-
-             <a href="<?php echo e(url('product/'.$p->slug)); ?>"><button class="overlay-btn overlay-view" data-id="<?php echo e($p->id); ?>">
-                <i class="ri-eye-line"></i> Quick View
-            </button></a>
-        </div>
-    </div>
-
-    <div class="product-info">
-
-        <div class="product-brand">
-            <?php echo e($p->author_name); ?>
-
-        </div>
-
-        <div class="product-name">
-            <?php echo e($p->name); ?>
-
-        </div>
-
-        <div class="product-rating">
-            <span class="stars-display">
-                <?php for($i = 1; $i <= 5; $i++): ?>
-                    <?php if($i <= floor(5)): ?>
-                        <i class="ri-star-fill"></i>
-                    <?php else: ?>
-                        <i class="ri-star-line"></i>
-                    <?php endif; ?>
-                <?php endfor; ?>
-            </span>
-
-            <span class="rating-count">
-                5 
-            </span>
-        </div>
-
-        <div class="product-price-row">
-            <div>
-                <span class="price-main">
-                    ₹<?php echo e(number_format($p->sr, 2)); ?>
-
-                </span>
-
-                <span class="price-original">
-                    ₹<?php echo e(number_format($p->mrp, 2)); ?>
-
-                </span>
-            </div>
-
-            <span class="price-save">
-                Save ₹<?php echo e(number_format($p->mrp - $p->sr, 2)); ?>
-
-            </span>
-        </div>
-
-    </div>
-</article>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-      </div>
-    </div>
-  </section>
-
-  <section class="products-section bg-alt" >
-    <div class="container">
-      <div class="section-header">
-        <div>
-          <p class="section-sub">⭐ Customer Favourites</p>
-          <h2 class="section-title">Best Sellers</h2>
-        </div>
-        <a href="<?php echo e(url('/gaming-products')); ?>" class="view-all-link">View All <i class="ri-arrow-right-line"></i></a>
-      </div>
-      <div class="product-grid" id="bestSellersGrid">
-        <?php $__currentLoopData = $fastmovingProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-       <article class="product-card" data-id="<?php echo e($p->id); ?>" role="button" tabindex="0" aria-label="<?php echo e($p->name); ?>">
-   
-    <div class="product-img-wrap">
-
-       
-
-        
-      <img src="<?php echo e(asset('public/assets/img/items/'.$p->image)); ?>" alt="<?php echo e($p->name); ?>" loading="lazy"> 
-
-        <div class="product-overlay" aria-hidden="true">
-            <!-- <button class="overlay-btn add-to-cart overlay-cart" data-id="<?php echo e($p->id); ?>">
-                <i class="ri-shopping-cart-line"></i> Add to Cart
-            </button> -->
-
-             <a href="<?php echo e(url('product/'.$p->slug)); ?>"><button class="overlay-btn overlay-view" data-id="<?php echo e($p->id); ?>">
-                <i class="ri-eye-line"></i> Quick View
-            </button></a>
-        </div>
-    </div>
-
-    <div class="product-info">
-
-        <div class="product-brand">
-            <?php echo e($p->author_name); ?>
-
-        </div>
-
-        <div class="product-name">
-            <?php echo e($p->name); ?>
-
-        </div>
-
-        <div class="product-rating">
-            <span class="stars-display">
-                <?php for($i = 1; $i <= 5; $i++): ?>
-                    <?php if($i <= floor(5)): ?>
-                        <i class="ri-star-fill"></i>
-                    <?php else: ?>
-                        <i class="ri-star-line"></i>
-                    <?php endif; ?>
-                <?php endfor; ?>
-            </span>
-
-            <span class="rating-count">
-                5 
-            </span>
-        </div>
-
-        <div class="product-price-row">
-            <div>
-                <span class="price-main">
-                    ₹<?php echo e(number_format($p->sr, 2)); ?>
-
-                </span>
-
-                <span class="price-original">
-                    ₹<?php echo e(number_format($p->mrp, 2)); ?>
-
-                </span>
-            </div>
-
-            <span class="price-save">
-                Save ₹<?php echo e(number_format($p->mrp - $p->sr, 2)); ?>
-
-            </span>
-        </div>
-
-    </div>
-</article>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
       </div>
     </div>

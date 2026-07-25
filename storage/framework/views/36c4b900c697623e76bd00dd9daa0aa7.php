@@ -178,7 +178,7 @@
        
 
         
-      <img src="<?php echo e(asset('public/assets/img/items/'.$p->image)); ?>" alt="<?php echo e($p->name); ?>" loading="lazy"> 
+     <a href="<?php echo e(url('product/'.$p->slug)); ?>"> <img src="<?php echo e(asset('public/assets/img/items/'.$p->image)); ?>" alt="<?php echo e($p->name); ?>" loading="lazy"> </a>
 
         <div class="product-overlay" aria-hidden="true">
             <!-- <button class="overlay-btn add-to-cart overlay-cart" data-id="<?php echo e($p->id); ?>">

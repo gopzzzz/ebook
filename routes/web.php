@@ -147,6 +147,8 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/', [IndexController::class, 'home'])->name('index');
 Route::redirect('/index', '/');
+Route::get('/newarrivals', [IndexController::class, 'newarrivals'])->name('newarrivals');
+Route::get('/bestsellors', [IndexController::class, 'bestsellors'])->name('bestsellors');
 Route::get('/gaming-products/{id}', [IndexController::class, 'gamingProducts'])->name('gaming.products');
 Route::get('/gaming-product-detail/{slug}', [IndexController::class, 'gamingProductDetail'])->name('gaming.product');
 Route::get('/productlist/{id}', [IndexController::class, 'productlist'])->name('product-list');

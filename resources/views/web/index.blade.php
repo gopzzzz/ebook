@@ -15,8 +15,8 @@
             <h1 class="hero-title">{{ $b->banner_title ?? 'Level Up Your' }}<br /><span class="gradient-text">Gaming Setup</span></h1>
             <p class="hero-desc">Premium gear crafted for champions. Experience the difference with Pouch Gallery®</p>
             <div class="hero-cta-group">
-              <a href="{{url('/gaming-products')}}" class="btn btn-primary">Shop Gaming <i class="ri-arrow-right-line"></i></a>
-              <a href="#featured" class="btn btn-ghost">View Deals</a>
+              <a href="{{url('gaming-products/21')}}" target="_blank" class="btn btn-primary">Shop Gaming <i class="ri-arrow-right-line"></i></a>
+              <a href="{{url('gaming-products/21')}}" target="_blank" class="btn btn-ghost">View Deals</a>
             </div>
             <div class="hero-stats">
               <div class="stat"><strong>50K+</strong><span>Happy Customers</span></div>
@@ -104,6 +104,191 @@
     </div>
   </section>
 
+   <section class="products-section" >
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="section-sub">🆕 Just Dropped</p>
+          <h2 class="section-title">New Arrivals</h2>
+        </div>
+        <a href="{{url('/newarrivals')}}" class="view-all-link">View All <i class="ri-arrow-right-line"></i></a>
+      </div>
+      <div class="product-grid" id="newArrivalsGrid">
+        @foreach($newarrivals as $p)
+        <article class="product-card" data-id="{{ $p->id }}" role="button" tabindex="0" aria-label="{{ $p->name }}">
+   
+    <div class="product-img-wrap">
+
+       
+
+        
+      <img src="{{ asset('public/assets/img/items/'.$p->image) }}" alt="{{ $p->name }}" loading="lazy"> 
+
+        <div class="product-overlay" aria-hidden="true">
+            <!-- <button class="overlay-btn add-to-cart overlay-cart" data-id="{{ $p->id }}">
+                <i class="ri-shopping-cart-line"></i> Add to Cart
+            </button> -->
+
+             <a href="{{url('product/'.$p->slug)}}"><button class="overlay-btn overlay-view" data-id="{{ $p->id }}">
+                <i class="ri-eye-line"></i> Quick View
+            </button></a>
+        </div>
+    </div>
+
+    <div class="product-info">
+
+        <div class="product-brand">
+            {{ $p->author_name }}
+        </div>
+
+        <div class="product-name">
+            {{ $p->name }}
+        </div>
+
+        <div class="product-rating">
+            <span class="stars-display">
+                @for($i = 1; $i <= 5; $i++)
+                    @if($i <= floor(5))
+                        <i class="ri-star-fill"></i>
+                    @else
+                        <i class="ri-star-line"></i>
+                    @endif
+                @endfor
+            </span>
+
+            <span class="rating-count">
+                5 
+            </span>
+        </div>
+
+        <div class="product-price-row">
+            <div>
+                <span class="price-main">
+                    ₹{{ number_format($p->sr, 2) }}
+                </span>
+
+                <span class="price-original">
+                    ₹{{ number_format($p->mrp, 2) }}
+                </span>
+            </div>
+
+            <span class="price-save">
+                Save ₹{{ number_format($p->mrp - $p->sr, 2) }}
+            </span>
+        </div>
+
+    </div>
+</article>
+        @endforeach
+      </div>
+    </div>
+  </section>
+
+  <section class="promo-section">
+    <div class="container">
+      <div class="promo-banner reveal">
+        <div class="promo-content">
+          <span class="promo-tag">Limited Time Offer</span>
+          <h2 class="promo-title">Get up to <span class="promo-accent">40% OFF</span><br />on Gaming Gear</h2>
+          <p class="promo-text">Premium keyboards, mice, headsets and more. Sale ends in:</p>
+          <div class="countdown" id="countdown">
+            <div class="cd-box"><span id="cd-h">12</span><small>Hours</small></div>
+            <div class="cd-box"><span id="cd-m">45</span><small>Mins</small></div>
+            <div class="cd-box"><span id="cd-s">30</span><small>Secs</small></div>
+          </div>
+          <a href="{{url('/gaming-products')}}" class="btn btn-accent">Shop the Sale <i class="ri-arrow-right-line"></i></a>
+        </div>
+        <div class="promo-img-wrap">
+          <img src="{{asset('public/assets/gaming_hero.png')}}" alt="Gaming sale" class="promo-img" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+ 
+
+
+  <section class="products-section bg-alt" >
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="section-sub">⭐ Customer Favourites</p>
+          <h2 class="section-title">Best Sellers</h2>
+        </div>
+        <a href="{{url('/bestsellors')}}" class="view-all-link">View All <i class="ri-arrow-right-line"></i></a>
+      </div>
+      <div class="product-grid" id="bestSellersGrid">
+        @foreach($bestSellers as $p)
+       <article class="product-card" data-id="{{ $p->id }}" role="button" tabindex="0" aria-label="{{ $p->name }}">
+   
+    <div class="product-img-wrap">
+
+       
+
+        
+      <img src="{{ asset('public/assets/img/items/'.$p->image) }}" alt="{{ $p->name }}" loading="lazy"> 
+
+        <div class="product-overlay" aria-hidden="true">
+            <!-- <button class="overlay-btn add-to-cart overlay-cart" data-id="{{ $p->id }}">
+                <i class="ri-shopping-cart-line"></i> Add to Cart
+            </button> -->
+
+             <a href="{{url('product/'.$p->slug)}}"><button class="overlay-btn overlay-view" data-id="{{ $p->id }}">
+                <i class="ri-eye-line"></i> Quick View
+            </button></a>
+        </div>
+    </div>
+
+    <div class="product-info">
+
+        <div class="product-brand">
+            {{ $p->author_name }}
+        </div>
+
+        <div class="product-name">
+            {{ $p->name }}
+        </div>
+
+        <div class="product-rating">
+            <span class="stars-display">
+                @for($i = 1; $i <= 5; $i++)
+                    @if($i <= floor(5))
+                        <i class="ri-star-fill"></i>
+                    @else
+                        <i class="ri-star-line"></i>
+                    @endif
+                @endfor
+            </span>
+
+            <span class="rating-count">
+                5 
+            </span>
+        </div>
+
+        <div class="product-price-row">
+            <div>
+                <span class="price-main">
+                    ₹{{ number_format($p->sr, 2) }}
+                </span>
+
+                <span class="price-original">
+                    ₹{{ number_format($p->mrp, 2) }}
+                </span>
+            </div>
+
+            <span class="price-save">
+                Save ₹{{ number_format($p->mrp - $p->sr, 2) }}
+            </span>
+        </div>
+
+    </div>
+</article>
+        @endforeach
+      </div>
+    </div>
+  </section>
+
+  
   <section class="products-section" >
     <div class="container">
       <div class="section-header">
@@ -181,187 +366,6 @@
     </div>
 </article>
 
-        @endforeach
-      </div>
-    </div>
-  </section>
-
-  <section class="promo-section">
-    <div class="container">
-      <div class="promo-banner reveal">
-        <div class="promo-content">
-          <span class="promo-tag">Limited Time Offer</span>
-          <h2 class="promo-title">Get up to <span class="promo-accent">40% OFF</span><br />on Gaming Gear</h2>
-          <p class="promo-text">Premium keyboards, mice, headsets and more. Sale ends in:</p>
-          <div class="countdown" id="countdown">
-            <div class="cd-box"><span id="cd-h">12</span><small>Hours</small></div>
-            <div class="cd-box"><span id="cd-m">45</span><small>Mins</small></div>
-            <div class="cd-box"><span id="cd-s">30</span><small>Secs</small></div>
-          </div>
-          <a href="{{url('/gaming-products')}}" class="btn btn-accent">Shop the Sale <i class="ri-arrow-right-line"></i></a>
-        </div>
-        <div class="promo-img-wrap">
-          <img src="{{asset('public/assets/gaming_hero.png')}}" alt="Gaming sale" class="promo-img" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="products-section" >
-    <div class="container">
-      <div class="section-header">
-        <div>
-          <p class="section-sub">🆕 Just Dropped</p>
-          <h2 class="section-title">New Arrivals</h2>
-        </div>
-        <a href="{{url('/gaming-products')}}" class="view-all-link">View All <i class="ri-arrow-right-line"></i></a>
-      </div>
-      <div class="product-grid" id="newArrivalsGrid">
-        @foreach($fastmovingProducts as $p)
-        <article class="product-card" data-id="{{ $p->id }}" role="button" tabindex="0" aria-label="{{ $p->name }}">
-   
-    <div class="product-img-wrap">
-
-       
-
-        
-      <img src="{{ asset('public/assets/img/items/'.$p->image) }}" alt="{{ $p->name }}" loading="lazy"> 
-
-        <div class="product-overlay" aria-hidden="true">
-            <!-- <button class="overlay-btn add-to-cart overlay-cart" data-id="{{ $p->id }}">
-                <i class="ri-shopping-cart-line"></i> Add to Cart
-            </button> -->
-
-             <a href="{{url('product/'.$p->slug)}}"><button class="overlay-btn overlay-view" data-id="{{ $p->id }}">
-                <i class="ri-eye-line"></i> Quick View
-            </button></a>
-        </div>
-    </div>
-
-    <div class="product-info">
-
-        <div class="product-brand">
-            {{ $p->author_name }}
-        </div>
-
-        <div class="product-name">
-            {{ $p->name }}
-        </div>
-
-        <div class="product-rating">
-            <span class="stars-display">
-                @for($i = 1; $i <= 5; $i++)
-                    @if($i <= floor(5))
-                        <i class="ri-star-fill"></i>
-                    @else
-                        <i class="ri-star-line"></i>
-                    @endif
-                @endfor
-            </span>
-
-            <span class="rating-count">
-                5 
-            </span>
-        </div>
-
-        <div class="product-price-row">
-            <div>
-                <span class="price-main">
-                    ₹{{ number_format($p->sr, 2) }}
-                </span>
-
-                <span class="price-original">
-                    ₹{{ number_format($p->mrp, 2) }}
-                </span>
-            </div>
-
-            <span class="price-save">
-                Save ₹{{ number_format($p->mrp - $p->sr, 2) }}
-            </span>
-        </div>
-
-    </div>
-</article>
-        @endforeach
-      </div>
-    </div>
-  </section>
-
-  <section class="products-section bg-alt" >
-    <div class="container">
-      <div class="section-header">
-        <div>
-          <p class="section-sub">⭐ Customer Favourites</p>
-          <h2 class="section-title">Best Sellers</h2>
-        </div>
-        <a href="{{url('/gaming-products')}}" class="view-all-link">View All <i class="ri-arrow-right-line"></i></a>
-      </div>
-      <div class="product-grid" id="bestSellersGrid">
-        @foreach($fastmovingProducts as $p)
-       <article class="product-card" data-id="{{ $p->id }}" role="button" tabindex="0" aria-label="{{ $p->name }}">
-   
-    <div class="product-img-wrap">
-
-       
-
-        
-      <img src="{{ asset('public/assets/img/items/'.$p->image) }}" alt="{{ $p->name }}" loading="lazy"> 
-
-        <div class="product-overlay" aria-hidden="true">
-            <!-- <button class="overlay-btn add-to-cart overlay-cart" data-id="{{ $p->id }}">
-                <i class="ri-shopping-cart-line"></i> Add to Cart
-            </button> -->
-
-             <a href="{{url('product/'.$p->slug)}}"><button class="overlay-btn overlay-view" data-id="{{ $p->id }}">
-                <i class="ri-eye-line"></i> Quick View
-            </button></a>
-        </div>
-    </div>
-
-    <div class="product-info">
-
-        <div class="product-brand">
-            {{ $p->author_name }}
-        </div>
-
-        <div class="product-name">
-            {{ $p->name }}
-        </div>
-
-        <div class="product-rating">
-            <span class="stars-display">
-                @for($i = 1; $i <= 5; $i++)
-                    @if($i <= floor(5))
-                        <i class="ri-star-fill"></i>
-                    @else
-                        <i class="ri-star-line"></i>
-                    @endif
-                @endfor
-            </span>
-
-            <span class="rating-count">
-                5 
-            </span>
-        </div>
-
-        <div class="product-price-row">
-            <div>
-                <span class="price-main">
-                    ₹{{ number_format($p->sr, 2) }}
-                </span>
-
-                <span class="price-original">
-                    ₹{{ number_format($p->mrp, 2) }}
-                </span>
-            </div>
-
-            <span class="price-save">
-                Save ₹{{ number_format($p->mrp - $p->sr, 2) }}
-            </span>
-        </div>
-
-    </div>
-</article>
         @endforeach
       </div>
     </div>

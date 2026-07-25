@@ -28,6 +28,37 @@ class IndexController extends Controller
          ->limit(4)
          ->get();
 
+          $newarrivals=DB::table('items')
+         ->leftJoin('authors', 'items.author_id', '=', 'authors.id')
+         ->select('items.*','authors.author_name')
+         ->where('items.status',0)
+          ->orderBy('id', 'desc')
+         ->limit(4)
+         ->get();
+
+          $bestSellers = DB::table('items')
+    ->leftJoin('authors', 'items.author_id', '=', 'authors.id')
+    ->leftJoin('order_trans', 'items.id', '=', 'order_trans.book_id')
+    ->select(
+        'items.*',
+        'authors.author_name',
+        DB::raw('COUNT(order_trans.book_id) as total_orders')
+    )
+    ->where('items.status', 0)
+    ->groupBy(
+        'items.id',
+        'authors.author_name'
+    )
+    ->orderByDesc('total_orders')
+    ->limit(4)
+    ->get();
+
+        $catlimit = DB::table('categories')
+    // ->skip(5)
+    // ->take(8)
+    ->where('status',0)
+    ->get();
+
       
          
     // echo "<pre>";print_r( $catlimit);exit;
@@ -35,7 +66,64 @@ class IndexController extends Controller
          
          
 
-        return view('web.index',compact('banner','dod','fastmovingProducts'));
+        return view('web.index',compact('banner','dod','fastmovingProducts','newarrivals','bestSellers'));
+    }
+
+    public function newarrivals(){
+            $category=DB::table('categories')
+          ->leftJoin('items', 'categories.id', '=', 'items.cat_id')
+          ->where('main_id',0)
+        //   ->where('items.item_type',$id)
+          ->where('categories.status',0)
+          ->where('items.status',0)
+          ->groupBy('categories.id')
+          
+          ->get();
+
+          $items=DB::table('items')
+         ->leftJoin('authors', 'items.author_id', '=', 'authors.id')
+         ->select('items.*','authors.author_name')
+         ->where('items.status',0)
+        //  ->where('items.cat_id',$id)
+         ->orderBy('items.id', 'desc')
+         ->orderBy('id', 'desc')
+        //  ->limit(4)
+         ->get();
+
+         
+         return view('web.productlist',compact('category','items'));
+    }
+
+    public function bestsellors(){
+           $category=DB::table('categories')
+          ->leftJoin('items', 'categories.id', '=', 'items.cat_id')
+          ->where('main_id',0)
+        //   ->where('items.item_type',$id)
+          ->where('categories.status',0)
+          ->where('items.status',0)
+          ->groupBy('categories.id')
+          
+          ->get();
+
+          $items=DB::table('items')
+    ->leftJoin('authors', 'items.author_id', '=', 'authors.id')
+    ->leftJoin('order_trans', 'items.id', '=', 'order_trans.book_id')
+    ->select(
+        'items.*',
+        'authors.author_name',
+        DB::raw('COUNT(order_trans.book_id) as total_orders')
+    )
+    ->where('items.status', 0)
+    ->groupBy(
+        'items.id',
+        'authors.author_name'
+    )
+    ->orderByDesc('total_orders')
+    // ->limit(4)
+    ->get();
+
+         
+         return view('web.productlist',compact('category','items'));
     }
 
     public function gamingProducts($id) {

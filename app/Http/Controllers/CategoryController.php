@@ -33,6 +33,7 @@ class CategoryController extends Controller
 
     $request->validate([
         'category_name' => 'required|string|max:255',
+        'type' =>'required',
         'image' => 'nullable|image|mimes:jpg,jpeg,png'
     ]);
 
@@ -49,6 +50,7 @@ class CategoryController extends Controller
 
     Category::create([
         'category_name' => $request->category_name,
+        'main_id'=>$request->type,
         'image' => $categoryimage
     ]);
 
@@ -77,7 +79,8 @@ class CategoryController extends Controller
     ]);
 
     $data = [
-        'category_name' => $request->category_name
+        'category_name' => $request->category_name,
+        'main_id'=>$request->type,
     ];
 
     if ($request->hasFile('image')) {

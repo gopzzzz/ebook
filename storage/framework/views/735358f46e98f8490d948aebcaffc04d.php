@@ -17,12 +17,16 @@
        
       </a>
 
-      <div class="header-search" id="headerSearch">
-        <i class="ri-search-line search-icon"></i>
-        <input type="search" placeholder="Search products, brands..." id="searchInput" autocomplete="off" />
-        <button class="search-btn" aria-label="Search">Search</button>
-      </div>
-
+  <div class="header-search" id="headerSearch">
+    <i class="ri-search-line search-icon"></i>
+    <input type="search"
+           placeholder="Search products, brands..."
+           id="searchInput"
+           autocomplete="off">
+    <button class="search-btn" id="searchBtn" aria-label="Search">
+        Search
+    </button>
+</div>
       <div class="header-actions">
        
         

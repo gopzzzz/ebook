@@ -6,7 +6,7 @@
       </a>
     
       <div class="g-actions">
-        <a href="{{url('/index')}}" class="g-action-btn" title="Back to Store"><i class="ri-store-line"></i></a>
+        <a href="{{url('/')}}" class="g-action-btn" title="Back to Store"><i class="ri-store-line"></i></a>
         
           @if(Auth::check())
            <a href="{{url('userprofile')}}" class="g-action-btn"><i class="ri-user-line"></i></a>
@@ -25,7 +25,7 @@
     
     <nav class="g-nav" id="gNav">
       <div class="g-nav-inner g-container">
-        <a href="{{url('/index')}}" class="g-nav-link home-link"><i class="ri-arrow-left-line"></i> Main Store</a>
+        <a href="{{url('/')}}" class="g-nav-link home-link"><i class="ri-arrow-left-line"></i> Main Store</a>
          @foreach($gamecategories as $gcat)
         <a href="{{url('gaming-products/'.$gcat->id)}}" class="g-nav-link "><i class="ri-gamepad-line"></i> {{$gcat->category_name}}</a>
         @endforeach

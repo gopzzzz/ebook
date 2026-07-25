@@ -89,7 +89,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/items/update/{id}', [ItemController::class, 'update'])->name('items.update');
     Route::get('/items/delete/{id}', [ItemController::class, 'destroy'])->name('items.delete');
 
-
+  
     Route::get('/orders', [OrderMasterController::class, 'index'])->name('orders.index');
     Route::get('/orders/create', [OrderMasterController::class, 'create'])->name('orders.create');
     Route::post('/orders/store', [OrderMasterController::class, 'store'])->name('orders.store');
@@ -161,6 +161,8 @@ Route::get('/search-customers', [PageController::class, 'search'])
 Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
 Route::get('/term-conditions', [PageController::class, 'termconditions'])->name('term-conditions');
 Route::get('/refund', [PageController::class, 'refund'])->name('refund');
+Route::get('/cancellation', [PageController::class, 'cancellation'])->name('cancellation');
+Route::get('/search', [IndexController::class, 'search'])->name('products.search');
 
 Route::get('/cart', [OrderController::class, 'cart'])->name('cart');
 

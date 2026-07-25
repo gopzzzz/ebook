@@ -1,6 +1,4 @@
-@extends('layouts.weblayout')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
 .invoice-box{
@@ -124,23 +122,23 @@ margin-bottom: 0.5rem;
     <div class="invoice-header">
         <div>
             <div class="invoice-title">INVOICE</div>
-            <p>Order ID: {{ $order_master->order_id }}</p>
-            <p>Date: {{ date('d M Y', strtotime($order_master->created_at)) }}</p>
+            <p>Order ID: <?php echo e($order_master->order_id); ?></p>
+            <p>Date: <?php echo e(date('d M Y', strtotime($order_master->created_at))); ?></p>
         </div>
 
         <div class="company-details">
-            <h3>{{$app_profile->name}}</h3>
+            <h3><?php echo e($app_profile->name); ?></h3>
         
         </div>
     </div>
 
     <div class="customer-details">
         <h4>Billing To:</h4>
-        <p>{{ $order_master->name }}</p>
-        <p>{{ $order_master->address }}</p>
-        <p>{{ $order_master->district }}, {{ $order_master->state }}</p>
-        <p>Pin: {{ $order_master->pincode }}</p>
-        <p>Phone: {{ $order_master->phone_number }}</p>
+        <p><?php echo e($order_master->name); ?></p>
+        <p><?php echo e($order_master->address); ?></p>
+        <p><?php echo e($order_master->district); ?>, <?php echo e($order_master->state); ?></p>
+        <p>Pin: <?php echo e($order_master->pincode); ?></p>
+        <p>Phone: <?php echo e($order_master->phone_number); ?></p>
     </div>
 
     <table class="table">
@@ -157,28 +155,28 @@ margin-bottom: 0.5rem;
         </thead>
         <tbody>
 
-            @php $i = 1; @endphp
+            <?php $i = 1; ?>
 
-            @foreach($order_trans as $item)
+            <?php $__currentLoopData = $order_trans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>
-                <td>{{ $i++ }}</td>
-                <td>({{$item->pro_code}})</td>
-                <td>{{ $item->name }}({{$item->size}})</td>
-                <td>₹{{$item->mrp}}</td>
-                <td>₹{{ $item->sr }}</td>
-                <td>{{ $item->qty }}</td>
-                <td>₹{{ $item->sr * $item->qty}}</td>
+                <td><?php echo e($i++); ?></td>
+                <td>(<?php echo e($item->pro_code); ?>)</td>
+                <td><?php echo e($item->name); ?>(<?php echo e($item->size); ?>)</td>
+                <td>₹<?php echo e($item->mrp); ?></td>
+                <td>₹<?php echo e($item->sr); ?></td>
+                <td><?php echo e($item->qty); ?></td>
+                <td>₹<?php echo e($item->sr * $item->qty); ?></td>
             </tr>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
         </tbody>
     </table>
 
     <div class="total-box">
-        <p>Subtotal: ₹ {{ $order_master->total_mrp}}</p>
-        <p>Discount: ₹ {{ $order_master->total_mrp - $order_master->total_sr }}</p>
+        <p>Subtotal: ₹ <?php echo e($order_master->total_mrp); ?></p>
+        <p>Discount: ₹ <?php echo e($order_master->total_mrp - $order_master->total_sr); ?></p>
          <p>Shipping Charge: ₹ 60 </p>
-        <h3>Grand Total: ₹ {{ $order_master->total_amount }}</h3>
+        <h3>Grand Total: ₹ <?php echo e($order_master->total_amount); ?></h3>
     </div>
 
 </div>
@@ -187,6 +185,8 @@ margin-bottom: 0.5rem;
  <button class="print-btn" onclick="window.print()">Print Invoice</button>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
 
+
+<?php echo $__env->make('layouts.weblayout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\ebook\resources\views/web/orderview.blade.php ENDPATH**/ ?>

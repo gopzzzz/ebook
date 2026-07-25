@@ -408,5 +408,31 @@ document.getElementById('payBtn').onclick = function () {
 
 });
 </script>
+
+
+<script>
+$(document).ready(function () {
+    $('.brand-filter').on('change', function () {
+        $('#filterForm').submit();
+    });
+});
+</script>
+<script>
+function searchProducts() {
+    let keyword = document.getElementById('searchInput').value.trim();
+
+    if (keyword !== '') {
+        window.location.href = "<?php echo e(route('products.search')); ?>?keyword=" + encodeURIComponent(keyword);
+    }
+}
+
+document.getElementById('searchBtn').addEventListener('click', searchProducts);
+
+document.getElementById('searchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        searchProducts();
+    }
+});
+</script>
 <!-- <script src="<?php echo e(asset('public/app.js')); ?>"></script> -->
 <?php /**PATH C:\xampp\htdocs\ebook\resources\views/layouts/webpartials/footerscript.blade.php ENDPATH**/ ?>

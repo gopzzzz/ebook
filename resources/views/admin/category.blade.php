@@ -42,13 +42,20 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
+               <div class="mb-3">
+                <label class="form-label">Type</label>
+                <select class="form-control" name="type">
+                  <option value="0">Main Category</option>
+                   <option value="1">Under Gaming </option>
+                 </select>
+              </div>
               <div class="mb-3">
                 <label class="form-label">Category</label>
                 <input type="text" name="category_name" class="form-control" placeholder="Enter Name" required>
               </div>
               <div class="mb-3">
                 <label class="form-label">Image</label>
-                <input type="file" name="image" class="form-control" accept="image/png,image/jpeg" required>
+                <input type="file" name="image" class="form-control" accept="image/png,image/jpeg" >
 </div>
             </div>
             <div class="modal-footer">
@@ -75,7 +82,7 @@
       <tbody> @foreach ($categories as $category) <tr>
          <td>{{ $categories->firstItem() + $loop->index }}</td>
           <td>
-            {{ $category->category_name }}
+           @if($category->main_id==1) Gaming ->  @endif{{ $category->category_name }} 
           </td>
 
            <td>
@@ -87,7 +94,7 @@
                 <i class="bx bx-dots-vertical-rounded"></i>
               </button>
               <div class="dropdown-menu">
-                <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Editmodal"  data-image="{{ $category->image }}" data-id="{{ $category->id }}" data-name="{{ $category->category_name }}">
+                <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Editmodal"  data-image="{{ $category->image }}" data-id="{{ $category->id }}" data-name="{{ $category->category_name }}" data-mainid="{{ $category->main_id }}">
                   <i class="bx bx-edit-alt me-1"></i> Edit </a>
                 <a class="dropdown-item  delete-btn" href="{{ route('categories.delete', $category->id) }}">
                   <i class="bx bx-trash me-1"></i> Delete </a>
@@ -107,10 +114,13 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-              <div class="mb-3">
-                <label class="form-label">Current Image</label>
-                <br>
-                <img id="editBannerPreview" src="" class="img-thumbnail mb-2" width="120">
+         
+                 <div class="mb-3">
+                <label class="form-label">Type</label>
+                <select class="form-control" name="type" id="typeid">
+                  <option value="0">Main Category</option>
+                   <option value="1">Under Gaming </option>
+                 </select>
               </div>
               <div class="mb-3">
                 <label class="form-label">Category Name</label>
@@ -135,11 +145,14 @@
         const editModal = document.getElementById('Editmodal');
         const form = document.getElementById('editCategoryForm');
         const nameInput = document.getElementById('editCategoryName');
+          const mainiInput = document.getElementById('typeid');
         editModal.addEventListener('show.bs.modal', function(event) {
           const button = event.relatedTarget;
           const id = button.getAttribute('data-id');
           const name = button.getAttribute('data-name');
+          const main = button.getAttribute('data-mainid');
           nameInput.value = name;
+           mainiInput.value = main;
           form.action = "{{ url('categories/update') }}/" + button.dataset.id;
          
         });

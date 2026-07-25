@@ -114,13 +114,13 @@
 
     <div class="policy-hero">
         <h1>Shipping & Replacement Policy</h1>
-        <p>Brandson Clothings – Last Updated: 02 March 2024</p>
+        <p>{{$app_profile->name}}  – Last Updated: 02 March 2024</p>
     </div>
 
     <div class="policy-container">
 
         <p>
-            Thank you for shopping with <strong>Brandson Clothings</strong>. We are committed to delivering 
+            Thank you for shopping with <strong>{{$app_profile->name}} </strong>. We are committed to delivering 
             your orders quickly and ensuring a smooth experience.
         </p>
 
@@ -175,8 +175,8 @@
             <h2><span>5</span>Contact Us</h2>
             <div class="policy-contact">
                 <p>For support or replacement requests:</p>
-                <p><strong>📧 support@brandsonclothings.com</strong></p>
-                <p><strong>📞 +91 80759 50651</strong></p>
+                <p><strong>📧 {{$app_profile->email}}</strong></p>
+                <p><strong>📞 +91 {{$app_profile->phone_number}}</strong></p>
                 <p><small>Available 24×7</small></p>
             </div>
         </div>

@@ -74,26 +74,35 @@
             <input type="range" min="0" max="30000" value="25000" step="500" id="gPriceRange" class="g-range" />
             <button class="g-btn g-btn-ghost" style="width:100%;justify-content:center;padding:0.5rem;font-size:0.65rem;" onclick="gShowToast('PRICE FILTER APPLIED')">APPLY FILTER</button>
           </div> -->
+<form id="filterForm" method="GET" action="<?php echo e(url()->current()); ?>">
+        <div class="g-sidebar-card">
+    <div class="g-sidebar-title">// Brands</div>
 
-          <div class="g-sidebar-card">
-            <div class="g-sidebar-title">// Brands</div>
-            <div class="g-check-list">
-              <label class="g-check"><input type="checkbox" checked /><span>HyperX</span><span class="cnt">2</span></label>
-              <label class="g-check"><input type="checkbox" checked /><span>Logitech</span><span class="cnt">1</span></label>
-              <label class="g-check"><input type="checkbox" checked /><span>Razer</span><span class="cnt">1</span></label>
-              <label class="g-check"><input type="checkbox" checked /><span>Corsair</span><span class="cnt">1</span></label>
-              <label class="g-check"><input type="checkbox" checked /><span>Microsoft</span><span class="cnt">1</span></label>
-              <label class="g-check"><input type="checkbox" /><span>SteelSeries</span><span class="cnt">0</span></label>
-              <label class="g-check"><input type="checkbox" /><span>Green Soul</span><span class="cnt">1</span></label>
-            </div>
-          </div>
+    <div class="g-check-list">
+        <?php $__currentLoopData = $brands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <label class="g-check">
+                <input
+                    type="checkbox"
+                    name="brands[]"
+                    value="<?php echo e($brand->id); ?>"
+                    class="brand-filter"
+                    <?php echo e(in_array($brand->id, request()->brands ?? []) ? 'checked' : ''); ?>
+
+                >
+                <span><?php echo e($brand->author_name); ?></span>
+             
+            </label>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    </div>
+</div>
+</form>
 
         
 
           <div class="g-sidebar-card">
             <div class="g-sidebar-title">// Stock Status</div>
             <div class="g-check-list">
-              <label class="g-check"><input type="checkbox" checked /><span>In Stock</span></label>
+              <label class="g-check"><input type="checkbox"  /><span>In Stock</span></label>
               <label class="g-check"><input type="checkbox" /><span>Pre-Order</span></label>
             </div>
           </div>
@@ -129,7 +138,9 @@
           <div class="g-card-img-wrap">
            
            
+           <a href="<?php echo e(url('gaming-product-detail/'.$p->slug)); ?>"> 
             <img src="<?php echo e(asset('public/assets/img/items/'.$p->image)); ?>" alt="<?php echo e($p->name); ?>" class="g-card-img" loading="lazy" />
+            </a>
          
             <div class="g-card-overlay">
               
@@ -193,6 +204,7 @@
   </div>
   <button class="g-back-top" id="gBackTop"><i class="ri-arrow-up-line"></i></button>
 <?php $__env->stopSection(); ?>
+
 
 
 

@@ -104,7 +104,7 @@
     </div>
   </section>
 
-   <section class="products-section" >
+   <section class="products-section new-arrivals" >
     <div class="container">
       <div class="section-header">
         <div>

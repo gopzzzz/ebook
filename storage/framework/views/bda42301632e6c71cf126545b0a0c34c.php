@@ -6,7 +6,7 @@
       </a>
     
       <div class="g-actions">
-        <a href="<?php echo e(url('/index')); ?>" class="g-action-btn" title="Back to Store"><i class="ri-store-line"></i></a>
+        <a href="<?php echo e(url('/')); ?>" class="g-action-btn" title="Back to Store"><i class="ri-store-line"></i></a>
         
           <?php if(Auth::check()): ?>
            <a href="<?php echo e(url('userprofile')); ?>" class="g-action-btn"><i class="ri-user-line"></i></a>
@@ -25,7 +25,7 @@
     
     <nav class="g-nav" id="gNav">
       <div class="g-nav-inner g-container">
-        <a href="<?php echo e(url('/index')); ?>" class="g-nav-link home-link"><i class="ri-arrow-left-line"></i> Main Store</a>
+        <a href="<?php echo e(url('/')); ?>" class="g-nav-link home-link"><i class="ri-arrow-left-line"></i> Main Store</a>
          <?php $__currentLoopData = $gamecategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gcat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <a href="<?php echo e(url('gaming-products/'.$gcat->id)); ?>" class="g-nav-link "><i class="ri-gamepad-line"></i> <?php echo e($gcat->category_name); ?></a>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

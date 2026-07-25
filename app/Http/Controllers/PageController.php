@@ -51,5 +51,8 @@ public function termconditions(){
 public function refund(){
     return view('pages.refund');
 }
+public function cancellation(){
+     return view('pages.cancellation');
+}
 
 }

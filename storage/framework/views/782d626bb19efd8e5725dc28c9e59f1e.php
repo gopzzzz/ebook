@@ -39,13 +39,13 @@
     <div class="row mb-5">
         <div class="col-lg-10 mx-auto">
             <p>
-                Welcome to <span class="highlight">Brandson Clothings</span>, your trusted fashion destination based in
+                Welcome to <span class="highlight">Pouch Gallery</span>, your trusted fashion destination based in
                 <strong>Thodupuzha, Kerala</strong>. We are passionate about bringing the latest trends,
                 premium-quality apparel, and affordable fashion to customers across India.
             </p>
 
             <p>
-                At Brandson Clothings, we believe that great style should be accessible to everyone.
+                At Pouch Gallery, we believe that great style should be accessible to everyone.
                 Our collections are carefully selected to offer the perfect blend of comfort, quality,
                 and modern fashion, helping you look and feel your best every day.
             </p>

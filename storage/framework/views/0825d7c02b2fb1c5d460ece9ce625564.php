@@ -113,13 +113,13 @@
 
     <div class="tc-hero">
         <h1>Terms & Conditions</h1>
-        <p>Brandson Clothings – Effective from June 1, 2026</p>
+        <p><?php echo e($app_profile->name); ?> – Effective from July  25, 2026</p>
     </div>
 
     <div class="tc-container">
 
         <p>
-            Welcome to <strong>Brandson Clothings</strong>. By accessing our website, you agree to comply 
+            Welcome to <strong><?php echo e($app_profile->name); ?> </strong>. By accessing our website, you agree to comply 
             with the following Terms & Conditions.
         </p>
 
@@ -137,7 +137,7 @@
 
         <div class="tc-section">
             <h2><span>2</span>Content Ownership</h2>
-            <p>All materials belong to Brandson Clothings and are protected by law.</p>
+            <p>All materials belong to <?php echo e($app_profile->name); ?>  and are protected by law.</p>
             <ul>
                 <li>No copying or reuse without permission</li>
                 <li>No harmful or illegal content submissions</li>
@@ -159,12 +159,12 @@
 
         <div class="tc-section">
             <h2><span>5</span>Limitation of Liability</h2>
-            <p>Brandson Clothings is not liable for damages arising from usage.</p>
+            <p><?php echo e($app_profile->name); ?>  is not liable for damages arising from usage.</p>
         </div>
 
         <div class="tc-section">
             <h2><span>6</span>Indemnification</h2>
-            <p>You agree to protect Brandson Clothings from claims or losses.</p>
+            <p>You agree to protect <?php echo e($app_profile->name); ?>  from claims or losses.</p>
         </div>
 
         <div class="tc-section">
@@ -196,7 +196,7 @@
             <h2><span>12</span>Contact</h2>
             <div class="tc-contact">
                 <p>Need help?</p>
-                <strong>📞 +91 80759 50651</strong>
+                <strong>📞 +91 <?php echo e($app_profile->phone_number); ?></strong>
             </div>
         </div>
 

@@ -1,6 +1,4 @@
-@extends('layouts.weblayout')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
 .privacy-container{
@@ -174,4 +172,6 @@
 
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.weblayout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\ebook\resources\views/pages/privacy.blade.php ENDPATH**/ ?>

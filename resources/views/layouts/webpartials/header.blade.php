@@ -1,13 +1,30 @@
-  <!-- <div class="announcement-bar" id="announcementBar">
-    <div class="announcement-inner">
-      <span>🎮 Free Shipping on Orders above ₹999</span>
-      <span class="sep">|</span>
-      <span>⚡ Use code <strong>POUCH10</strong> for 10% off</span>
-      <span class="sep">|</span>
-      <span>🏆 Official Dealer – 100% Authentic Products</span>
+  <div class="top-announcement-ticker" role="region" aria-label="Store Announcements">
+    <div class="ticker-track">
+      {{-- Group 1 --}}
+      <div class="ticker-item"><i class="ri-truck-line icon-green"></i> <span>FREE 24HR DELIVERY IN TRIVANDRUM</span></div>
+      <span class="ticker-sep">|</span>
+      <div class="ticker-item"><i class="ri-award-fill icon-gold"></i> <span>31+ YEARS EXPERIENCE</span></div>
+      <span class="ticker-sep">|</span>
+      <div class="ticker-item"><i class="ri-shield-check-fill icon-cyan"></i> <span>100% AUTHENTIC BRAND WARRANTY</span></div>
+      <span class="ticker-sep">|</span>
+      <div class="ticker-item"><i class="ri-flashlight-fill icon-yellow"></i> <span>SAME DAY DISPATCH ON GAMING GEAR</span></div>
+      <span class="ticker-sep">|</span>
+      <div class="ticker-item"><i class="ri-customer-service-2-fill icon-green"></i> <span>PREMIUM AFTER-SALES SUPPORT IN KERALA</span></div>
+      <span class="ticker-sep">|</span>
+
+      {{-- Group 2 (Duplicate for infinite seamless scrolling) --}}
+      <div class="ticker-item"><i class="ri-truck-line icon-green"></i> <span>FREE 24HR DELIVERY IN TRIVANDRUM</span></div>
+      <span class="ticker-sep">|</span>
+      <div class="ticker-item"><i class="ri-award-fill icon-gold"></i> <span>31+ YEARS EXPERIENCE</span></div>
+      <span class="ticker-sep">|</span>
+      <div class="ticker-item"><i class="ri-shield-check-fill icon-cyan"></i> <span>100% AUTHENTIC BRAND WARRANTY</span></div>
+      <span class="ticker-sep">|</span>
+      <div class="ticker-item"><i class="ri-flashlight-fill icon-yellow"></i> <span>SAME DAY DISPATCH ON GAMING GEAR</span></div>
+      <span class="ticker-sep">|</span>
+      <div class="ticker-item"><i class="ri-customer-service-2-fill icon-green"></i> <span>PREMIUM AFTER-SALES SUPPORT IN KERALA</span></div>
+      <span class="ticker-sep">|</span>
     </div>
-    <button class="ann-close" id="annClose" aria-label="Close announcement"><i class="ri-close-line"></i></button>
-  </div> -->
+  </div>
 
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
@@ -28,8 +45,9 @@
     </button>
 </div>
       <div class="header-actions">
-       
-        
+        <button class="hdr-btn mobile-search-toggle" id="mobileSearchBtn" aria-label="Toggle Search">
+          <i class="ri-search-line"></i>
+        </button>
 
           @if(Auth::check())
           <a href="{{url('userprofile')}}" class="hdr-btn" aria-label="Account">
@@ -112,6 +130,9 @@
             <a href="{{url('productlist/'.$cat->id)}}" class="nav-link">{{$cat->category_name}}</a>
           </li>
           @endforeach
+          <li class="nav-item">
+            <a href="{{url('/#our-brands')}}" class="nav-link">Our Brands</a>
+          </li>
         
         </ul>
       </div>

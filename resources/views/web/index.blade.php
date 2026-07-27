@@ -5,10 +5,8 @@
     <div class="hero-slider" id="heroSlider">
 
       @foreach($banner as $key => $b)
-      <div class="hero-slide {{ $key == 0 ? 'active' : '' }}">
-        <div class="hero-bg" style="background: #f7f7f7;">
-          <div class="hero-particles"></div>
-        </div>
+      <div class="hero-slide {{ $key == 0 ? 'active' : '' }}" style="background-image: url('{{ asset('public/uploads/banners/'.$b->banner) }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+        <div class="hero-overlay"></div>
         <div class="hero-content-wrap">
           <div class="hero-text">
             <div class="hero-tag">🔥 Special Offer</div>
@@ -25,10 +23,6 @@
               <div class="stat-sep"></div>
               <div class="stat"><strong>4.9★</strong><span>Avg Rating</span></div>
             </div>
-          </div>
-          <div class="hero-image-wrap">
-            <div class="hero-glow"></div>
-            <img src="{{asset('public/uploads/banners/'.$b->banner)}}" alt="Banner image" class="hero-img" style="border-radius: 10px;" />
           </div>
         </div>
       </div>
@@ -75,6 +69,52 @@
             <div class="trust-desc">We're always here to help</div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── OUR BRANDS SCROLLING MARQUEE ─── -->
+  <section class="brands-section" id="our-brands">
+    <div class="container">
+      <div class="brands-header">
+        <h2>Our Brands</h2>
+      </div>
+    </div>
+    <div class="brands-marquee-wrap">
+      <div class="brands-track">
+        {{-- Set 1 --}}
+        <div class="brand-card"><span class="brand-logo-crucial">crucial.</span></div>
+        <div class="brand-card"><div class="brand-logo-deepcool">DEEPCOOL <i class="ri-cpu-line"></i></div></div>
+        <div class="brand-card"><div class="brand-logo-dell">DELL</div></div>
+        <div class="brand-card"><div class="brand-logo-digitech"><i class="ri-grid-fill"></i> DigiTech</div></div>
+        <div class="brand-card"><div class="brand-logo-dji">dji</div></div>
+        <div class="brand-card"><div class="brand-logo-edifier">EDIFIER</div></div>
+        <div class="brand-card"><div class="brand-logo-elgato"><i class="ri-gamepad-line"></i> elgato</div></div>
+        <div class="brand-card"><div class="brand-logo-epson">EPSON</div></div>
+        <div class="brand-card"><div class="brand-logo-evm"><i class="ri-disc-line"></i> EVM</div></div>
+        <div class="brand-card"><div class="brand-logo-logitech"><i class="ri-base-station-line"></i> logitech <span>G</span></div></div>
+        <div class="brand-card"><div class="brand-logo-razer">RAZER</div></div>
+        <div class="brand-card"><div class="brand-logo-corsair"><i class="ri-vip-diamond-fill"></i> CORSAIR</div></div>
+        <div class="brand-card"><div class="brand-logo-steelseries"><i class="ri-sound-module-line"></i> steelseries</div></div>
+        <div class="brand-card"><div class="brand-logo-hyperx">HyperX</div></div>
+        <div class="brand-card"><div class="brand-logo-rog"><i class="ri-eye-line"></i> ROG</div></div>
+
+        {{-- Set 2 (Duplicate for seamless infinite scrolling loop) --}}
+        <div class="brand-card"><span class="brand-logo-crucial">crucial.</span></div>
+        <div class="brand-card"><div class="brand-logo-deepcool">DEEPCOOL <i class="ri-cpu-line"></i></div></div>
+        <div class="brand-card"><div class="brand-logo-dell">DELL</div></div>
+        <div class="brand-card"><div class="brand-logo-digitech"><i class="ri-grid-fill"></i> DigiTech</div></div>
+        <div class="brand-card"><div class="brand-logo-dji">dji</div></div>
+        <div class="brand-card"><div class="brand-logo-edifier">EDIFIER</div></div>
+        <div class="brand-card"><div class="brand-logo-elgato"><i class="ri-gamepad-line"></i> elgato</div></div>
+        <div class="brand-card"><div class="brand-logo-epson">EPSON</div></div>
+        <div class="brand-card"><div class="brand-logo-evm"><i class="ri-disc-line"></i> EVM</div></div>
+        <div class="brand-card"><div class="brand-logo-logitech"><i class="ri-base-station-line"></i> logitech <span>G</span></div></div>
+        <div class="brand-card"><div class="brand-logo-razer">RAZER</div></div>
+        <div class="brand-card"><div class="brand-logo-corsair"><i class="ri-vip-diamond-fill"></i> CORSAIR</div></div>
+        <div class="brand-card"><div class="brand-logo-steelseries"><i class="ri-sound-module-line"></i> steelseries</div></div>
+        <div class="brand-card"><div class="brand-logo-hyperx">HyperX</div></div>
+        <div class="brand-card"><div class="brand-logo-rog"><i class="ri-eye-line"></i> ROG</div></div>
       </div>
     </div>
   </section>
@@ -870,6 +910,39 @@
         }
       });
     })();
+
+    /* ── Hero Slider Auto & Manual Navigation ── */
+    document.addEventListener('DOMContentLoaded', function() {
+      const slides = document.querySelectorAll('.hero-slide');
+      const dots = document.querySelectorAll('.hero-dot');
+      if (slides.length <= 1) return;
+      
+      let current = 0;
+      let timer;
+
+      function goTo(n) {
+        slides[current]?.classList.remove('active');
+        dots[current]?.classList.remove('active');
+        current = (n + slides.length) % slides.length;
+        slides[current]?.classList.add('active');
+        dots[current]?.classList.add('active');
+      }
+
+      function next() { goTo(current + 1); }
+      function prev() { goTo(current - 1); }
+      function startTimer() { 
+        if (timer) clearInterval(timer); 
+        timer = setInterval(next, 5000); 
+      }
+
+      document.getElementById('heroNext')?.addEventListener('click', () => { next(); startTimer(); });
+      document.getElementById('heroPrev')?.addEventListener('click', () => { prev(); startTimer(); });
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => { goTo(i); startTimer(); });
+      });
+
+      startTimer();
+    });
   </script>
 
 @endsection

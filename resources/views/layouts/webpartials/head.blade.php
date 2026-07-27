@@ -17,7 +17,7 @@
 
 		<link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
 
-		<link rel="stylesheet" type="text/css" href="{{asset('public/style.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('public/style.css')}}?v={{ time() }}">
 
 		
 	

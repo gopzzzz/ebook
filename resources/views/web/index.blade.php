@@ -912,37 +912,64 @@
     })();
 
     /* ── Hero Slider Auto & Manual Navigation ── */
-    document.addEventListener('DOMContentLoaded', function() {
-      const slides = document.querySelectorAll('.hero-slide');
-      const dots = document.querySelectorAll('.hero-dot');
-      if (slides.length <= 1) return;
-      
-      let current = 0;
-      let timer;
+    (function initHeroCarousel() {
+      function runSlider() {
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.hero-dot');
+        const nextBtn = document.getElementById('heroNext');
+        const prevBtn = document.getElementById('heroPrev');
 
-      function goTo(n) {
-        slides[current]?.classList.remove('active');
-        dots[current]?.classList.remove('active');
-        current = (n + slides.length) % slides.length;
-        slides[current]?.classList.add('active');
-        dots[current]?.classList.add('active');
+        if (!slides || slides.length <= 1) return;
+        
+        let current = 0;
+        let timer;
+
+        function goTo(n) {
+          if (slides[current]) slides[current].classList.remove('active');
+          if (dots[current]) dots[current].classList.remove('active');
+          current = (n + slides.length) % slides.length;
+          if (slides[current]) slides[current].classList.add('active');
+          if (dots[current]) dots[current].classList.add('active');
+        }
+
+        function next() { goTo(current + 1); }
+        function prev() { goTo(current - 1); }
+        function startTimer() { 
+          if (timer) clearInterval(timer); 
+          timer = setInterval(next, 5500); 
+        }
+
+        if (nextBtn) {
+          nextBtn.onclick = function(e) {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            next();
+            startTimer();
+          };
+        }
+        if (prevBtn) {
+          prevBtn.onclick = function(e) {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            prev();
+            startTimer();
+          };
+        }
+        dots.forEach((dot, i) => {
+          dot.onclick = function(e) {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            goTo(i);
+            startTimer();
+          };
+        });
+
+        startTimer();
       }
 
-      function next() { goTo(current + 1); }
-      function prev() { goTo(current - 1); }
-      function startTimer() { 
-        if (timer) clearInterval(timer); 
-        timer = setInterval(next, 5000); 
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', runSlider);
+      } else {
+        runSlider();
       }
-
-      document.getElementById('heroNext')?.addEventListener('click', () => { next(); startTimer(); });
-      document.getElementById('heroPrev')?.addEventListener('click', () => { prev(); startTimer(); });
-      dots.forEach((dot, i) => {
-        dot.addEventListener('click', () => { goTo(i); startTimer(); });
-      });
-
-      startTimer();
-    });
+    })();
   </script>
 
 @endsection

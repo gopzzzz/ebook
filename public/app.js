@@ -142,23 +142,25 @@ function attachCardEvents(container) {
 // ─── HERO SLIDER ──────────────────────────────────────────────
 function initHeroSlider() {
   const slides = $$('.hero-slide'), dots = $$('.hero-dot');
-  if (!slides.length) return;
+  if (!slides || slides.length <= 1) return;
   let current = 0, timer;
 
   function goTo(n) {
-    slides[current].classList.remove('active');
-    dots[current]?.classList.remove('active');
+    if (slides[current]) slides[current].classList.remove('active');
+    if (dots[current]) dots[current].classList.remove('active');
     current = (n + slides.length) % slides.length;
-    slides[current].classList.add('active');
-    dots[current]?.classList.add('active');
+    if (slides[current]) slides[current].classList.add('active');
+    if (dots[current]) dots[current].classList.add('active');
   }
   function next() { goTo(current + 1); }
   function prev() { goTo(current - 1); }
-  function startTimer() { clearInterval(timer); timer = setInterval(next, 5000); }
+  function startTimer() { clearInterval(timer); timer = setInterval(next, 5500); }
 
-  $('#heroNext')?.addEventListener('click', () => { next(); startTimer(); });
-  $('#heroPrev')?.addEventListener('click', () => { prev(); startTimer(); });
-  dots.forEach((dot, i) => dot.addEventListener('click', () => { goTo(i); startTimer(); }));
+  const nextBtn = $('#heroNext');
+  const prevBtn = $('#heroPrev');
+  if (nextBtn) nextBtn.onclick = (e) => { if (e) { e.preventDefault(); e.stopPropagation(); } next(); startTimer(); };
+  if (prevBtn) prevBtn.onclick = (e) => { if (e) { e.preventDefault(); e.stopPropagation(); } prev(); startTimer(); };
+  dots.forEach((dot, i) => dot.onclick = (e) => { if (e) { e.preventDefault(); e.stopPropagation(); } goTo(i); startTimer(); });
   startTimer();
 }
 

@@ -352,25 +352,26 @@ input, select, textarea { font-family: inherit; }
 .hero-tag {
   display: inline-flex; align-items: center; gap: .5rem;
   font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-  color: #ffffff;
+  color: #ffffff !important;
   background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.28);
   padding: .4rem 1.2rem; border-radius: 99px; margin-bottom: 1.5rem;
   backdrop-filter: blur(10px);
+  text-shadow: none !important;
 }
 
-/* Main title — crisp bright white */
+/* Main title — crisp bright white without dark shade */
 .hero-title {
   font-size: clamp(2.8rem, 5.5vw, 4.5rem); font-weight: 900;
   line-height: 1.08; letter-spacing: -.03em; margin-bottom: 1.5rem;
-  color: #ffffff;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  color: #ffffff !important;
+  text-shadow: none !important;
 }
-.gradient-text { color: #ffffff; }
+.gradient-text { color: #ffffff !important; text-shadow: none !important; }
 
 .hero-desc {
-  font-size: 1.15rem; color: rgba(255,255,255,0.88); line-height: 1.75;
+  font-size: 1.15rem; color: #ffffff !important; line-height: 1.75;
   margin-bottom: 2.5rem; max-width: 550px;
-  text-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  text-shadow: none !important;
 }
 .hero-cta-group { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
 
@@ -396,8 +397,8 @@ input, select, textarea { font-family: inherit; }
   display: flex; gap: 2.5rem; padding-top: 2.25rem;
   border-top: 1px solid rgba(255,255,255,0.25);
 }
-.stat strong { display: block; font-size: 1.6rem; font-weight: 900; color: #ffffff; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
-.stat span { font-size: .75rem; color: rgba(255,255,255,0.75); text-transform: uppercase; letter-spacing: .1em; font-weight: 600; }
+.stat strong { display: block; font-size: 1.6rem; font-weight: 900; color: #ffffff !important; text-shadow: none !important; }
+.stat span { font-size: .75rem; color: #ffffff !important; text-transform: uppercase; letter-spacing: .1em; font-weight: 600; text-shadow: none !important; }
 .stat-sep { width: 1px; background: rgba(255,255,255,0.25); }
 
 /* Slider navigation arrows and dots */

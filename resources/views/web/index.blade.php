@@ -83,38 +83,48 @@
     <div class="brands-marquee-wrap">
       <div class="brands-track">
         {{-- Set 1 --}}
-        <div class="brand-card"><span class="brand-logo-crucial">crucial.</span></div>
-        <div class="brand-card"><div class="brand-logo-deepcool">DEEPCOOL <i class="ri-cpu-line"></i></div></div>
-        <div class="brand-card"><div class="brand-logo-dell">DELL</div></div>
-        <div class="brand-card"><div class="brand-logo-digitech"><i class="ri-grid-fill"></i> DigiTech</div></div>
-        <div class="brand-card"><div class="brand-logo-dji">dji</div></div>
-        <div class="brand-card"><div class="brand-logo-edifier">EDIFIER</div></div>
-        <div class="brand-card"><div class="brand-logo-elgato"><i class="ri-gamepad-line"></i> elgato</div></div>
-        <div class="brand-card"><div class="brand-logo-epson">EPSON</div></div>
-        <div class="brand-card"><div class="brand-logo-evm"><i class="ri-disc-line"></i> EVM</div></div>
-        <div class="brand-card"><div class="brand-logo-logitech"><i class="ri-base-station-line"></i> logitech <span>G</span></div></div>
-        <div class="brand-card"><div class="brand-logo-razer">RAZER</div></div>
-        <div class="brand-card"><div class="brand-logo-corsair"><i class="ri-vip-diamond-fill"></i> CORSAIR</div></div>
-        <div class="brand-card"><div class="brand-logo-steelseries"><i class="ri-sound-module-line"></i> steelseries</div></div>
-        <div class="brand-card"><div class="brand-logo-hyperx">HyperX</div></div>
-        <div class="brand-card"><div class="brand-logo-rog"><i class="ri-eye-line"></i> ROG</div></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/asus.svg') }}" alt="ASUS" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/corsair.svg') }}" alt="Corsair" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/razer.svg') }}" alt="Razer" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/intel.svg') }}" alt="Intel" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/amd.svg') }}" alt="AMD" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/nvidia.svg') }}" alt="NVIDIA" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/msi.svg') }}" alt="MSI" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/dell.svg') }}" alt="DELL" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/steelseries.svg') }}" alt="SteelSeries" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/samsung.svg') }}" alt="Samsung" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/elgato.svg') }}" alt="Elgato" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/jbl.svg') }}" alt="JBL" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/lenovo.svg') }}" alt="Lenovo" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/sony.svg') }}" alt="Sony" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/lg.svg') }}" alt="LG" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/dji.svg') }}" alt="DJI" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/epson.svg') }}" alt="Epson" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/acer.svg') }}" alt="Acer" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/hp.svg') }}" alt="HP" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/apple.svg') }}" alt="Apple" class="brand-img" /></div>
 
         {{-- Set 2 (Duplicate for seamless infinite scrolling loop) --}}
-        <div class="brand-card"><span class="brand-logo-crucial">crucial.</span></div>
-        <div class="brand-card"><div class="brand-logo-deepcool">DEEPCOOL <i class="ri-cpu-line"></i></div></div>
-        <div class="brand-card"><div class="brand-logo-dell">DELL</div></div>
-        <div class="brand-card"><div class="brand-logo-digitech"><i class="ri-grid-fill"></i> DigiTech</div></div>
-        <div class="brand-card"><div class="brand-logo-dji">dji</div></div>
-        <div class="brand-card"><div class="brand-logo-edifier">EDIFIER</div></div>
-        <div class="brand-card"><div class="brand-logo-elgato"><i class="ri-gamepad-line"></i> elgato</div></div>
-        <div class="brand-card"><div class="brand-logo-epson">EPSON</div></div>
-        <div class="brand-card"><div class="brand-logo-evm"><i class="ri-disc-line"></i> EVM</div></div>
-        <div class="brand-card"><div class="brand-logo-logitech"><i class="ri-base-station-line"></i> logitech <span>G</span></div></div>
-        <div class="brand-card"><div class="brand-logo-razer">RAZER</div></div>
-        <div class="brand-card"><div class="brand-logo-corsair"><i class="ri-vip-diamond-fill"></i> CORSAIR</div></div>
-        <div class="brand-card"><div class="brand-logo-steelseries"><i class="ri-sound-module-line"></i> steelseries</div></div>
-        <div class="brand-card"><div class="brand-logo-hyperx">HyperX</div></div>
-        <div class="brand-card"><div class="brand-logo-rog"><i class="ri-eye-line"></i> ROG</div></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/asus.svg') }}" alt="ASUS" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/corsair.svg') }}" alt="Corsair" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/razer.svg') }}" alt="Razer" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/intel.svg') }}" alt="Intel" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/amd.svg') }}" alt="AMD" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/nvidia.svg') }}" alt="NVIDIA" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/msi.svg') }}" alt="MSI" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/dell.svg') }}" alt="DELL" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/steelseries.svg') }}" alt="SteelSeries" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/samsung.svg') }}" alt="Samsung" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/elgato.svg') }}" alt="Elgato" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/jbl.svg') }}" alt="JBL" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/lenovo.svg') }}" alt="Lenovo" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/sony.svg') }}" alt="Sony" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/lg.svg') }}" alt="LG" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/dji.svg') }}" alt="DJI" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/epson.svg') }}" alt="Epson" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/acer.svg') }}" alt="Acer" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/hp.svg') }}" alt="HP" class="brand-img" /></div>
+        <div class="brand-card"><img src="{{ asset('public/assets/brands/apple.svg') }}" alt="Apple" class="brand-img" /></div>
       </div>
     </div>
   </section>

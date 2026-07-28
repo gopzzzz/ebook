@@ -560,26 +560,18 @@ html { scroll-behavior: smooth; }
   border-color: #cbd5e1;
 }
 
-/* Brand Custom Typography & Emblem Styles */
-.brand-logo-crucial { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 1.45rem; color: #1e293b; letter-spacing: -0.05em; }
-.brand-logo-deepcool { display: flex; align-items: center; gap: 6px; font-family: 'Orbitron', 'Inter', sans-serif; font-weight: 800; font-size: 0.98rem; color: #0f172a; letter-spacing: 0.03em; }
-.brand-logo-deepcool i { font-size: 1.35rem; color: #3b82f6; }
-.brand-logo-dell { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 1.7rem; color: #0076ce; letter-spacing: -0.06em; transform: scaleY(0.92); }
-.brand-logo-digitech { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 1.2rem; color: #334155; letter-spacing: -0.02em; }
-.brand-logo-digitech i { color: #0284c7; font-size: 1.35rem; }
-.brand-logo-dji { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 1.8rem; font-style: italic; letter-spacing: 0.05em; color: #0f172a; }
-.brand-logo-edifier { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1.18rem; letter-spacing: 0.16em; color: #334155; }
-.brand-logo-elgato { display: flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif; font-weight: 800; font-size: 1.38rem; color: #0055ff; letter-spacing: -0.03em; }
-.brand-logo-elgato i { font-size: 1.5rem; }
-.brand-logo-epson { font-family: 'Arial Black', 'Inter', sans-serif; font-weight: 900; font-size: 1.45rem; letter-spacing: -0.03em; color: #002052; }
-.brand-logo-evm { display: flex; align-items: center; gap: 6px; font-weight: 900; font-size: 1.4rem; color: #dc2626; letter-spacing: -0.03em; }
-.brand-logo-logitech { display: flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif; font-weight: 800; font-size: 1.25rem; color: #0284c7; letter-spacing: -0.04em; }
-.brand-logo-logitech span { background: #0284c7; color: #fff; padding: 1px 6px; border-radius: 4px; font-size: 0.9rem; font-weight: 900; }
-.brand-logo-razer { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 1.2rem; color: #22c55e; letter-spacing: 0.09em; background: #0f172a; padding: 4px 12px; border-radius: 6px; box-shadow: 0 2px 8px rgba(34,197,94,0.25); }
-.brand-logo-corsair { display: flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif; font-weight: 800; font-size: 1.15rem; color: #eab308; letter-spacing: 0.05em; }
-.brand-logo-steelseries { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 1.2rem; color: #ea580c; letter-spacing: -0.03em; }
-.brand-logo-hyperx { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 1.45rem; color: #e1141e; font-style: italic; letter-spacing: -0.03em; }
-.brand-logo-rog { display: flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif; font-weight: 900; font-size: 1.35rem; color: #dc2626; letter-spacing: -0.03em; }
+/* Brand Logo Image & Hover Animation */
+.brand-img {
+  max-width: 115px;
+  max-height: 46px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.3s ease;
+}
+.brand-card:hover .brand-img {
+  transform: scale(1.12);
+}
 
 /* ─── SECTION HEADERS ─── */
 .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }

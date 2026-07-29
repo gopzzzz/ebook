@@ -10,12 +10,22 @@
             $discPct   = ($product->mrp > 0 && $product->mrp > $product->sr)
                          ? round((($product->mrp - $product->sr) / $product->mrp) * 100) : 0;
             $size= $getCart?->size ?? '';
-          
-           
+            
+            $cleanName = html_entity_decode(urldecode($product->name), ENT_QUOTES, 'UTF-8');
+            while(preg_match('/&amp;|&AMP;/i', $cleanName)) {
+                $cleanName = html_entity_decode(str_ireplace(['&amp;', '&AMP;'], '&', $cleanName), ENT_QUOTES, 'UTF-8');
+            }
         @endphp
-
-
-
+        <style>
+            .g-detail-title {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                line-height: 1.3;
+            }
+        </style>
   <div class="g-breadcrumb">
     <div class="g-container">
       <nav class="g-breadcrumb-inner">
@@ -23,7 +33,7 @@
         <i class="ri-arrow-right-s-line"></i>
         <a href="{{url('/gaming-products')}}">GAMING</a>
         <i class="ri-arrow-right-s-line"></i>
-        <span id="gBreadcrumb">{{ Str::limit(strtoupper($product->name), 40) }}</span>
+        <span id="gBreadcrumb">{{ Str::limit(strtoupper($cleanName), 40) }}</span>
       </nav>
     </div>
   </div>
@@ -38,7 +48,7 @@
             <div class="g-corner gc-tr" style="position:absolute;top:0;right:0;width:20px;height:20px;border-top:2px solid var(--g-cyan);border-right:2px solid var(--g-cyan);z-index:2;"></div>
             <div class="g-corner gc-bl" style="position:absolute;bottom:0;left:0;width:20px;height:20px;border-bottom:2px solid var(--g-cyan);border-left:2px solid var(--g-cyan);z-index:2;"></div>
             <div class="g-corner gc-br" style="position:absolute;bottom:0;right:0;width:20px;height:20px;border-bottom:2px solid var(--g-cyan);border-right:2px solid var(--g-cyan);z-index:2;"></div>
-            <img src="{{ asset('public/assets/img/items/'.$product->image) }}" alt="{{$product->name}}" id="gMainImg" style="transition: opacity 0.25s ease-in-out;" />
+            <img src="{{ asset('public/assets/img/items/'.$product->image) }}" alt="{{$cleanName}}" id="gMainImg" style="transition: opacity 0.25s ease-in-out;" />
           </div>
           <div class="g-thumb-row">
             <button class="g-thumb-btn active" onclick="changeImage('{{ asset('public/assets/img/items/'.$product->image) }}', this)"><img src="{{ asset('public/assets/img/items/'.$product->image) }}" alt="View 1" /></button>
@@ -66,7 +76,7 @@
           </div>
 
           <div class="g-detail-eyebrow" id="gDetailBrand">{{ strtoupper($product->author_name ?? 'Brandson') }}</div>
-          <h1 class="g-detail-title" id="gDetailTitle">{{ $product->name }}</h1>
+          <h1 class="g-detail-title" id="gDetailTitle" title="{{ $cleanName }}">{{ $cleanName }}</h1>
 
           <div class="g-detail-rating">
             <span class="g-stars" id="gDetailStars">★★★★½</span>
@@ -153,7 +163,7 @@
         <div class="g-tab-panel active" id="g-tab-description">
           <div style="max-width:780px;">
             <div class="g-section-eyebrow" style="margin-bottom:0.75rem;">PRODUCT OVERVIEW</div>
-            <h3 style="font-family:var(--g-font);font-size:1rem;font-weight:700;text-transform:uppercase;color:#e0e8ff;margin-bottom:1rem;letter-spacing:0.04em;">About {{ $product->name }}</h3>
+            <h3 style="font-family:var(--g-font);font-size:1rem;font-weight:700;text-transform:uppercase;color:#e0e8ff;margin-bottom:1rem;letter-spacing:0.04em;">About {{ $cleanName }}</h3>
             <div style="color:#667788;line-height:1.8;margin-bottom:2rem;font-family:var(--g-font-body);">
               {!! $product->description ?? 'Experience premium gaming with this incredible new product. Designed for precision and built for durability, it helps you reach peak performance in any match.' !!}
             </div>
@@ -268,13 +278,19 @@
       <div class="g-product-grid"  style="grid-template-columns:repeat(4,1fr);">
 
        @foreach($fastmovingProducts as $p)
+        @php
+            $relCleanName = html_entity_decode(urldecode($p->name), ENT_QUOTES, 'UTF-8');
+            while(preg_match('/&amp;|&AMP;/i', $relCleanName)) {
+                $relCleanName = html_entity_decode(str_ireplace(['&amp;', '&AMP;'], '&', $relCleanName), ENT_QUOTES, 'UTF-8');
+            }
+        @endphp
 
           <article class="g-product-card" data-id="{{$p->id}}">
           <div class="g-card-line"></div>
           <div class="g-card-img-wrap">
            
            
-            <img src="{{ asset('public/assets/img/items/'.$p->image) }}" alt="{{$p->name}}" class="g-card-img" loading="lazy" />
+            <img src="{{ asset('public/assets/img/items/'.$p->image) }}" alt="{{$relCleanName}}" class="g-card-img" loading="lazy" />
          
             <div class="g-card-overlay">
               
@@ -283,7 +299,7 @@
           </div>
           <div class="g-card-info">
             <div class="g-card-brand">{{$p->author_name}}</div>
-            <div class="g-card-name">{{$p->name}}</div>
+            <div class="g-card-name" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;" title="{{ $relCleanName }}">{{$relCleanName}}</div>
           
             <div class="g-card-price-row">
               <div>

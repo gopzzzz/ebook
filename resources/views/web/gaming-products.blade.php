@@ -133,6 +133,12 @@
           <div class="g-product-grid" >
 
             @forelse($gamingItems as $p)
+            @php
+                $cleanName = html_entity_decode(urldecode($p->name), ENT_QUOTES, 'UTF-8');
+                while(preg_match('/&amp;|&AMP;/i', $cleanName)) {
+                    $cleanName = html_entity_decode(str_ireplace(['&amp;', '&AMP;'], '&', $cleanName), ENT_QUOTES, 'UTF-8');
+                }
+            @endphp
 
           <article class="g-product-card" data-id="{{$p->id}}">
           <div class="g-card-line"></div>
@@ -140,7 +146,7 @@
            
            
            <a href="{{ url('gaming-product-detail/'.$p->slug) }}"> 
-            <img src="{{ asset('public/assets/img/items/'.$p->image) }}" alt="{{$p->name}}" class="g-card-img" loading="lazy" />
+            <img src="{{ asset('public/assets/img/items/'.$p->image) }}" alt="{{$cleanName}}" class="g-card-img" loading="lazy" />
             </a>
          
             <div class="g-card-overlay">
@@ -150,7 +156,7 @@
           </div>
           <div class="g-card-info">
             <div class="g-card-brand">{{$p->author_name}}</div>
-            <div class="g-card-name">{{$p->name}}</div>
+            <div class="g-card-name" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;" title="{{ $cleanName }}">{{$cleanName}}</div>
           
             <div class="g-card-price-row">
               <div>

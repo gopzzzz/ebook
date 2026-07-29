@@ -436,7 +436,7 @@ document.getElementById('searchInput').addEventListener('keypress', function(e) 
 </script>
 <script>
 // ─── MOBILE MENU TOGGLE & HEADER ENHANCEMENTS ───
-document.addEventListener('DOMContentLoaded', function() {
+$(document).ready(function() {
     const mobileBtn = document.getElementById('mobileMenuBtn');
     const mainNav = document.getElementById('mainNav');
 

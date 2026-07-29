@@ -437,56 +437,40 @@ document.getElementById('searchInput').addEventListener('keypress', function(e) 
 <script>
 // ─── MOBILE MENU TOGGLE & HEADER ENHANCEMENTS ───
 $(document).ready(function() {
-    const mobileBtn = document.getElementById('mobileMenuBtn');
-    const mainNav = document.getElementById('mainNav');
+    $(document).on('click', '#mobileMenuBtn', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $(this).toggleClass('active');
+        $('#mainNav').toggleClass('open');
+    });
 
-    if (mobileBtn && mainNav) {
-        mobileBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            mobileBtn.classList.toggle('active');
-            mainNav.classList.toggle('open');
-        });
+    $(document).on('click', '#mainNav .nav-link', function() {
+        $('#mobileMenuBtn').removeClass('active');
+        $('#mainNav').removeClass('open');
+    });
 
-        // Automatically dismiss mobile menu when clicking any menu link
-        mainNav.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function() {
-                mobileBtn.classList.remove('active');
-                mainNav.classList.remove('open');
-            });
-        });
-
-        // Close menu if user clicks outside of it
-        document.addEventListener('click', function(e) {
-            if (mainNav.classList.contains('open') && !mainNav.contains(e.target) && !mobileBtn.contains(e.target)) {
-                mobileBtn.classList.remove('active');
-                mainNav.classList.remove('open');
-            }
-        });
-    }
+    $(document).on('click', function(e) {
+        if ($('#mainNav').hasClass('open') && !$(e.target).closest('#mainNav').length && !$(e.target).closest('#mobileMenuBtn').length) {
+            $('#mobileMenuBtn').removeClass('active');
+            $('#mainNav').removeClass('open');
+        }
+    });
 
     // ─── MOBILE POP-UP SEARCH TOGGLE ───
-    const mobileSearchBtn = document.getElementById('mobileSearchBtn');
-    const headerSearch = document.getElementById('headerSearch');
-    const searchInput = document.getElementById('searchInput');
+    $(document).on('click', '#mobileSearchBtn', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('#headerSearch').toggleClass('active');
+        if ($('#headerSearch').hasClass('active')) {
+            setTimeout(() => $('#searchInput').focus(), 50);
+        }
+    });
 
-    if (mobileSearchBtn && headerSearch) {
-        mobileSearchBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            headerSearch.classList.toggle('active');
-            if (headerSearch.classList.contains('active') && searchInput) {
-                setTimeout(() => searchInput.focus(), 50);
-            }
-        });
-
-        // Close search popup if user clicks outside of it
-        document.addEventListener('click', function(e) {
-            if (headerSearch.classList.contains('active') && !headerSearch.contains(e.target) && !mobileSearchBtn.contains(e.target)) {
-                headerSearch.classList.remove('active');
-            }
-        });
-    }
+    $(document).on('click', function(e) {
+        if ($('#headerSearch').hasClass('active') && !$(e.target).closest('#headerSearch').length && !$(e.target).closest('#mobileSearchBtn').length) {
+            $('#headerSearch').removeClass('active');
+        }
+    });
 
     // Add scrolled class to sticky header
     const header = document.getElementById('siteHeader');

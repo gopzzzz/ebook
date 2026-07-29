@@ -34,17 +34,17 @@
 
         <div class="g-gallery">
           <div class="g-main-img" id="gMainImgBox">
-            <div class="g-corner gc-tl" style="position:absolute;top:0;left:0;width:20px;height:20px;border-top:2px solid var(--g-cyan);border-left:2px solid var(--g-cyan);"></div>
-            <div class="g-corner gc-tr" style="position:absolute;top:0;right:0;width:20px;height:20px;border-top:2px solid var(--g-cyan);border-right:2px solid var(--g-cyan);"></div>
-            <div class="g-corner gc-bl" style="position:absolute;bottom:0;left:0;width:20px;height:20px;border-bottom:2px solid var(--g-cyan);border-left:2px solid var(--g-cyan);"></div>
-            <div class="g-corner gc-br" style="position:absolute;bottom:0;right:0;width:20px;height:20px;border-bottom:2px solid var(--g-cyan);border-right:2px solid var(--g-cyan);"></div>
-            <img src="{{ asset('public/assets/img/items/'.$product->image) }}" alt="{{$product->name}}" id="gMainImg" />
+            <div class="g-corner gc-tl" style="position:absolute;top:0;left:0;width:20px;height:20px;border-top:2px solid var(--g-cyan);border-left:2px solid var(--g-cyan);z-index:2;"></div>
+            <div class="g-corner gc-tr" style="position:absolute;top:0;right:0;width:20px;height:20px;border-top:2px solid var(--g-cyan);border-right:2px solid var(--g-cyan);z-index:2;"></div>
+            <div class="g-corner gc-bl" style="position:absolute;bottom:0;left:0;width:20px;height:20px;border-bottom:2px solid var(--g-cyan);border-left:2px solid var(--g-cyan);z-index:2;"></div>
+            <div class="g-corner gc-br" style="position:absolute;bottom:0;right:0;width:20px;height:20px;border-bottom:2px solid var(--g-cyan);border-right:2px solid var(--g-cyan);z-index:2;"></div>
+            <img src="{{ asset('public/assets/img/items/'.$product->image) }}" alt="{{$product->name}}" id="gMainImg" style="transition: opacity 0.25s ease-in-out;" />
           </div>
           <div class="g-thumb-row">
-            <button class="g-thumb-btn active"><img src="{{asset('public/assets/keyboard.png')}}" alt="View 1" /></button>
-            <button class="g-thumb-btn"><img src="{{asset('public/assets/mouse.png')}}" alt="View 2" /></button>
-            <button class="g-thumb-btn"><img src="{{asset('public/assets/headset.png')}}" alt="View 3" /></button>
-            <button class="g-thumb-btn"><img src="{{asset('public/assets/mousepad.png')}}" alt="View 4" /></button>
+            <button class="g-thumb-btn active" onclick="changeImage('{{ asset('public/assets/img/items/'.$product->image) }}', this)"><img src="{{ asset('public/assets/img/items/'.$product->image) }}" alt="View 1" /></button>
+            <button class="g-thumb-btn" onclick="changeImage('{{asset('public/assets/mouse.png')}}', this)"><img src="{{asset('public/assets/mouse.png')}}" alt="View 2" /></button>
+            <button class="g-thumb-btn" onclick="changeImage('{{asset('public/assets/headset.png')}}', this)"><img src="{{asset('public/assets/headset.png')}}" alt="View 3" /></button>
+            <button class="g-thumb-btn" onclick="changeImage('{{asset('public/assets/mousepad.png')}}', this)"><img src="{{asset('public/assets/mousepad.png')}}" alt="View 4" /></button>
           </div>
         </div>
 
@@ -301,5 +301,23 @@
 
   <div class="g-toast" id="gToast"><i class="ri-terminal-box-line"></i><span id="gToastMsg">// ITEM ADDED</span></div>
   <button class="g-back-top" id="gBackTop"><i class="ri-arrow-up-line"></i></button>
+
+  <script>
+    function changeImage(newSrc, btnElement) {
+        // Update active class on thumbnails
+        const thumbBtns = document.querySelectorAll('.g-thumb-btn');
+        thumbBtns.forEach(btn => btn.classList.remove('active'));
+        btnElement.classList.add('active');
+
+        // Smooth image transition
+        const mainImg = document.getElementById('gMainImg');
+        mainImg.style.opacity = '0'; // Fade out
+        
+        setTimeout(() => {
+            mainImg.src = newSrc; // Change source
+            mainImg.style.opacity = '1'; // Fade in
+        }, 250); // Wait for fade out to complete
+    }
+  </script>
 
   @endsection

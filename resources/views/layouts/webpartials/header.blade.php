@@ -45,6 +45,16 @@
     </button>
 
     <!-- Search Suggestions Dropdown -->
+    <style>
+    .search-suggestions { position: absolute; top: calc(100% + 10px); left: 0; width: 100%; background: #fff; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid #cbd5e1; max-height: 400px; overflow-y: auto; z-index: 1000; padding: 0.5rem 0; display: none; }
+    .search-suggestions.active { display: block; }
+    .search-suggestion-item { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1rem; cursor: pointer; transition: background 0.2s; text-decoration: none; color: #111827; }
+    .search-suggestion-item:hover { background: #f8fafc; }
+    .search-suggestion-item img { width: 40px; height: 40px; object-fit: cover; border-radius: 6px; }
+    .search-suggestion-item div { display: flex; flex-direction: column; }
+    .search-suggestion-item strong { font-size: 0.95rem; font-weight: 600; }
+    .search-suggestion-item span { font-size: 0.8rem; color: #64748b; }
+    </style>
     <div class="search-suggestions" id="searchSuggestions"></div>
 </div>
       <div class="header-actions">

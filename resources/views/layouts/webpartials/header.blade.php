@@ -43,6 +43,9 @@
     <button class="search-btn" id="searchBtn" aria-label="Search">
         Search
     </button>
+
+    <!-- Search Suggestions Dropdown -->
+    <div class="search-suggestions" id="searchSuggestions"></div>
 </div>
       <div class="header-actions">
         <button class="hdr-btn mobile-search-toggle" id="mobileSearchBtn" aria-label="Toggle Search">

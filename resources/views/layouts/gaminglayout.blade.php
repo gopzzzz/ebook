@@ -3,6 +3,12 @@
      @include('layouts.gamingpartials.head')
 
 <body class="gaming-page">
+ <style>
+ .g-cursor { position: fixed; top: 0; left: 0; width: 20px; height: 20px; border: 2px solid #00f5ff; pointer-events: none; z-index: 999999; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s; box-shadow: 0 0 10px rgba(0,245,255,0.4); }
+ .g-cursor.hover { width: 34px; height: 34px; background-color: rgba(0, 245, 255, 0.1); border-color: #b026ff; box-shadow: 0 0 15px rgba(176,38,255,0.5); }
+ /* Hide default cursor */
+ .gaming-page, .gaming-page * { cursor: none !important; }
+ </style>
  <div class="g-cursor" id="gCursor"></div>
 
  @include('layouts.gamingpartials.header')

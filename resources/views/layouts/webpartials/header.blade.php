@@ -114,7 +114,7 @@
             @foreach($type as $ty)
           <li class="nav-item has-dropdown">
             
-            <a href="{{url('')}}" class="nav-link">{{$ty->name}}<i class="ri-arrow-down-s-line"></i></a>
+            <a href="{{url('')}}" class="nav-link btn-gaming-nav">{{$ty->name}} <i class="ri-arrow-down-s-line"></i></a>
              @php 
               $subcat=DB::table('categories')->where('main_id',$ty->id)->get();
              @endphp

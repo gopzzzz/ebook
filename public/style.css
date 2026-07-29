@@ -1116,6 +1116,30 @@ background-color: #0e7829;
   .cd-box span { font-size: 1.5rem; }
 }
 
+/* ─── GAMING NAV BUTTON ─── */
+.btn-gaming-nav {
+  background-color: #0f172a;
+  color: #ffffff !important;
+  padding: 0.45rem 1.1rem !important;
+  border-radius: 99px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-weight: 700 !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.btn-gaming-nav:hover {
+  background-color: #1e293b;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+.btn-gaming-nav::after {
+  display: none !important; /* Hide default nav link underline */
+}
+
+
 /* ================================================================
    LOGIN & REGISTER — targets exact blade structure:
    .login-card > .card > .card-body

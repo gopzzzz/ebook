@@ -586,9 +586,7 @@ html { scroll-behavior: smooth; }
   width: max-content;
   animation: scrollBrands 42s linear infinite;
 }
-.brands-track:hover {
-  animation-play-state: paused;
-}
+
 @keyframes scrollBrands {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -627,6 +625,39 @@ html { scroll-behavior: smooth; }
 }
 .brand-card:hover img, .brand-card:hover .brand-img {
   transform: scale(1.12);
+}
+
+/* Brand arrow nav buttons */
+.brands-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.brands-arrow-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid #e2e8f0;
+  background: #fff;
+  color: #374151;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  flex-shrink: 0;
+}
+.brands-arrow-btn:hover {
+  background: #111827;
+  border-color: #111827;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  transform: scale(1.08);
+}
+.brands-arrow-btn:active {
+  transform: scale(0.95);
 }
 
 /* ─── SECTION HEADERS ─── */

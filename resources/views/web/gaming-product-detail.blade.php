@@ -25,6 +25,24 @@
                 text-overflow: ellipsis;
                 line-height: 1.3;
             }
+            .g-thumb-row {
+                overflow-x: auto;
+                padding-bottom: 8px;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                scroll-behavior: smooth;
+            }
+            .g-thumb-row::-webkit-scrollbar {
+                display: none;
+            }
+            .g-thumb-btn {
+                -webkit-tap-highlight-color: transparent;
+                outline: none;
+                touch-action: manipulation;
+            }
+            .g-thumb-btn:active {
+                transform: scale(0.95);
+            }
         </style>
   <div class="g-breadcrumb">
     <div class="g-container">
@@ -320,6 +338,8 @@
 
   <script>
     function changeImage(newSrc, btnElement) {
+        if (btnElement.classList.contains('active')) return;
+
         // Update active class on thumbnails
         const thumbBtns = document.querySelectorAll('.g-thumb-btn');
         thumbBtns.forEach(btn => btn.classList.remove('active'));
@@ -331,7 +351,16 @@
         
         setTimeout(() => {
             mainImg.src = newSrc; // Change source
-            mainImg.style.opacity = '1'; // Fade in
+            
+            // Wait for new image to load before fading in to prevent popping
+            if (mainImg.complete) {
+                mainImg.style.opacity = '1';
+            } else {
+                mainImg.onload = () => {
+                    mainImg.style.opacity = '1';
+                    mainImg.onload = null;
+                };
+            }
         }, 250); // Wait for fade out to complete
     }
   </script>

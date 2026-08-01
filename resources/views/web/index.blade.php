@@ -76,8 +76,12 @@
   <!-- ─── OUR BRANDS SCROLLING MARQUEE ─── -->
   <section class="brands-section" id="our-brands">
     <div class="container">
-      <div class="brands-header">
-        <h2>Our Brands</h2>
+      <div class="brands-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+        <h2 style="margin:0;">Our Brands</h2>
+        <div class="brands-nav">
+          <button class="brands-arrow-btn" id="brandsLeft" aria-label="Scroll left"><i class="ri-arrow-left-s-line"></i></button>
+          <button class="brands-arrow-btn" id="brandsRight" aria-label="Scroll right"><i class="ri-arrow-right-s-line"></i></button>
+        </div>
       </div>
     </div>
     <div class="brands-marquee-wrap">
@@ -128,6 +132,53 @@
       </div>
     </div>
   </section>
+
+  <script>
+    (function() {
+      var track = document.querySelector('.brands-track');
+      var leftBtn = document.getElementById('brandsLeft');
+      var rightBtn = document.getElementById('brandsRight');
+      if (!track || !leftBtn || !rightBtn) return;
+
+      var NORMAL_DUR = 42;
+      var FAST_DUR   = 10;
+      var pressTimer = null;
+
+      function setSpeed(duration, dir) {
+        track.style.animationDuration = duration + 's';
+        if (dir === 'left') {
+          track.style.animationDirection = 'normal';
+        } else {
+          track.style.animationDirection = 'reverse';
+        }
+      }
+
+      function resetSpeed() {
+        track.style.animationDuration = NORMAL_DUR + 's';
+        track.style.animationDirection = 'normal';
+      }
+
+      function bindBtn(btn, dir) {
+        btn.addEventListener('mousedown', function() {
+          setSpeed(FAST_DUR, dir);
+        });
+        btn.addEventListener('touchstart', function() {
+          setSpeed(FAST_DUR, dir);
+        }, { passive: true });
+        btn.addEventListener('mouseup',   resetSpeed);
+        btn.addEventListener('mouseleave', resetSpeed);
+        btn.addEventListener('touchend',  resetSpeed);
+        btn.addEventListener('click', function() {
+          setSpeed(FAST_DUR, dir);
+          clearTimeout(pressTimer);
+          pressTimer = setTimeout(resetSpeed, 600);
+        });
+      }
+
+      bindBtn(leftBtn,  'left');
+      bindBtn(rightBtn, 'right');
+    })();
+  </script>
 
   <section class="categories-section" >
     <div class="container">

@@ -1224,7 +1224,7 @@ input[type="range"].g-range::-webkit-slider-thumb {
   height: 1px;
   background: linear-gradient(90deg, var(--g-cyan), transparent);
 }
-.g-price-main {
+.g-price-box .g-price-main {
   font-family: var(--g-font);
   font-size: 2.2rem;
   font-weight: 900;
@@ -1791,9 +1791,5 @@ input[type="range"].g-range::-webkit-slider-thumb {
 }
 
 /* --- GAMING CUSTOM CURSOR --- */
-@media (pointer: fine) {
-  body.gaming-page { cursor: none; }
-  body.gaming-page * { cursor: none !important; }
-}
-.g-cursor { position: fixed; top: 0; left: 0; width: 20px; height: 20px; border: 2px solid var(--g-cyan); pointer-events: none; z-index: 999999; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s; box-shadow: var(--g-glow-cyan); }
-.g-cursor.hover { width: 34px; height: 34px; background-color: rgba(0, 245, 255, 0.1); border-color: var(--g-purple); box-shadow: var(--g-glow-purple); }
+/* Cursor styles are defined inline in gaminglayout.blade.php */
+
